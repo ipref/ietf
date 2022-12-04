@@ -105,25 +105,42 @@
         <t><em>our</em> - pertaining to IP address, IPREF address or reference controlled by the local network</t>
         <t><em>their</em> - pertaining to IP address, IPREF address or reference controlled by the remote network</t>
         <t><em>ref</em> - IPREF reference</t>
+        <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
       </section>
 
     </section>
 
     <section><name>Overview</name>
-  
+
       <t>Overview text</t>
 
       <figure><name>private networks</name>
         <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
           <artwork type="ascii-art" name="private networks diagram">
             <![CDATA[
- +------------+      ╔═════════╗     ╭─────────────╮
- | ASCII box  |      ║ map_tun ╟─╴◁╶─┤ fwd_to_tun  │
- +------------+      ╚═════════╝     ╰───────┬───┬─╯    ╔═══════════╗
-                                       ╹     │   ┆      ║ allocated ║
-                                       ▲     △   △      ╚═════╤═════╝
-                                       ╻     │   ┆            △
-                                     ╭───────┴───┴─╮    ╭─────┴─────╮
+                  ╲                   ╲                     Local Network B
+
+                    ╲                   ╲    172.18.2.0/24
+                                                                   ┌──────┐
+                      ╲                   ╲                   ┃ .66│      │
+                                         ┏━━━━━━━┓            ┠────┤ host │
+                        ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
+                                       ╭─┨ g-way ┠────────────┨    └──────┘
+    ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
+    │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
+    │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
+    │  A5  │    ┃                 The Internet                ┃ .64│      │
+    └──────┘    ┃             ╲                   ╲           ┠────┤ host │
+                ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
+                ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
+    ┌──────┐    ┠────────────┨ g-way ┠─╯
+    │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
+    │ host ├────┨            ┗━━━━━━━┛
+    │  A7  │    ┃                   ╲                   ╲
+    └──────┘
+                     172.17.1.0/24    ╲                   ╲
+
+    Local Network A                     ╲                   ╲
             ]]>
           </artwork>
         </artset>
@@ -170,7 +187,18 @@
     </section>
 
     <section><name>Embedding References in IP Packets </name>
-      <t>text embedding references in IP packets</t>
+
+      <t>A reference is a network layer entity and the most natural place for embedding it would
+         be a network layer header, such as an IPv4 option or an IPv6 next header. Another way of
+         embedding a reference is to place it along with the payload. One such common
+         technique is tunneling where a reference could be placed along with a network packet
+         being tunneled.
+      </t>
+      <t>In terms of how the reference is processed, the most natural place for embedding it would
+         be with the payload, not with the header. The reason is because while the packets traverse
+         the <em>third</em> network, the reference remains opaque. It is processed only at the IPREF
+         gateways of the communicating private networks.
+      </t>
 
       <section><name>IPv4 Option</name>
         <t>text ipv4 option</t>
@@ -184,10 +212,10 @@
         <t>text udp tunnel</t>
       </section>
 
-    </section><!-- ^^Embeddding References^^ -->
+    </section><!-- ^^Embedding References^^ -->
 
     <section><name>Distributing IPREF Addresses</name>
-    
+
       <t>text distributing IPREF addresses</t>
 
       <section><name>DNS Records</name>
