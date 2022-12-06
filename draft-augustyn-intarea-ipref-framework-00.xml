@@ -102,9 +102,10 @@
 
       <section anchor="terminology"><name>IPREF Terminology</name>
         <t>IPREF - short name referring to the technology described in this document, pronounced I-P-REF</t>
-        <t><em>our</em> - pertaining to IP address, IPREF address or reference controlled by the local network</t>
-        <t><em>their</em> - pertaining to IP address, IPREF address or reference controlled by the remote network</t>
+        <t><em>ea</em> - encoded address, a native address presented to hosts in lieu of an IPREF address </t>
+        <t><em>our</em> - pertaining to IP address, IPREF address, or reference controlled by the local network</t>
         <t><em>ref</em> - IPREF reference</t>
+        <t><em>their</em> - pertaining to IP address, IPREF address, or reference controlled by the remote network</t>
         <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
       </section>
 
@@ -118,9 +119,9 @@
         <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
           <artwork type="ascii-art" name="private networks diagram">
             <![CDATA[
-                  ╲                   ╲                     Local Network B
-
-                    ╲                   ╲    172.18.2.0/24
+                  ╲                   ╲     Encoding Network B: 10.192.0.0/10
+                                               Local Network B: 172.18.2.0/24
+                    ╲                   ╲
                                                                    ┌──────┐
                       ╲                   ╲                   ┃ .66│      │
                                          ┏━━━━━━━┓            ┠────┤ host │
@@ -129,7 +130,7 @@
     ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
     │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
     │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
-    │  A5  │    ┃                 The Internet                ┃ .64│      │
+    │  A5  │    ┃                Third Network                ┃ .64│      │
     └──────┘    ┃             ╲                   ╲           ┠────┤ host │
                 ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
                 ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
@@ -138,9 +139,9 @@
     │ host ├────┨            ┗━━━━━━━┛
     │  A7  │    ┃                   ╲                   ╲
     └──────┘
-                     172.17.1.0/24    ╲                   ╲
-
-    Local Network A                     ╲                   ╲
+                                      ╲                   ╲
+     Local Network A: 172.17.1.0/24
+  Encoding Network A: 10.128.0.0/10     ╲                   ╲
             ]]>
           </artwork>
         </artset>
@@ -148,8 +149,52 @@
 
       <t>More overview text</t>
 
+      <figure><name>address rewriting</name>
+        <artset> <artwork type="ascii-art" name="address rewriting diagram"> <![CDATA[
+  Host B4 has IPREF address: 198.51.100.22+400
+          encoded at GWA as: 10.128.0.40
+
+  Host A5 is allocated IPREF address: 198.51.100.11+50
+                   encoded at GWB as: 10.192.0.70
+
+  Sending a packet from A5 to B4 and receiving a response back at A5:
+
+         ┌───────────────────┬───────────────────┬─────────┐
+  1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  2 GWA: │ 198.51.100.11+50  │ 198.51.100.22+400 │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+                          ┌───────────────────┬───────────────────┬─────────┐
+  3                  GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+                          └───────────────────┴───────────────────┴─────────┘
+                          ┌───────────────────┬───────────────────┬─────────┐
+  4                  B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+                          └───────────────────┴───────────────────┴─────────┘
+
+                          ┌───────────────────┬───────────────────┬─────────┐
+  5                  B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+                          └───────────────────┴───────────────────┴─────────┘
+                          ┌───────────────────┬───────────────────┬─────────┐
+  6                  GWB: │ 198.51.100.22+400 │ 198.51.100.11+50  │ payload │
+                          └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+            ]]> </artwork> </artset>
+      </figure>
+
+      <t>Continue overview text</t>
+
       <section><name>IPREF Addresses</name>
         <t>text ipref addresses</t>
+      </section>
+
+      <section><name>Encoding Addresses</name>
+        <t>text encoding addresses</t>
       </section>
 
       <section><name>IPREF Gateways</name>
