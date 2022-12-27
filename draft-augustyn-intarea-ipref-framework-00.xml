@@ -114,6 +114,19 @@
 
     <section><name>Overview</name>
 
+      <t>overview text
+      </t>
+
+      <figure anchor="ipref-address"><name>IPREF address</name>
+        <artset> <artwork type="ascii-art" name="ipref address diagram"> <![CDATA[
+         ┌───────────────────┬───────────────────┐
+         │    IP address     │    reference      │
+         └───────────────────┴───────────────────┘
+            198.51.100.11+700
+            2001:db8::abc:11+700
+            ]]> </artwork> </artset>
+      </figure>
+
       <t><xref target="private-networks"/> depicts how two local networks communicate with one another. Local
           network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em> network,
           the Internet. Local network B has hosts B4, B6, and a gateway GWB. The gateway connects to the same <em>third</em>
