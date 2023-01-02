@@ -114,7 +114,16 @@
 
     <section><name>Overview</name>
 
-      <t>overview text
+      <t>IP addressing with references (IPREF) is intended for communication between private networks connected
+        via a <em>third</em> network, typically the Internet. The references are opaque integers that factor
+        in calculating of actual addresses at the respective private networks. References are not direct IP addresses.
+        Each peer makes the calculations independently and in a manner that it sees fit irrespective of how the peer
+        might be interpreting the very same references. The resulting addresses are normally different (they may be
+        the same by chance) and are not known to the peers.
+      </t>
+      <t>The references are used in conjunction with standard IP addresses from the third network. These are typically
+        addresses of gateway interfaces where the packets arrive at or where they are being sent to. A combination of
+        a <em>third</em> network IP address and the reference is called an IPREF address, <xref target="ipref-address"/>.
       </t>
 
       <figure anchor="ipref-address"><name>IPREF address</name>
@@ -127,19 +136,25 @@
             ]]> </artwork> </artset>
       </figure>
 
+      <t>In the notation, a plus sign '+' is used to separate the IP address from the reference. In a packet exchange,
+        there is a source IPREF address and a destination IPREF address, thus two references. The destination reference
+        is allocated by the destination private network while the source reference is allocated by the source private
+        network. There are no negotiations. Each peer defines their own references and accept peer references as opaque
+        values.
+
       <t><xref target="private-networks"/> depicts how two local networks communicate with one another. Local
           network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em> network,
           the Internet. Local network B has hosts B4, B6, and a gateway GWB. The gateway connects to the same <em>third</em>
           network as gateway GWA. Only the gateways are aware of, and implement, IPREF processing. The hosts on both local
-          networks, as well as any networks hosts, routers, or nodes on the <em>third</em> network are standard devices, completely
+          networks, as well as any networks hosts, routers, or nodes on the <em>third</em> network are standard network devices,
           unaware of IPREF. For simplicity, the examples shows the case of IPv4 running on all three networks. The IP addresses
           on local networks may overlap but for simplicity are shown as distinct. Further, for ease of following the example,
           addresses related to local network A are odd while addresses related to local network B are even.
       </t>
       <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without knowing
         the IP addresses on the peer network or even without knowing the network protocol employed by the peer network. An
-        <em>encoding</em> network is used in lieu of the peer private network. The peer hosts appear as if they were hosted
-        on the <em>encoding</em> network. This is a compatibility feature. It is possible to avoid such mapping at the cost
+        <em>encoding</em> network is used in lieu of the peer private network addresses. The peer hosts appear as if they were
+        hosted on the <em>encoding</em> network. This is a compatibility feature. It is possible to avoid such mapping at the cost
         of making local hosts IPREF aware. That case is not described here as it is dramatically simpler to use <em>encoding</em>
         networks and leave existing hosts as-is without any modifications.
       </t>
@@ -177,14 +192,14 @@
       </figure>
 
       <t>Let's assume host A5 wants to send a packet to host B4 and receive a response. Prior to the packet
-        exchange, an administrator from local network B informed an administrator of local network A that host
-        B can be reached at an IPREF address 198.151.100.22+400. Local administrator entered that information
-        on gateway GWA which in turn allocated an <em>encoded</em> address of 10.128.0.40 to represent host B.
+        exchange, an administrator from local network B informs an administrator of local network A that host
+        B can be reached at an IPREF address 198.151.100.22+400. Local administrator enters that information
+        on gateway GWA which in turn allocates an <em>encoded</em> address of 10.128.0.40 to represent host B.
         This information is further passed to host A5 so that it can send packets to host B by using 10.128.0.40
         as the destination.
       </t>
       <t>In step (1) host A5 places its own address as source, 172.17.1.75 and the provided address of host B 10.128.0.40
-        as destination. As the packet traverses the network, its source destination addresses will be rewritten.
+        as destination. As the packet traverses the network, both source and destination addresses will be rewritten.
         It is illustrated in <xref target="address-rewriting"/>. In step (2), the packet arrives at gateway GWA. The gateway
         realizes the destination is an <em>encoded</em> address. It finds that the address corresponds to an IPREF address
         198.51.100.22+400. It places this IPREF address in the packet as the new destination address. It also finds that
@@ -192,9 +207,9 @@
         perhaps randomly, as 198.51.100.11+50. It places this IPREF address in the packet as the new source address. It then
         sends the packet into the <em>third</em> network. This is the common network, the Internet, that both local networks
         A and B connect to. In step (3) the packet arrives at gateway GWB. The gateway recognizes the destination IPREF address
-        as representation of internal host's B address 172.18.2.64. It places this address in the packet as new destination
+        as representation of the internal host's B address 172.18.2.64. It places this address in the packet as new destination
         address. The gateway does not recognize the source IPREF address so it allocates an <em>encoded</em> address for it
-        10.192.0.70. It places this address in the packet as new source address. It, then, sends the packet to the local
+        10.192.0.70. It places this address in the packet as the new source address. It, then, sends the packet to the local
         host B4. In step (4), local host B4 receives the packet and recognizes the destination address as its own. It consumes
         the packet and processes it according to the payload.
       </t>
@@ -249,7 +264,8 @@
         local host A5. in step (8), local host A5 recognizes the destination address 172.17.1.75 as its own and consumes
         the packet for processing. This concludes packet exchange.
       </t>
-      <t>In general case, networks may have overlapping addresses, they may also run different network protocols. For example
+      <t>In general case, networks may have overlapping addresses, they may have several local subnets, they may have more
+        than one gateway to the <em>third</em> network. They may also run different network protocols. For example
         one private network may run IPv4 while its peer may run IPv6. The communicating networks do not need to know their
         peers' actual IP addresses or network protocols. The references are the stand ins representing those addresses in
         their native network protocol domains. The references are interpreted independently by both communicating networks.
