@@ -218,7 +218,7 @@
           It is illustrated in <xref target="address-rewriting"/>. In step (2), the packet arrives at gateway GWA. The gateway
           realizes the destination is an <em>encoded</em> address. It finds that the address corresponds to an IPREF address
           198.51.100.22+400. It places this IPREF address in the packet as the new destination address. It also finds that
-          the source address 172.17.1.75 does not correspond to any IPREF address so it allocates one, through some algorithm
+          the source address 172.17.1.75 does not correspond to any IPREF address so it allocates one through some algorithm,
           perhaps randomly, as 198.51.100.11+50. It places this IPREF address in the packet as the new source address. It then
           sends the packet into the <em>third</em> network. This is the common network, the Internet, that both local networks
           A and B connect to. In step (3) the packet arrives at gateway GWB. The gateway recognizes the destination IPREF address
@@ -295,7 +295,76 @@
       </section>  <!-- ^^ Packet Exchange ^^ -->
 
       <section><name>DNS with IPREF</name>
-        <t>text dns with ipref</t>
+
+        <t>Similarly to standard IP, IPREF can operate without DNS (Domain Name System) relying on IPREF addresses
+          manually entered and distributed. For example, an /etc/hosts file could be used for the purpose. Such
+          use makes sense in certain cases and is available with IPREF the same way as it is with standard IP.
+          Especially on private networks, the practice of using direct addresses is common even if local domain
+          names are allocated to the hosts.
+        </t>
+        <t>IPREF can take full advantage of DNS. IPREF addresses are publishable. When resolving names that render IPREF
+          addresses, local resolvers must obtain translation into <em>encoded</em> addresses for standard hosts on local
+          networks. This is the normal case, only IPREF gateways understand IPREF addresses, the vast majority of hosts
+          are standard hosts which are unaware of IPREF addressing. The necessary mapping to <em>encoded</em> addresses
+          is typically made by IPREF gateways and presented back to resolvers which pass them to the querying hosts. In
+          addition, IPREF gateways must be aware of all local hosts whose IPREF addresses are published through DNS. This
+          is illustrated in <xref target="dns-with-ipref"/>.
+        </t>
+
+        <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
+          <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
+            <artwork type="ascii-art" name="DNS with IPREF diagram">
+              <![CDATA[
+                      ╲
+                               ┏━━━━━━━━┓
+                        ╲      ┃ public ┃
+                               ┃  DNS   ┃ <╌╌ public DNS queries
+    ┌──────┐              ╲    ┃ server ┃
+    │      │.75 ┃              ┗━━┯━━━━━┛
+    │ host ├────┨           ╲     ╎
+    │  A5  │    ┃                 ╎
+    └──────┘    ┃             ╲   ╎
+                ┃            ┏━━━━┷━━┓
+                ┃         .1 ┃ IPREF ┃
+    ┌──────┐    ┠────────────┨ g-way ┠─
+    │      │.77 ┃            ┃  GWA  ┃
+    │ host ├────┨            ┗━━┯━━━━┛
+    │  A7  │    ┃               ╎   ╲
+    └──────┘                    ╎
+                                ╎     ╲
+                         ┏━━━━━━┷━━━┓
+                         ┃  local   ┃   ╲
+  local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
+                         ┃ resolver ┃     ╲
+     Local Network A     ┗━━━━━━━━━━┛
+                                            ╲
+              ]]>
+            </artwork>
+          </artset>
+        </figure>
+
+        <t>Local hosts A5 and A7 resolve DNS names via a local resolver. The resolver queries DNS servers on their
+           behalf. A query may return a standard IPv4 or IPv6 address, or it may return an IPREF address. In the
+           former cases, the IP addresses are simply returned to the querying hosts. In case of IPREF addresses,
+           the resolvers consults related IPREF gateway for a mapping to an <em>encoded</em> network. The gateway may
+           allocate one on the fly if mapping is not available. The resulting <em>encoded</em> IP address is then
+           returned to the querying hosts.
+        </t>
+        <t>Local network administrator may decide to publish IPREF addresses of some internal hosts via DNS. The
+           IPREF gateway must be aware which hosts are made available externally and what IPREF address
+           have been assigned to them. Typically, this is a semi-static configuration which remains stable for long
+           periods of time. The gateways may query those DNS servers for information periodically or some other
+           mechanism may be employed to pass that information to the IPREF gateways.
+        </t>
+        <t>Returning to the packet exchange scenario shown in <xref target="address-rewriting"/>, the IPREF
+           address of host B4 may be published via a public DNS server maintained by the administrator of local
+           network B. In that case, host A5 may simply use a DNS name of that host and ask local resolver to provide
+           the corresponding IP address. The resolver would query the DNS server, recognize the response as an
+           IPREF address and consult local IPREF gateway for proper mapping to an <em>encoded</em> IP address.
+           That IP address would then be returned to host A5 which in turn would use it as the destination IP
+           address.
+        </t>
+
       </section>  <!-- ^^ DNS with IPREF ^^ -->
 
     </section>  <!-- ^^Overview^^ -->
