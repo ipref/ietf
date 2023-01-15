@@ -76,7 +76,10 @@
 
     <abstract>
       <t>This document describes IP addressing with references (IPREF) and how it can be used with IPv4
-         and IPv6. It also described how IPREF addresses may be distributed through Domain Name System.
+         and IPv6. IPREF is a private-to-private technology where hosts on private networks communicate
+         with hosts on other private networks directly. Special addresses, called IPREF addresses, are
+         used for the purpose. It also describes how hosts on private networks may publish its IPREF
+         addresses via Domain Name System.
       </t>
     </abstract>
 
