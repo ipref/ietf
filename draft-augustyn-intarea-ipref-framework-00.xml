@@ -427,10 +427,10 @@
         </ul>
         <t>The encapsulation record would consist of four octets. First octet would contain the
            value of TTL copied from the original IP header. The second octet would contain protocol
-           number copied from the original IP header. The third octet would report number of hops
-           detected for incoming packets. The fourth octet would be reserved for possible future
-           use while padding to 4 octet boundary. The IPREF option would follow in the format
-           matching respective IP protocol, IPv4 or IPv6.
+           number copied from the original IPv4 header or next header value form an IPv6 extension
+           header. The third octet would report number of hops detected for incoming packets. The
+           fourth octet would be reserved for possible future use while padding to 4 octet boundary.
+           The IPREF option would follow in the format matching respective IP protocol, IPv4 or IPv6.
         </t>
         <t>The tunnel would operate at port 1045. This value would be registered with IANA. A
            separate document should describe the tunnel in detail.
