@@ -392,7 +392,7 @@
       </t>
 
       <section><name>IPv4 Option</name>
-        <t>With IPv4, references may be embedded in an IP header option. It would be a new option
+        <t>With IPv4, references may be embedded in an IPv4 header option. It would be a new option
            type. It would contain an octet with option type and option number, an octet with
            length, and two octets reserved for possible future use while padding to four octet
            boundary. The source and destination references would then follow.
@@ -423,7 +423,7 @@
           <li>UDP header</li>
           <li>Tunnel encapsulation record</li>
           <li>IPREF option</li>
-          <li>Packet payload</l>
+          <li>Packet payload</li>
         </ul>
         <t>The encapsulation record would consist of four octets. First octet would contain the
            value of TTL copied from the original IP header. The second octet would contain protocol
