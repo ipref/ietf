@@ -75,8 +75,9 @@
          use by search engines. -->
 
     <abstract>
-      <t>This document describes IP addressing with references (IPREF) and how it can be used with IPv4 and IPv6.</t>
-      <t>It also described how IPREF addresses may be distributed through Domain Name System</t>
+      <t>This document describes IP addressing with references (IPREF) and how it can be used with IPv4
+         and IPv6. It also described how IPREF addresses may be distributed through Domain Name System.
+      </t>
     </abstract>
 
   </front>
@@ -102,10 +103,10 @@
 
       <section anchor="terminology"><name>IPREF Terminology</name>
         <t>IPREF - short name referring to the technology described in this document, pronounced I-P-REF</t>
-        <t><em>ea</em> - encoded address, a native address presented to hosts in lieu of an IPREF address </t>
-        <t><em>our</em> - pertaining to IP address, IPREF address, or reference controlled by the local network</t>
-        <t><em>ref</em> - IPREF reference</t>
-        <t><em>their</em> - pertaining to IP address, IPREF address, or reference controlled by the remote network</t>
+        <!--<t><em>ea</em> - encoded address, a native address presented to hosts in lieu of an IPREF address </t>-->
+        <!--<t><em>our</em> - pertaining to IP address, IPREF address, or reference controlled by the local network</t>-->
+        <!--<t><em>ref</em> - IPREF reference</t>-->
+        <!--<t><em>their</em> - pertaining to IP address, IPREF address, or reference controlled by the remote network</t>-->
         <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
         <t><em>encoding</em> network - network representing hosts on peer private network</t>
       </section>
