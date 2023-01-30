@@ -75,11 +75,11 @@
          use by search engines. -->
 
     <abstract>
-      <t>This document describes IP addressing with references (IPREF) and how it can be used with IPv4
-         and IPv6. IPREF is a private-to-private technology where hosts on private networks communicate
-         with hosts on other private networks directly. Special addresses, called IPREF addresses, are
-         used for the purpose. It also describes how hosts on private networks may publish its IPREF
-         addresses via Domain Name System.
+      <t>This document describes IP addressing with references (referred to as IPREF) and how it can be
+         used with IPv4 and IPv6. IPREF is a private-to-private technology where hosts on private networks
+         communicate with hosts on other private networks directly. Special addresses, called IPREF
+         addresses, are used for the purpose. It also describes how hosts on private networks may publish
+         their IPREF addresses via Domain Name System (DNS).
       </t>
     </abstract>
 
@@ -90,7 +90,22 @@
     <section>
     <!-- The default attributes for <section> are numbered="true" and toc="default" -->
       <name>Introduction</name>
-      <t>Introductory text</t>
+      <t>Normally, hosts on private networks are only reachable by other hosts on the same private networks. To
+         make them visible to other hosts, NAT is used to make them appear as if residing directly on the public
+         Internet. In most cases, only selected services, determined by their layer 4 port numbers, are made
+         available through this method. Thanks to port mapping, services from different private hosts may be
+         visible with a use of a single public address.
+      </t>
+      <t>This document describes a different way of accessing hosts on private networks. It is done by enhancing
+         capabilities of existing layer 3 protocols. The enhancement provides for addressing with references where
+         the source and destination is specified by means of references rather than concrete addresses. The respective
+         private networks, communicating in this manner, use these references to render actual addresses on their
+         local networks. Reference are single values, unsigned integers, which are carried in addition to the existing
+         addresses by the layer 3 protocols.
+      </t>
+      <t>In theory, any layer 3 protocol can operate in the manner described. For practical purpose, this document
+         discusses only the case of IPv4 and IPv6, and only with the Internet connecting communicating private networks.
+      </t>
 
       <section anchor="requirements">
       <!-- anchor is an optional attribute -->
@@ -122,21 +137,23 @@
         via a <em>third</em> network, typically the Internet. The references are opaque integers that factor
         in calculating of actual addresses at the respective private networks. References are not direct IP addresses.
         Each private network makes their calculations independently irrespective of how their peers might be interpreting
-        the very same references. The resulting addresses are normally different (they may be the same by chance) and
+        the same references. The resulting addresses are normally different (they may be the same by chance) and
         are not known to the peers.
       </t>
-      <t>IPREF deals exclusively with private networks, there is no provision to communicate directly with 'public' hosts,
-        i.e. hosts with addresses on the <em>third</em> network. There is no need to. The 'public' hosts normally reside
-        on private networks anyway but are made avalable on the 'public' network using traditional NAT (Network Address
-        Translation). Since they reside on private networks, they can be reached through IPREF direclty without NAT. IPREF
-        is a form of network address translation but it is never referred to it by this term to avoid confusion with well
-        known NAT. It is always referred to as IPREF. It is an evolution of network address translation.
+      <t>IPREF deals with private networks, there is no intention to communicate directly with 'public' hosts, i.e. hosts
+        with addresses on the <em>third</em> network. There is no need to. The so called 'public' hosts normally reside
+        on private networks anyway. They are made available on the 'public' network using traditional NAT (Network Address
+        Translation). Since they reside on private networks, they can be reached through IPREF directly without NAT thus
+        obviating the need for allocating public addresses to represent them.
+      </t>
+      <t>IPREF is a form of network address translation but it is never referred to it by this term to avoid confusion
+        with well known NAT. It is always referred to as IPREF. It is an evolution of network address translation.
       </t>
 
       <section><name>IPREF Addresses</name>
 
         <t>The references are used in conjunction with standard IP addresses from the third network. These are typically
-          addresses of gateway interfaces where the packets arrive at or where they are being sent to. A combination of
+          addresses of gateway interfaces where the packets arrive at or where they are being sent from. A combination of
           a <em>third</em> network IP address and the reference is called an IPREF address, <xref target="ipref-address"/>.
         </t>
 
