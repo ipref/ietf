@@ -141,13 +141,19 @@
         are not known to the peers.
       </t>
       <t>IPREF deals with private networks, there is no intention to communicate directly with 'public' hosts, i.e. hosts
-        with addresses on the <em>third</em> network. There is no need to. The so called 'public' hosts normally reside
-        on private networks anyway. They are made available on the 'public' network using traditional NAT (Network Address
-        Translation). Since they reside on private networks, they can be reached through IPREF directly without NAT thus
-        obviating the need for allocating public addresses to represent them.
+        with addresses on the <em>third</em> network. There is no need to. These 'public' hosts normally reside on
+        private networks anyway. They are made available on the 'public' network using techniques such as NAT (Network
+        Address Translation) or filtering. Since they reside on private networks, they can be reached through IPREF
+        directly without NAT mapping or creating special filters.
+      </t>
+      <t>In case of IPv6 private networks, local addresses may be globally routable. In spite of that, they may or may
+        not be reachable from peer private networks. IPREF is not concerned with that, it works the same way regardless.
+        Similarly, IPv4 private networks may include hosts with globally routable addresses, it makes no difference.
+        Peer networks still don't know, and don't need to know, what those addresses are and to which protocol they
+        belong.
       </t>
       <t>IPREF is a form of network address translation but it is never referred to it by this term to avoid confusion
-        with well known NAT. It is always referred to as IPREF. It is an evolution of network address translation.
+        with well known NAT. It is always referred to as IPREF. It is an evolution of address rewriting technology.
       </t>
 
       <section><name>IPREF Addresses</name>
