@@ -91,10 +91,10 @@
     <!-- The default attributes for <section> are numbered="true" and toc="default" -->
       <name>Introduction</name>
       <t>Normally, hosts on private networks are only reachable by other hosts on the same private networks. To
-         make them visible to other hosts, NAT is used to make them appear as if residing directly on the public
-         Internet. In most cases, only selected services, determined by their layer 4 port numbers, are made
-         available through this method. Thanks to port mapping, services from different private hosts may be
-         visible with a use of a single public address.
+         make them visible to other hosts, techniques like NAT, popular with IPv4 private networks, or filtering,
+         more likely found with IPv6 private networks, are used to make them appear on the public Internet. In most
+         cases, only selected services, determined by their layer 4 port numbers, are made available through these
+         methods. Services from different private hosts may share a single public address.
       </t>
       <t>This document describes a different way of accessing hosts on private networks. It is done by enhancing
          capabilities of existing layer 3 protocols. The enhancement provides for addressing with references where
@@ -246,7 +246,7 @@
           realizes the destination is an <em>encoded</em> address. It finds that the address corresponds to an IPREF address
           198.51.100.22+400. It places this IPREF address in the packet as the new destination address. It also finds that
           the source address 172.17.1.75 does not correspond to any IPREF address so it allocates one through some algorithm,
-          perhaps randomly, as 198.51.100.11+50. It places this IPREF address in the packet as the new source address. It then
+          perhaps randomly, as 198.51.100.11+500. It places this IPREF address in the packet as the new source address. It then
           sends the packet into the <em>third</em> network. This is the common network, the Internet, that both local networks
           A and B connect to. In step (3) the packet arrives at gateway GWB. The gateway recognizes the destination IPREF address
           as representation of the internal host's B address 172.18.2.64. It places this address in the packet as new destination
@@ -261,7 +261,7 @@
   Host B4 has IPREF address: 198.51.100.22+400
           encoded at GWA as: 10.128.0.40
 
-  Host A5 is allocated IPREF address: 198.51.100.11+50
+  Host A5 is allocated IPREF address: 198.51.100.11+500
                    encoded at GWB as: 10.192.0.70
 
   Sending a packet from A5 to B4 and receiving a response back at A5:
@@ -270,7 +270,7 @@
   1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
          └───────────────────┴───────────────────┴─────────┘
          ┌───────────────────┬───────────────────┬─────────┐
-  2 GWA: │ 198.51.100.11+50  │ 198.51.100.22+400 │ payload │
+  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
          └───────────────────┴───────────────────┴─────────┘
                           ┌───────────────────┬───────────────────┬─────────┐
   3                  GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
@@ -283,7 +283,7 @@
   5                  B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
                           └───────────────────┴───────────────────┴─────────┘
                           ┌───────────────────┬───────────────────┬─────────┐
-  6                  GWB: │ 198.51.100.22+400 │ 198.51.100.11+50  │ payload │
+  6                  GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
                           └───────────────────┴───────────────────┴─────────┘
          ┌───────────────────┬───────────────────┬─────────┐
   7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
@@ -296,7 +296,7 @@
 
         <t>In step (5), host B4 sends a response back to host A5. I reverses source and destination addresses and sends a
           packet to gateway GWB. In step (6), the packet arrives at gateway GWB. The gateway recognizes the destination address
-          as an <em>encoded</em> address previously created to represent IPREF address 198.51.100.11+50. It places this IPREF
+          as an <em>encoded</em> address previously created to represent IPREF address 198.51.100.11+500. It places this IPREF
           address in the packet as the new destination address. The gateway also recognizes the source address as corresponding
           to a preset IPREF address 198.51.100.22+400. It places this IPREF address as the new source address. It then sends
           the packet to the <em>third</em> network. In step (7), the packet arrives at gateway GWA. The gateway recognizes the
