@@ -128,7 +128,7 @@
         <!--<t><em>ref</em> - IPREF reference</t>-->
         <!--<t><em>their</em> - pertaining to IP address, IPREF address, or reference controlled by the remote network</t>-->
         <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
-        <t><em>encoding</em> network - network representing hosts on peer private network</t>
+        <t><em>encoding</em> network - network representing hosts on peer private networks</t>
       </section>
 
     </section>
@@ -320,7 +320,7 @@
           interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
           knows, or cares about, how the references are interpreted outside of their own administrative domains. In cases
           where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
-          repackaging of the packets. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
+          repackaging of the payload. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
           practical.
         </t>
 
@@ -423,7 +423,7 @@
     <section><name>IPREF Address</name>
 
       <t>An IPREF address is a combination of a layer 3 network address and a reference carried in the
-        same packet. In notation, a plus sign '+' is used to separate the two components. For example:
+        same packet. In notation, a plus sign '+' separates the two components. For example:
         198.51.100.11+700 or 2001:db8::abc:11+700.
       </t>
 
@@ -510,24 +510,25 @@
 
     <section><name>Related Technologies</name>
 
-      <t>It may be useful to describe how IPREF works with related technologies.
+      <t>IPREF works well with related technologies. It does not create conflicts and it does
+        not attempt to step on their functionality. 
       </t>
         <ul spacing="normal">
-          <li>IPv4 - IPREF does not replace IPv4, it is an add-on to enhance IPv4 capabilities
-             in the area of address rewriting. It relies on IPv4 in all other functions of a
-             network protocol.
+          <li>IPv4 - IPREF does not replace IPv4, it is an optional add-on to enhance IPv4
+             capabilities in the area of address rewriting. It relies on IPv4 in all other
+             functions of a network protocol.
           </li>
-          <li>IPv6 - IPREF does not replace IPv6, it is an add-on to enhance IPv6 capabilities
-             in the area of address rewriting. It relies on IPv6 in all other functions of a
-             network protocol.
+          <li>IPv6 - IPREF does not replace IPv6, it is an optional add-on to enhance IPv6
+             capabilities in the area of address rewriting. It relies on IPv6 in all other
+             functions of a network protocol.
           </li>
           <li>NAT - IPREF is an address rewriting technology but operates differently than NAT. It
              operates exclusively at the network layer. It does not reach to upper layer protocols
              or lower layer protocols. For example, there is no manipulation of TCP/UDP ports. All
-             ports are carried transparently as-is. IPREF does not conflict with NAT. In a common
-             configuration, a NAT gateway connects to the <em>third</em> network without any changes.
-             IPREF may operate in parallel to NAT on the same gateway, or it may operate on another
-             gateway within the local network 'behind NAT'.
+             layer 4 port fields are carried transparently as-is. IPREF does not conflict with NAT.
+             In a common configuration, a NAT gateway connects to the <em>third</em> network without
+             any changes. IPREF may operate in parallel to NAT on the same gateway, or it may operate
+             on another gateway within the local network 'behind NAT'.
           </li>
           <li>VPN - IPREF deals mostly with addressing. It does not perform typical functions of
              a VPN and it does not replace it. It behaves differently. A typical VPN makes hosts
@@ -535,16 +536,16 @@
              to a VPN are managed by that other private networks. This involves a substantial level
              of trust between the two private networks. IPREF does not do any of that. Hosts
              reachable through IPREF are firmly in their respective private networks and remain
-             managed by their respective administrators. There is far less trust involved. There
-             may be cases where IPREF may be deemed sufficient but in general IPREF is not a substitute
+             managed by their respective administrators. There may be cases where IPREF may be
+             deemed sufficient for a particular purpose but in general IPREF is not a substitute
              for a VPN. IPREF does not conflict with VPNs. A VPN might use IPREF to establish
              a VPN connection.
           </li>
-          <li>Firewall - IPREF is not a firewall. While it is true that allocation or lack of allocation
-             of references to local hosts has the effect of blocking or allowing access to them, such
-             function is best vested with a firewall. IPREF mappers deal with address rewriting, they
-             are not packet filters. There is no conflict between firewalls and IPREF. Firewalls might
-             need to be made aware of IPREF to be effective in their mission.
+          <li>Firewall - IPREF is not a firewall. While allocation or lack of allocation of references
+             to local hosts has the effect of blocking or allowing access to them, blocking policy is
+             best vested with a firewall. IPREF mappers deal with address rewriting, they are not packet
+             filters. There is no conflict between firewalls and IPREF. Firewalls might need to be made
+             aware of IPREF to be effective in their mission.
           </li>
         </ul>
 
