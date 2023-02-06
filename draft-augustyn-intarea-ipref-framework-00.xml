@@ -550,10 +550,6 @@
 
     </section>
 
-    <section><name>Distinct Properties</name>
-      <t>text distinct properties</t>
-    </section>
-
     <section anchor="IANA">
     <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
       <name>IANA Considerations</name>
