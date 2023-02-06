@@ -91,10 +91,11 @@
     <!-- The default attributes for <section> are numbered="true" and toc="default" -->
       <name>Introduction</name>
       <t>Normally, hosts on private networks are only reachable by other hosts on the same private networks. To
-         make them visible to other hosts, techniques like NAT, popular with IPv4 private networks, or filtering,
-         more likely found with IPv6 private networks, are used to make them appear on the public Internet. In most
-         cases, only selected services, determined by their layer 4 port numbers, are made available through these
-         methods. Services from different private hosts may share a single public address.
+         make them visible to hosts on other networks, techniques such as Network Address Translation (NAT),
+         popular with IPv4 private networks, or filtering, more likely found with IPv6 private networks, are
+         used to make them appear on the public Internet. In most cases, only selected services, determined by
+         their layer 4 port numbers, are made available through these methods. Services from different private
+         hosts may share a single public address.
       </t>
       <t>This document describes a different way of accessing hosts on private networks. It is done by enhancing
          capabilities of existing layer 3 protocols. The enhancement provides for addressing with references where
@@ -104,7 +105,7 @@
          addresses by the layer 3 protocols.
       </t>
       <t>In theory, any layer 3 protocol can operate in the manner described. For practical purpose, this document
-         discusses only the case of IPv4 and IPv6, and only with the Internet connecting communicating private networks.
+         discusses only the case of IPv4 and IPv6.
       </t>
 
       <section anchor="requirements">
@@ -140,11 +141,11 @@
         the same references. The resulting addresses are normally different (they may be the same by chance) and
         are not known to the peers.
       </t>
-      <t>IPREF deals with private networks, there is no intention to communicate directly with 'public' hosts, i.e. hosts
-        with addresses on the <em>third</em> network. There is no need to. These 'public' hosts normally reside on
-        private networks anyway. They are made available on the 'public' network using techniques such as NAT (Network
-        Address Translation) or filtering. Since they reside on private networks, they can be reached through IPREF
-        directly without NAT mapping or creating special filters.
+      <t>IPREF deals with private networks, there is no intention to communicate directly with 'public' hosts, i.e.
+        hosts with addresses on the <em>third</em> network. There is no need to. These 'public' hosts normally reside
+        on private networks anyway. They are made available on the 'public' network using techniques such as NAT or
+        filtering. Since they reside on private networks, they can be reached through IPREF directly without NAT mapping
+        or creating special filters.
       </t>
       <t>In case of IPv6 private networks, local addresses may be globally routable. In spite of that, they may or may
         not be reachable from peer private networks. IPREF is not concerned with that, it works the same way regardless.
@@ -158,9 +159,10 @@
 
       <section><name>IPREF Addresses</name>
 
-        <t>The references are used in conjunction with standard IP addresses from the third network. These are typically
-          addresses of gateway interfaces where the packets arrive at or where they are being sent from. A combination of
-          a <em>third</em> network IP address and the reference is called an IPREF address, <xref target="ipref-address"/>.
+        <t>The references are used in conjunction with standard IP addresses from the <em>third</em> network. These
+          are typically addresses of gateway interfaces where the packets arrive at or where they are being sent
+          from. A combination of a <em>third</em> network IP address and the reference is called an IPREF address,
+          <xref target="ipref-address"/>.
         </t>
 
         <figure anchor="ipref-address"><name>IPREF address</name>
@@ -185,20 +187,22 @@
       <section><name>Packet Exchange</name>
 
         <t><xref target="private-networks"/> depicts how two local networks communicate with one another. Local
-            network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em> network,
-            the Internet. Local network B has hosts B4, B6, and a gateway GWB. The gateway connects to the same <em>third</em>
-            network as gateway GWA. Only the gateways are aware of, and implement, IPREF processing. The hosts on both local
-            networks, as well as any networks hosts, routers, or nodes on the <em>third</em> network are standard network devices,
-            unaware of IPREF. For simplicity, the examples shows the case of IPv4 running on all three networks. The IP addresses
-            on local networks may overlap but for simplicity are shown as distinct. Further, for ease of following the example,
-            addresses related to local network A are odd while addresses related to local network B are even.
+            network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em>
+            network, the Internet. Local network B has hosts B4, B6, and a gateway GWB. The gateway connects to
+            the same <em>third</em> network as gateway GWA. Only the gateways are aware of, and implement, IPREF
+            processing. The hosts on both local networks, as well as any hosts or routers on the <em>third</em>
+            network are standard network devices, unaware of IPREF. For simplicity, the examples shows the case of
+            IPv4 running on all three networks. The IP addresses on local networks may overlap but for simplicity
+            are shown as distinct. Further, for ease of following the example, addresses related to local network
+            A are odd while addresses related to local network B are even.
         </t>
-        <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without knowing
-          the IP addresses on the peer network or even without knowing the network protocol employed by the peer network. An
-          <em>encoding</em> network is used in lieu of the peer private network addresses. The peer hosts appear as if they were
-          hosted on the <em>encoding</em> network. This is a compatibility feature. It is possible to avoid such mapping at the cost
-          of making local hosts IPREF aware. That case is not described here as it is dramatically simpler to use <em>encoding</em>
-          networks and leave existing hosts as-is without any modifications.
+        <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without
+          knowing the IP addresses on the peer network or even without knowing the network protocol employed by the
+          peer network. An <em>encoding</em> network is used in lieu of the peer private network addresses. The peer
+          hosts appear as if they were hosted on the <em>encoding</em> network. This is a compatibility feature. It
+          is possible to avoid such mapping at the cost of making local hosts IPREF aware. That case is not described
+          here as it is dramatically simpler to use <em>encoding</em> networks and leave existing hosts as-is, without
+          any modifications.
         </t>
 
         <figure anchor="private-networks"><name>private networks</name>
@@ -314,28 +318,28 @@
           In the example above, network B allocates reference '400' to represent host B4. At network B, that reference is
           interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
           knows, or cares about, how the references are interpreted outside of their own administrative domains. In cases
-          where interpretation involves changing network protocol, the local gateway must run dual stacks and perform proper
-          repackaging of the packets. Of course, higher level protocol, such as TCP/UDP, must be compatible for this to be
-          practical. IPv4 and IPv6 meet this criterion.
+          where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
+          repackaging of the packets. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
+          practical.
         </t>
 
       </section>  <!-- ^^ Packet Exchange ^^ -->
 
       <section><name>DNS with IPREF</name>
 
-        <t>Similarly to standard IP, IPREF can operate without DNS (Domain Name System) relying on IPREF addresses
-          manually entered and distributed. For example, an /etc/hosts file could be used for the purpose. Such
-          use makes sense in certain cases and is available with IPREF the same way as it is with standard IP.
-          Especially on private networks, the practice of using direct addresses is common even if local domain
-          names are allocated to the hosts.
+        <t>Similarly to standard IP, IPREF can operate without DNS relying on IPREF addresses manually entered
+          and distributed. For example, an /etc/hosts file could be used for the purpose. Such use makes sense
+          in certain cases and is available with IPREF the same way as it is with standard IP. Especially on
+          private networks, the practice of using direct addresses is common even if local DNS names are allocated
+          to the hosts.
         </t>
-        <t>IPREF can take full advantage of DNS. IPREF addresses are publishable. When resolving names that render IPREF
-          addresses, local resolvers must obtain translation into <em>encoded</em> addresses for standard hosts on local
-          networks. This is the normal case, only IPREF gateways understand IPREF addresses, the vast majority of hosts
-          are standard hosts which are unaware of IPREF addressing. The necessary mapping to <em>encoded</em> addresses
-          is typically made by IPREF gateways and presented back to resolvers which pass them to the querying hosts. In
-          addition, IPREF gateways must be aware of all local hosts whose IPREF addresses are published through DNS. This
-          is illustrated in <xref target="dns-with-ipref"/>.
+        <t>IPREF can also take full advantage of DNS. IPREF addresses are publishable. When resolving names that
+          render IPREF addresses, local resolvers must obtain translation into <em>encoded</em> addresses for
+          standard hosts on local networks. This is the normal case, only IPREF gateways understand IPREF addresses,
+          the vast majority of hosts are standard hosts which are unaware of IPREF addressing. The necessary mapping
+          to <em>encoded</em> addresses is typically made by IPREF gateways and presented back to resolvers which
+          pass them to the querying hosts. In addition, IPREF gateways must be aware of all local hosts whose IPREF
+          addresses are published through DNS. This is illustrated in <xref target="dns-with-ipref"/>.
         </t>
 
         <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
@@ -378,12 +382,12 @@
            returned to the querying hosts.
         </t>
         <t>Local network administrator may decide to publish IPREF addresses of some internal hosts via DNS. The
-           IPREF gateway must be aware which hosts are made available externally and what IPREF address
+           IPREF gateway must be aware which hosts are made available externally and what IPREF addresses
            have been assigned to them. Typically, this is a semi-static configuration which remains stable for long
            periods of time. The gateways may query those DNS servers for information periodically or some other
            mechanism may be employed to pass that information to the IPREF gateways.
         </t>
-        <t>Returning to the packet exchange scenario shown in <xref target="address-rewriting"/>, the IPREF
+        <t>Returning to the packet exchange example shown in <xref target="address-rewriting"/>, the IPREF
            address of host B4 may be published via a public DNS server maintained by the administrator of local
            network B. In that case, host A5 may simply use a DNS name of that host and ask local resolver to provide
            the corresponding IP address. The resolver would query the DNS server, recognize the response as an
