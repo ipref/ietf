@@ -3,9 +3,9 @@
 
 
 Internet Engineering Task Force                         W. Augustyn, Ed.
-Internet-Draft                                           14 January 2023
+Internet-Draft                                           6 February 2023
 Intended status: Informational                                          
-Expires: 18 July 2023
+Expires: 10 August 2023
 
 
           Framework for IP Addressing with References (IPREF)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 July 2023.
+   This Internet-Draft will expire on 10 August 2023.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 1]
+Augustyn                 Expires 10 August 2023                 [Page 1]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -78,44 +78,41 @@ Table of Contents
      2.3.  DNS with IPREF  . . . . . . . . . . . . . . . . . . . . .   8
    3.  IPREF Reference . . . . . . . . . . . . . . . . . . . . . . .  10
    4.  IPREF Address . . . . . . . . . . . . . . . . . . . . . . . .  10
-   5.  Embedding References in IP Packets  . . . . . . . . . . . . .  10
-     5.1.  IPv4 Option . . . . . . . . . . . . . . . . . . . . . . .  10
+   5.  Embedding References in IP Packets  . . . . . . . . . . . . .  11
+     5.1.  IPv4 Option . . . . . . . . . . . . . . . . . . . . . . .  11
      5.2.  IPv6 Extension Header . . . . . . . . . . . . . . . . . .  11
      5.3.  UDP Tunnel  . . . . . . . . . . . . . . . . . . . . . . .  11
-   6.  Distributing IPREF Addresses  . . . . . . . . . . . . . . . .  11
+   6.  Distributing IPREF Addresses  . . . . . . . . . . . . . . . .  12
      6.1.  DNS Records . . . . . . . . . . . . . . . . . . . . . . .  12
      6.2.  Local Network Resolver  . . . . . . . . . . . . . . . . .  12
      6.3.  DNS Agent . . . . . . . . . . . . . . . . . . . . . . . .  12
    7.  Related Technologies  . . . . . . . . . . . . . . . . . . . .  12
-   8.  Distinct Properties . . . . . . . . . . . . . . . . . . . . .  12
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  12
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  12
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  12
-   Appendix A.  Appendix 1 . . . . . . . . . . . . . . . . . . . . .  13
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  13
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  13
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  14
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
    Normally, hosts on private networks are only reachable by other hosts
-   on the same private networks.  To make them visible to other hosts,
-   techniques like NAT, popular with IPv4 private networks, or
-   filtering, more likely found with IPv6 private networks, are used to
-   make them appear on the public Internet.  In most cases, only
-   selected services, determined by their layer 4 port numbers, are made
+   on the same private networks.  To make them visible to hosts on other
+   networks, techniques such as Network Address Translation (NAT),
+   popular with IPv4 private networks, or filtering, more likely found
+   with IPv6 private networks, are used to make them appear on the
+   public Internet.  In most cases, only selected services, determined
+   by their layer 4 port numbers, are made available through these
+   methods.  Services from different private hosts may share a single
+   public address.
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 2]
+
+Augustyn                 Expires 10 August 2023                 [Page 2]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
-
-   available through these methods.  Services from different private
-   hosts may share a single public address.
 
    This document describes a different way of accessing hosts on private
    networks.  It is done by enhancing capabilities of existing layer 3
@@ -129,8 +126,7 @@ Internet-Draft               IPREF Framework                January 2023
 
    In theory, any layer 3 protocol can operate in the manner described.
    For practical purpose, this document discusses only the case of IPv4
-   and IPv6, and only with the Internet connecting communicating private
-   networks.
+   and IPv6.
 
 1.1.  Requirements Language
 
@@ -163,21 +159,21 @@ Internet-Draft               IPREF Framework                January 2023
    are normally different (they may be the same by chance) and are not
    known to the peers.
 
-
-
-Augustyn                  Expires 18 July 2023                  [Page 3]
-
-Internet-Draft               IPREF Framework                January 2023
-
-
    IPREF deals with private networks, there is no intention to
-   communicate directly with 'public' hosts, i.e. hosts with addresses
+   communicate directly with 'public' hosts, i.e.  hosts with addresses
    on the _third_ network.  There is no need to.  These 'public' hosts
+
+
+
+Augustyn                 Expires 10 August 2023                 [Page 3]
+
+Internet-Draft               IPREF Framework               February 2023
+
+
    normally reside on private networks anyway.  They are made available
-   on the 'public' network using techniques such as NAT (Network Address
-   Translation) or filtering.  Since they reside on private networks,
-   they can be reached through IPREF directly without NAT mapping or
-   creating special filters.
+   on the 'public' network using techniques such as NAT or filtering.
+   Since they reside on private networks, they can be reached through
+   IPREF directly without NAT mapping or creating special filters.
 
    In case of IPv6 private networks, local addresses may be globally
    routable.  In spite of that, they may or may not be reachable from
@@ -195,7 +191,7 @@ Internet-Draft               IPREF Framework                January 2023
 2.1.  IPREF Addresses
 
    The references are used in conjunction with standard IP addresses
-   from the third network.  These are typically addresses of gateway
+   from the _third_ network.  These are typically addresses of gateway
    interfaces where the packets arrive at or where they are being sent
    from.  A combination of a _third_ network IP address and the
    reference is called an IPREF address, Figure 1.
@@ -221,9 +217,13 @@ Internet-Draft               IPREF Framework                January 2023
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 4]
+
+
+
+
+Augustyn                 Expires 10 August 2023                 [Page 4]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
 2.2.  Packet Exchange
@@ -234,13 +234,13 @@ Internet-Draft               IPREF Framework                January 2023
    network B has hosts B4, B6, and a gateway GWB.  The gateway connects
    to the same _third_ network as gateway GWA.  Only the gateways are
    aware of, and implement, IPREF processing.  The hosts on both local
-   networks, as well as any networks hosts, routers, or nodes on the
-   _third_ network are standard network devices, unaware of IPREF.  For
-   simplicity, the examples shows the case of IPv4 running on all three
-   networks.  The IP addresses on local networks may overlap but for
-   simplicity are shown as distinct.  Further, for ease of following the
-   example, addresses related to local network A are odd while addresses
-   related to local network B are even.
+   networks, as well as any hosts or routers on the _third_ network are
+   standard network devices, unaware of IPREF.  For simplicity, the
+   examples shows the case of IPv4 running on all three networks.  The
+   IP addresses on local networks may overlap but for simplicity are
+   shown as distinct.  Further, for ease of following the example,
+   addresses related to local network A are odd while addresses related
+   to local network B are even.
 
    Hosts on local network A communicate with hosts on other local
    networks, such as local network B, without knowing the IP addresses
@@ -251,7 +251,7 @@ Internet-Draft               IPREF Framework                January 2023
    feature.  It is possible to avoid such mapping at the cost of making
    local hosts IPREF aware.  That case is not described here as it is
    dramatically simpler to use _encoding_ networks and leave existing
-   hosts as-is without any modifications.
+   hosts as-is, without any modifications.
 
 
 
@@ -277,9 +277,9 @@ Internet-Draft               IPREF Framework                January 2023
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 5]
+Augustyn                 Expires 10 August 2023                 [Page 5]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
                   ╲                   ╲     Encoding Network B: 10.192.0.0/10
@@ -333,9 +333,9 @@ Internet-Draft               IPREF Framework                January 2023
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 6]
+Augustyn                 Expires 10 August 2023                 [Page 6]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
    networks A and B connect to.  In step (3) the packet arrives at
@@ -389,9 +389,9 @@ Internet-Draft               IPREF Framework                January 2023
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 7]
+Augustyn                 Expires 10 August 2023                 [Page 7]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
    In step (5), host B4 sends a response back to host A5.  I reverses
@@ -427,30 +427,30 @@ Internet-Draft               IPREF Framework                January 2023
    is interpreted as 10.128.0.4 at network A.  Neither network knows, or
    cares about, how the references are interpreted outside of their own
    administrative domains.  In cases where interpretation involves
-   changing network protocol, the local gateway must run dual stacks and
-   perform proper repackaging of the packets.  Of course, higher level
-   protocol, such as TCP/UDP, must be compatible for this to be
-   practical.  IPv4 and IPv6 meet this criterion.
+   changing network protocols, the local gateway must run dual stacks
+   and perform proper repackaging of the packets.  Of course, higher
+   level protocols such as TCP/UDP, must be compatible for this to be
+   practical.
 
 2.3.  DNS with IPREF
 
-   Similarly to standard IP, IPREF can operate without DNS (Domain Name
-   System) relying on IPREF addresses manually entered and distributed.
-   For example, an /etc/hosts file could be used for the purpose.  Such
-   use makes sense in certain cases and is available with IPREF the same
-   way as it is with standard IP.  Especially on private networks, the
-   practice of using direct addresses is common even if local domain
-   names are allocated to the hosts.
+   Similarly to standard IP, IPREF can operate without DNS relying on
+   IPREF addresses manually entered and distributed.  For example, an
+   /etc/hosts file could be used for the purpose.  Such use makes sense
+   in certain cases and is available with IPREF the same way as it is
+   with standard IP.  Especially on private networks, the practice of
+   using direct addresses is common even if local DNS names are
+   allocated to the hosts.
 
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 8]
+Augustyn                 Expires 10 August 2023                 [Page 8]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
-   IPREF can take full advantage of DNS.  IPREF addresses are
+   IPREF can also take full advantage of DNS.  IPREF addresses are
    publishable.  When resolving names that render IPREF addresses, local
    resolvers must obtain translation into _encoded_ addresses for
    standard hosts on local networks.  This is the normal case, only
@@ -501,22 +501,22 @@ Internet-Draft               IPREF Framework                January 2023
 
 
 
-Augustyn                  Expires 18 July 2023                  [Page 9]
+Augustyn                 Expires 10 August 2023                 [Page 9]
 
-Internet-Draft               IPREF Framework                January 2023
+Internet-Draft               IPREF Framework               February 2023
 
 
    Local network administrator may decide to publish IPREF addresses of
    some internal hosts via DNS.  The IPREF gateway must be aware which
-   hosts are made available externally and what IPREF address have been
-   assigned to them.  Typically, this is a semi-static configuration
-   which remains stable for long periods of time.  The gateways may
-   query those DNS servers for information periodically or some other
-   mechanism may be employed to pass that information to the IPREF
-   gateways.
+   hosts are made available externally and what IPREF addresses have
+   been assigned to them.  Typically, this is a semi-static
+   configuration which remains stable for long periods of time.  The
+   gateways may query those DNS servers for information periodically or
+   some other mechanism may be employed to pass that information to the
+   IPREF gateways.
 
-   Returning to the packet exchange scenario shown in Figure 3, the
-   IPREF address of host B4 may be published via a public DNS server
+   Returning to the packet exchange example shown in Figure 3, the IPREF
+   address of host B4 may be published via a public DNS server
    maintained by the administrator of local network B.  In that case,
    host A5 may simply use a DNS name of that host and ask local resolver
    to provide the corresponding IP address.  The resolver would query
@@ -527,11 +527,40 @@ Internet-Draft               IPREF Framework                January 2023
 
 3.  IPREF Reference
 
-   text ipref reference
+   An IPREF reference is an unsigned integer 16 octets in size.  Values
+   0-255 are reserved.  Of the reserved values, only one is defined.
+   The value of 0 indicates a null reference, i.e. a reference which is
+   not subject to mapping, rather, it indicates the related IP address
+   should be used directly.
+
+   The registry of reserved reference values should be vested with IANA.
+   For now, these values are listed here until a suitable request to
+   establish such registry is made with IANA.
+
+   References are meaningful only in the context of their local
+   networks.  Local administrators may divide them into fields for any
+   purpose they deem useful.  For example, the fields may reflect
+   different sources of allocations, or provide extra security bits, or
+   provide load balancing options, or provide A/B address ranges etc.
+   The definition of these fields, their values, their use are fully
+   under local administration control.  The peers are unaware of these
+   fields and treat the references as single opaque values.
 
 4.  IPREF Address
 
-   text ipref address
+   An IPREF address is a combination of a layer 3 network address and a
+   reference carried in the same packet.  In notation, a plus sign '+'
+   is used to separate the two components.  For example:
+   198.51.100.11+700 or 2001:db8::abc:11+700.
+
+
+
+
+
+Augustyn                 Expires 10 August 2023                [Page 10]
+
+Internet-Draft               IPREF Framework               February 2023
+
 
 5.  Embedding References in IP Packets
 
@@ -554,13 +583,6 @@ Internet-Draft               IPREF Framework                January 2023
    type and option number, an octet with length, and two octets reserved
    for possible future use while padding to four octet boundary.  The
    source and destination references would then follow.
-
-
-
-Augustyn                  Expires 18 July 2023                 [Page 10]
-
-Internet-Draft               IPREF Framework                January 2023
-
 
    A new option number would be registered with IANA.  Until then,
    experimental option, 30, could be used.  A separate document should
@@ -588,6 +610,14 @@ Internet-Draft               IPREF Framework                January 2023
    record is added.  The order of items is as follows:
 
       UDP header
+
+
+
+Augustyn                 Expires 10 August 2023                [Page 11]
+
+Internet-Draft               IPREF Framework               February 2023
+
+
       Tunnel encapsulation record
       IPREF option
       Packet payload
@@ -609,15 +639,6 @@ Internet-Draft               IPREF Framework                January 2023
 
    text distributing IPREF addresses
 
-
-
-
-
-Augustyn                  Expires 18 July 2023                 [Page 11]
-
-Internet-Draft               IPREF Framework                January 2023
-
-
 6.1.  DNS Records
 
    text dns records
@@ -632,29 +653,84 @@ Internet-Draft               IPREF Framework                January 2023
 
 7.  Related Technologies
 
-   text related technologies
+   It may be useful to describe how IPREF works with related
+   technologies.
 
-8.  Distinct Properties
+   *  IPv4 - IPREF does not replace IPv4, it is an add-on to enhance
+      IPv4 capabilities in the area of address rewriting.  It relies on
+      IPv4 in all other functions of a network protocol.
 
-   text distinct properties
+   *  IPv6 - IPREF does not replace IPv6, it is an add-on to enhance
+      IPv6 capabilities in the area of address rewriting.  It relies on
+      IPv6 in all other functions of a network protocol.
 
-9.  IANA Considerations
 
-   This memo includes no request to IANA.
 
-10.  Security Considerations
+
+
+
+Augustyn                 Expires 10 August 2023                [Page 12]
+
+Internet-Draft               IPREF Framework               February 2023
+
+
+   *  NAT - IPREF is an address rewriting technology but operates
+      differently than NAT.  It operates exclusively at the network
+      layer.  It does not reach to upper layer protocols or lower layer
+      protocols.  For example, there is no manipulation of TCP/UDP
+      ports.  All ports are carried transparently as-is.  IPREF does not
+      conflict with NAT.  In a common configuration, a NAT gateway
+      connects to the _third_ network without any changes.  IPREF may
+      operate in parallel to NAT on the same gateway, or it may operate
+      on another gateway within the local network 'behind NAT'.
+
+   *  VPN - IPREF deals mostly with addressing.  It does not perform
+      typical functions of a VPN and it does not replace it.  It behaves
+      differently.  A typical VPN makes hosts of a local network appear
+      as if members of some other local network.  Hosts subjected to a
+      VPN are managed by that other private networks.  This involves a
+      substantial level of trust between the two private networks.
+      IPREF does not do any of that.  Hosts reachable through IPREF are
+      firmly in their respective private networks and remain managed by
+      their respective administrators.  There is far less trust
+      involved.  There may be cases where IPREF may be deemed sufficient
+      but in general IPREF is not a substitute for a VPN.  IPREF does
+      not conflict with VPNs.  A VPN might use IPREF to establish a VPN
+      connection.
+
+   *  Firewall - IPREF is not a firewall.  While it is true that
+      allocation or lack of allocation of references to local hosts has
+      the effect of blocking or allowing access to them, such function
+      is best vested with a firewall.  IPREF mappers deal with address
+      rewriting, they are not packet filters.  There is no conflict
+      between firewalls and IPREF.  Firewalls might need to be made
+      aware of IPREF to be effective in their mission.
+
+8.  IANA Considerations
+
+   This memo includes no requests to IANA.
+
+9.  Security Considerations
 
    This document should not affect the security of the Internet.
 
-11.  References
+10.  References
 
-11.1.  Normative References
+10.1.  Normative References
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-11.2.  Informative References
+
+
+
+Augustyn                 Expires 10 August 2023                [Page 13]
+
+Internet-Draft               IPREF Framework               February 2023
+
+
+10.2.  Informative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -666,31 +742,6 @@ Internet-Draft               IPREF Framework                January 2023
 
    [exampleRefOrg]
               Organization, "Title", 1984, <http://www.example.com/>.
-
-
-
-Augustyn                  Expires 18 July 2023                 [Page 12]
-
-Internet-Draft               IPREF Framework                January 2023
-
-
-Appendix A.  Appendix 1
-
-   This becomes an Appendix
-
-Acknowledgements
-
-   This template uses extracts from templates written by Pekka Savola,
-   Elwyn Davies and Henrik Levkowetz.
-
-Contributors
-
-   Thanks to all of the contributors.
-
-   Jane Doe
-   Acme
-   Email: jdoe@example.com
-
 
 Author's Address
 
@@ -725,4 +776,9 @@ Author's Address
 
 
 
-Augustyn                  Expires 18 July 2023                 [Page 13]
+
+
+
+
+
+Augustyn                 Expires 10 August 2023                [Page 14]
