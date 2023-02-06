@@ -56,7 +56,8 @@
       </address>
     </author>
 
-    <date year="2023" month="1" day="14"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
+    <date year="2023"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
+    <!--<date year="2023" month="2" day="5"/>--> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
     <!-- On draft subbmission:
          * If only the current year is specified, the current day and month will be used.
          * If the month and year are both specified and are the current ones, the current day will
@@ -401,11 +402,31 @@
     </section>  <!-- ^^Overview^^ -->
 
     <section><name>IPREF Reference</name>
-      <t>text ipref reference</t>
+
+      <t>An IPREF reference is an unsigned integer 16 octets in size. Values 0-255 are reserved. Of the
+        reserved values, only one is defined. The value of 0 indicates a null reference, i.e. a reference
+        which is not subject to mapping, rather, it indicates the related IP address should be used directly.
+      </t>
+      <t>The registry of reserved reference values should be vested with IANA. For now, these values are
+        listed here until a suitable request to establish such registry is made with IANA.
+      </t>
+      <t>References are meaningful only in the context of their local networks. Local administrators may
+        divide them into fields for any purpose they deem useful. For example, the fields may reflect
+        different sources of allocations, or provide extra security bits, or provide load balancing
+        options, or provide A/B address ranges etc. The definition of these fields, their values, their
+        use are fully under local administration control. The peers are unaware of these fields and treat
+        the references as single opaque values.
+      </t>
+
     </section>
 
     <section><name>IPREF Address</name>
-      <t>text ipref address</t>
+
+      <t>An IPREF address is a combination of a layer 3 network address and a reference carried in the
+        same packet. In notation, a plus sign '+' is used to separate the two components. For example:
+        198.51.100.11+700 or 2001:db8::abc:11+700.
+      </t>
+
     </section>
 
     <section><name>Embedding References in IP Packets</name>
@@ -488,7 +509,45 @@
     </section>  <!-- ^^Distributing IPREF Addresses^^ -->
 
     <section><name>Related Technologies</name>
-      <t>text related technologies</t>
+
+      <t>It may be useful to describe how IPREF works with related technologies.
+      </t>
+        <ul spacing="normal">
+          <li>IPv4 - IPREF does not replace IPv4, it is an add-on to enhance IPv4 capabilities
+             in the area of address rewriting. It relies on IPv4 in all other functions of a
+             network protocol.
+          </li>
+          <li>IPv6 - IPREF does not replace IPv6, it is an add-on to enhance IPv6 capabilities
+             in the area of address rewriting. It relies on IPv6 in all other functions of a
+             network protocol.
+          </li>
+          <li>NAT - IPREF is an address rewriting technology but operates differently than NAT. It
+             operates exclusively at the network layer. It does not reach to upper layer protocols
+             or lower layer protocols. For example, there is no manipulation of TCP/UDP ports. All
+             ports are carried transparently as-is. IPREF does not conflict with NAT. In a common
+             configuration, a NAT gateway connects to the <em>third</em> network without any changes.
+             IPREF may operate in parallel to NAT on the same gateway, or it may operate on another
+             gateway within the local network 'behind NAT'.
+          </li>
+          <li>VPN - IPREF deals mostly with addressing. It does not perform typical functions of
+             a VPN and it does not replace it. It behaves differently. A typical VPN makes hosts
+             of a local network appear as if members of some other local network. Hosts subjected
+             to a VPN are managed by that other private networks. This involves a substantial level
+             of trust between the two private networks. IPREF does not do any of that. Hosts
+             reachable through IPREF are firmly in their respective private networks and remain
+             managed by their respective administrators. There is far less trust involved. There
+             may be cases where IPREF may be deemed sufficient but in general IPREF is not a substitute
+             for a VPN. IPREF does not conflict with VPNs. A VPN might use IPREF to establish
+             a VPN connection.
+          </li>
+          <li>Firewall - IPREF is not a firewall. While it is true that allocation or lack of allocation
+             of references to local hosts has the effect of blocking or allowing access to them, such
+             function is best vested with a firewall. IPREF mappers deal with address rewriting, they
+             are not packet filters. There is no conflict between firewalls and IPREF. Firewalls might
+             need to be made aware of IPREF to be effective in their mission.
+          </li>
+        </ul>
+
     </section>
 
     <section><name>Distinct Properties</name>
@@ -498,7 +557,7 @@
     <section anchor="IANA">
     <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
       <name>IANA Considerations</name>
-      <t>This memo includes no request to IANA.</t>
+      <t>This memo includes no requests to IANA.</t>
     </section>
 
     <section anchor="Security">
