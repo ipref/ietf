@@ -597,28 +597,6 @@
           <seriesInfo name="DOI" value="10.17487/RFC2119"/>
         </reference>
 
-        <reference anchor="exampleRefMin">
-        <!-- Example minimum reference -->
-          <front>
-            <title>Title</title>
-            <author initials="Initials" surname="Surname">
-              <organization/>
-            </author>
-            <date year="2006"/>
-          </front>
-        </reference>
-
-        <reference anchor="exampleRefOrg" target="http://www.example.com/">
-        <!-- Example reference written by an organization not a person -->
-          <front>
-            <title>Title</title>
-            <author>
-              <organization>Organization</organization>
-            </author>
-            <date year="1984"/>
-          </front>
-        </reference>
-
       </references>
     </references>
 
