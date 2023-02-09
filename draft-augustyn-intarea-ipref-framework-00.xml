@@ -509,20 +509,19 @@
         <t> Here are some examples of what the records might look like:
         </t>
 
-        <sourcecode name="helloworld.c" type="c" markers="true"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#sourcecode -->
-          <![CDATA[
+        <sourcecode type="dns-rr"> <![CDATA[
     Host-B4     AA      198.51.100.22 + 400
     Host-A5     AA      net-A + 500
     Host-A5     AA      2001:db8::abc:11 + 700
-          ]]>
-        </sourcecode>
+    Host-A5     TXT     "AA net-A + 500"
+        ]]> </sourcecode>
 
-        <t>The IP portion may be provided in direct form or as a domain name. The format for the reference
+        <t>The IP portion may be provided numerically or as a domain name. The format for the reference
           would allow unsigned decimal integers as well as unsigned hex integers. Other formats maybe be
           defined as well.
         </t>
         <t>The definition of the new resource record, its use, notation, and registration with IANA should
-          be made in a separate document.
+          be described in a separate document.
         </t>
       </section>
 
@@ -535,10 +534,10 @@
       </section>
 
       <section><name>DNS Agent</name>
-        <t>IPREF mappers must be aware of any local hosts whose IPREF addresses are advertised via DNS.
-          There is a number of existing mechanisms to accomplish this. There is probably no need to
-          define another one. In case, there is some reason for doing so, it would be described in a
-          separate document.
+        <t>A DNS Agent is a component of IPREF mappers that detects if any local hosts are advertised
+          as reachable via IPREF addresses. There is a number of existing mechanisms to accomplish this.
+          There is probably no need to define another one. In case, there is some reason for doing so, it
+          would be described in a separate document.
         </t>
       </section>
 
