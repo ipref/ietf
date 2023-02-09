@@ -179,7 +179,7 @@
         <t>In the notation, a plus sign '+' is used to separate the IP address from the reference. In a packet exchange,
           there is a source IPREF address and a destination IPREF address, thus two references. The destination reference
           is allocated by the destination private network while the source reference is allocated by the source private
-          network. There are no negotiations. Each peer defines their own references and accept peer references as opaque
+          network. There are no negotiations. Each peer defines their own references and accepts peer references as opaque
           values.
         </t>
 
@@ -299,7 +299,7 @@
               ]]> </artwork> </artset>
         </figure>
 
-        <t>In step (5), host B4 sends a response back to host A5. I reverses source and destination addresses and sends a
+        <t>In step (5), host B4 sends a response back to host A5. It reverses source and destination addresses and sends a
           packet to gateway GWB. In step (6), the packet arrives at gateway GWB. The gateway recognizes the destination address
           as an <em>encoded</em> address previously created to represent IPREF address 198.51.100.11+500. It places this IPREF
           address in the packet as the new destination address. The gateway also recognizes the source address as corresponding
@@ -383,7 +383,7 @@
            returned to the querying hosts.
         </t>
         <t>Local network administrator may decide to publish IPREF addresses of some internal hosts via DNS. The
-           IPREF gateway must be aware which hosts are made available externally and what IPREF addresses
+           IPREF gateway must be aware which hosts have been made available externally and what IPREF addresses
            have been assigned to them. Typically, this is a semi-static configuration which remains stable for long
            periods of time. The gateways may query those DNS servers for information periodically or some other
            mechanism may be employed to pass that information to the IPREF gateways.
@@ -560,7 +560,10 @@
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
-      <t>This document should not affect the security of the Internet.</t>
+      <t>This document should not affect the security of the Internet. Documents describing particular
+        pieces of IPREF might. Proper security consideration statements would be included in those
+        documents.
+      </t>
     </section>
 
     <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
