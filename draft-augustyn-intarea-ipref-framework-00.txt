@@ -92,7 +92,7 @@ Table of Contents
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  14
      10.2.  Informative References . . . . . . . . . . . . . . . . .  14
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
 
 1.  Introduction
 
@@ -282,31 +282,31 @@ Augustyn                 Expires 13 August 2023                 [Page 5]
 Internet-Draft               IPREF Framework               February 2023
 
 
-               ╲                   ╲   Encoding Network B: 10.192.0.0/10
+                ╲                   ╲  Encoding Network B: 10.192.0.0/10
                                           Local Network B: 172.18.2.0/24
-                 ╲                   ╲
+                  ╲                   ╲
                                                                 ┌──────┐
-                   ╲                   ╲                   ┃ .66│      │
-                                      ┏━━━━━━━┓            ┠────┤ host │
-                     ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
-                                    ╭─┨ g-way ┠────────────┨    └──────┘
- ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
- │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
- │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
- │  A5  │    ┃                Third Network                ┃ .64│      │
- └──────┘    ┃             ╲                   ╲           ┠────┤ host │
-             ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
-             ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
- ┌──────┐    ┠────────────┨ g-way ┠─╯
- │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
- │ host ├────┨            ┗━━━━━━━┛
- │  A7  │    ┃                   ╲                   ╲
- └──────┘
-                                   ╲                   ╲
-    Local Network A: 172.17.1.0/24
- Encoding Network A: 10.128.0.0/10   ╲                   ╲
+                    ╲                   ╲                  ┃ .66│      │
+                                       ┏━━━━━━━┓           ┠────┤ host │
+                      ╲  198.51.100.22 ┃ IPREF ┃.2         ┃    │  B6  │
+                                     ╭─┨ g-way ┠───────────┨    └──────┘
+   ┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
+   │      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
+   │ host ├────┨          ╲                   ╲            ┃    ┌──────┐
+   │  A5  │    ┃               Third Network               ┃ .64│      │
+   └──────┘    ┃            ╲                   ╲          ┠────┤ host │
+               ┃           ┏━━━━━━━┓ ╎                     ┃    │  B4  │
+               ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
+   ┌──────┐    ┠───────────┨ g-way ┠─╯
+   │      │.77 ┃           ┃  GWA  ┃ 198.51.100.11  ╲
+   │ host ├────┨           ┗━━━━━━━┛
+   │  A7  │    ┃                  ╲                   ╲
+   └──────┘
+                                    ╲                   ╲
+   Local Network A: 172.17.1.0/24
+   Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
-                      Figure 2: private networks
+                        Figure 2: private networks
 
    Let's assume host A5 wants to send a packet to host B4 and receive a
    response.  Prior to the packet exchange, an administrator from local
@@ -349,41 +349,41 @@ Internet-Draft               IPREF Framework               February 2023
    and recognizes the destination address as its own.  It consumes the
    packet and processes it according to the payload.
 
-  Host B4 has IPREF address: 198.51.100.22+400
-          encoded at GWA as: 10.128.0.40
+   Host B4 has IPREF address: 198.51.100.22+400
+           encoded at GWA as: 10.128.0.40
 
-  Host A5 is allocated IPREF address: 198.51.100.11+500
-                   encoded at GWB as: 10.192.0.70
+   Host A5 is allocated IPREF address: 198.51.100.11+500
+                    encoded at GWB as: 10.192.0.70
 
-  Sending a packet from A5 to B4 and receiving a response back at A5:
+   Sending a packet from A5 to B4 and receiving a response back at A5:
 
-        ┌───────────────────┬───────────────────┬─────────┐
- 1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
-        └───────────────────┴───────────────────┴─────────┘
-        ┌───────────────────┬───────────────────┬─────────┐
- 2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
-        └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
+         └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
- 3              GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+  3             GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
- 4              B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+  4             B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
 
                      ┌───────────────────┬───────────────────┬─────────┐
- 5              B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+  5             B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
- 6              GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
+  6             GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
                      └───────────────────┴───────────────────┴─────────┘
-        ┌───────────────────┬───────────────────┬─────────┐
- 7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
-        └───────────────────┴───────────────────┴─────────┘
-        ┌───────────────────┬───────────────────┬─────────┐
- 8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
-        └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
+         ┌───────────────────┬───────────────────┬─────────┐
+  8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
+         └───────────────────┴───────────────────┴─────────┘
 
-                     Figure 3: address rewriting
+                      Figure 3: address rewriting
 
 
 
@@ -761,11 +761,30 @@ Internet-Draft               IPREF Framework               February 2023
 
 10.1.  Normative References
 
+   [RFC791]   Postel, J., "Internet Protocol", RFC 791, September 1981,
+              <https://www.rfc-editor.org/info/rfc791>.
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <https://www.rfc-editor.org/info/rfc1035>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+   [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
+              (IPv6) Specification", STD 86, RFC 8200,
+              DOI 10.17487/RFC8200, July 2017,
+              <https://www.rfc-editor.org/info/rfc8200>.
+
 10.2.  Informative References
+
+
+
+Augustyn                 Expires 13 August 2023                [Page 14]
+
+Internet-Draft               IPREF Framework               February 2023
+
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -781,4 +800,41 @@ Author's Address
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 14]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augustyn                 Expires 13 August 2023                [Page 15]

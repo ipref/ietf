@@ -36,7 +36,7 @@
     wcwidth 0.2.6
     weasyprint 57.2
 -->
-<link href="/usr/src/app/tmp/7e9f1825-c802-4410-a02c-8672e5fa9e6b/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
+<link href="/usr/src/app/tmp/74114d70-eb09-4f47-929e-1709a7077126/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">/*
 
@@ -1506,29 +1506,29 @@ li > p:last-of-type:only-child {
             <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-3.1.1">
 <pre>
 
-               ╲                   ╲   Encoding Network B: 10.192.0.0/10
-                                          Local Network B: 172.18.2.0/24
-                 ╲                   ╲
-                                                                ┌──────┐
-                   ╲                   ╲                   ┃ .66│      │
-                                      ┏━━━━━━━┓            ┠────┤ host │
-                     ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
-                                    ╭─┨ g-way ┠────────────┨    └──────┘
- ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
- │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
- │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
- │  A5  │    ┃                Third Network                ┃ .64│      │
- └──────┘    ┃             ╲                   ╲           ┠────┤ host │
-             ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
-             ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
- ┌──────┐    ┠────────────┨ g-way ┠─╯
- │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
- │ host ├────┨            ┗━━━━━━━┛
- │  A7  │    ┃                   ╲                   ╲
+              ╲                   ╲  Encoding Network B: 10.192.0.0/10
+                                        Local Network B: 172.18.2.0/24
+                ╲                   ╲
+                                                              ┌──────┐
+                  ╲                   ╲                  ┃ .66│      │
+                                     ┏━━━━━━━┓           ┠────┤ host │
+                    ╲  198.51.100.22 ┃ IPREF ┃.2         ┃    │  B6  │
+                                   ╭─┨ g-way ┠───────────┨    └──────┘
+ ┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
+ │      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
+ │ host ├────┨          ╲                   ╲            ┃    ┌──────┐
+ │  A5  │    ┃               Third Network               ┃ .64│      │
+ └──────┘    ┃            ╲                   ╲          ┠────┤ host │
+             ┃           ┏━━━━━━━┓ ╎                     ┃    │  B4  │
+             ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
+ ┌──────┐    ┠───────────┨ g-way ┠─╯
+ │      │.77 ┃           ┃  GWA  ┃ 198.51.100.11  ╲
+ │ host ├────┨           ┗━━━━━━━┛
+ │  A7  │    ┃                  ╲                   ╲
  └──────┘
-                                   ╲                   ╲
-    Local Network A: 172.17.1.0/24
- Encoding Network A: 10.128.0.0/10   ╲                   ╲
+                                  ╲                   ╲
+ Local Network A: 172.17.1.0/24
+ Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
 </pre><a href="#section-2.2-3.1.1" class="pilcrow">¶</a>
 </div>
@@ -1576,19 +1576,19 @@ li > p:last-of-type:only-child {
         ┌───────────────────┬───────────────────┬─────────┐
  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
         └───────────────────┴───────────────────┴─────────┘
-                     ┌───────────────────┬───────────────────┬─────────┐
- 3              GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
-                     └───────────────────┴───────────────────┴─────────┘
-                     ┌───────────────────┬───────────────────┬─────────┐
- 4              B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
-                     └───────────────────┴───────────────────┴─────────┘
+                    ┌───────────────────┬───────────────────┬─────────┐
+ 3             GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+                    └───────────────────┴───────────────────┴─────────┘
+                    ┌───────────────────┬───────────────────┬─────────┐
+ 4             B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+                    └───────────────────┴───────────────────┴─────────┘
 
-                     ┌───────────────────┬───────────────────┬─────────┐
- 5              B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
-                     └───────────────────┴───────────────────┴─────────┘
-                     ┌───────────────────┬───────────────────┬─────────┐
- 6              GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
-                     └───────────────────┴───────────────────┴─────────┘
+                    ┌───────────────────┬───────────────────┬─────────┐
+ 5             B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+                    └───────────────────┴───────────────────┴─────────┘
+                    ┌───────────────────┬───────────────────┬─────────┐
+ 6             GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
+                    └───────────────────┴───────────────────┴─────────┘
         ┌───────────────────┬───────────────────┬─────────┐
  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
         └───────────────────┴───────────────────┴─────────┘
@@ -1904,9 +1904,21 @@ li > p:last-of-type:only-child {
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC791">[RFC791]</dt>
+        <dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Protocol"</span>, <span class="seriesInfo">RFC 791</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc791">https://www.rfc-editor.org/info/rfc791</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC1035">[RFC1035]</dt>
+        <dd>
+<span class="refAuthor">Mockapetris, P.</span>, <span class="refTitle">"Domain names - implementation and specification"</span>, <span class="seriesInfo">STD 13</span>, <span class="seriesInfo">RFC 1035</span>, <span class="seriesInfo">DOI 10.17487/RFC1035</span>, <time datetime="1987-11" class="refDate">November 1987</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc1035">https://www.rfc-editor.org/info/rfc1035</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8200">[RFC8200]</dt>
+        <dd>
+<span class="refAuthor">Deering, S.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8200">https://www.rfc-editor.org/info/rfc8200</a>&gt;</span>. </dd>
 <dd class="break"></dd></dl>
 </section>
 <section id="section-10.2">
