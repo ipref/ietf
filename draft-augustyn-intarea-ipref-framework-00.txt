@@ -92,7 +92,7 @@ Table of Contents
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  14
      10.2.  Informative References . . . . . . . . . . . . . . . . .  14
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -656,15 +656,15 @@ Internet-Draft               IPREF Framework               February 2023
 
    Here are some examples of what the records might look like:
 
-   <CODE BEGINS> file "helloworld.c"
-
        Host-B4     AA      198.51.100.22 + 400
        Host-A5     AA      net-A + 500
        Host-A5     AA      2001:db8::abc:11 + 700
+       Host-A5     TXT     "AA net-A + 500"
 
-   <CODE ENDS>
-
-
+   The IP portion may be provided numerically or as a domain name.  The
+   format for the reference would allow unsigned decimal integers as
+   well as unsigned hex integers.  Other formats maybe be defined as
+   well.
 
 
 
@@ -674,13 +674,8 @@ Augustyn                 Expires 13 August 2023                [Page 12]
 Internet-Draft               IPREF Framework               February 2023
 
 
-   The IP portion may be provided in direct form or as a domain name.
-   The format for the reference would allow unsigned decimal integers as
-   well as unsigned hex integers.  Other formats maybe be defined as
-   well.
-
    The definition of the new resource record, its use, notation, and
-   registration with IANA should be made in a separate document.
+   registration with IANA should be described in a separate document.
 
 6.2.  Local Network Resolver
 
@@ -692,11 +687,11 @@ Internet-Draft               IPREF Framework               February 2023
 
 6.3.  DNS Agent
 
-   IPREF mappers must be aware of any local hosts whose IPREF addresses
-   are advertised via DNS.  There is a number of existing mechanisms to
-   accomplish this.  There is probably no need to define another one.
-   In case, there is some reason for doing so, it would be described in
-   a separate document.
+   A DNS Agent is a component of IPREF mappers that detects if any local
+   hosts are advertised as reachable via IPREF addresses.  There is a
+   number of existing mechanisms to accomplish this.  There is probably
+   no need to define another one.  In case, there is some reason for
+   doing so, it would be described in a separate document.
 
 7.  Related Technologies
 
@@ -722,6 +717,11 @@ Internet-Draft               IPREF Framework               February 2023
       may operate on another gateway within the local network 'behind
       NAT'.
 
+   *  VPN - IPREF deals mostly with addressing.  It does not perform
+      typical functions of a VPN and it does not replace it.  It behaves
+      differently.  A typical VPN makes hosts of a local network appear
+      as if members of some other local network.  Hosts subjected to a
+      VPN are managed by that other private networks.  This involves a
 
 
 
@@ -730,11 +730,6 @@ Augustyn                 Expires 13 August 2023                [Page 13]
 Internet-Draft               IPREF Framework               February 2023
 
 
-   *  VPN - IPREF deals mostly with addressing.  It does not perform
-      typical functions of a VPN and it does not replace it.  It behaves
-      differently.  A typical VPN makes hosts of a local network appear
-      as if members of some other local network.  Hosts subjected to a
-      VPN are managed by that other private networks.  This involves a
       substantial level of trust between the two private networks.
       IPREF does not do any of that.  Hosts reachable through IPREF are
       firmly in their respective private networks and remain managed by
@@ -777,15 +772,6 @@ Internet-Draft               IPREF Framework               February 2023
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-
-
-
-
-Augustyn                 Expires 13 August 2023                [Page 14]
-
-Internet-Draft               IPREF Framework               February 2023
-
-
 Author's Address
 
    Waldemar Augustyn (editor)
@@ -795,46 +781,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Augustyn                 Expires 13 August 2023                [Page 15]
+Augustyn                 Expires 13 August 2023                [Page 14]

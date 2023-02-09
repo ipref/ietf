@@ -36,7 +36,7 @@
     wcwidth 0.2.6
     weasyprint 57.2
 -->
-<link href="/usr/src/app/tmp/f098ef74-2157-4183-809a-4a3f9e9d1ad2/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
+<link href="/usr/src/app/tmp/7e9f1825-c802-4410-a02c-8672e5fa9e6b/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">/*
 
@@ -1802,16 +1802,19 @@ li > p:last-of-type:only-child {
           type has not been registered yet. Until such time, a TXT record may be used. The TXT record
           simply holds a textual representation of an AA record.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2"> Here are some examples of what the records might look like:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
-<div class="lang-c sourcecode" id="section-6.1-3">
-<pre>&lt;CODE BEGINS&gt;
-
-&lt;CODE ENDS&gt;</pre><a href="#section-6.1-3" class="pilcrow">¶</a>
+<div class="lang-dns-rr sourcecode" id="section-6.1-3">
+<pre>
+    Host-B4     AA      198.51.100.22 + 400
+    Host-A5     AA      net-A + 500
+    Host-A5     AA      2001:db8::abc:11 + 700
+    Host-A5     TXT     "AA net-A + 500"
+</pre><a href="#section-6.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-4">The IP portion may be provided in direct form or as a domain name. The format for the reference
+<p id="section-6.1-4">The IP portion may be provided numerically or as a domain name. The format for the reference
           would allow unsigned decimal integers as well as unsigned hex integers. Other formats maybe be
           defined as well.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.1-5">The definition of the new resource record, its use, notation, and registration with IANA should
-          be made in a separate document.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+          be described in a separate document.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 </section>
 <section id="section-6.2">
         <h3 id="name-local-network-resolver">
@@ -1826,10 +1829,10 @@ li > p:last-of-type:only-child {
         <h3 id="name-dns-agent">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-dns-agent" class="section-name selfRef">DNS Agent</a>
         </h3>
-<p id="section-6.3-1">IPREF mappers must be aware of any local hosts whose IPREF addresses are advertised via DNS.
-          There is a number of existing mechanisms to accomplish this. There is probably no need to
-          define another one. In case, there is some reason for doing so, it would be described in a
-          separate document.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">A DNS Agent is a component of IPREF mappers that detects if any local hosts are advertised
+          as reachable via IPREF addresses. There is a number of existing mechanisms to accomplish this.
+          There is probably no need to define another one. In case, there is some reason for doing so, it
+          would be described in a separate document.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-7">
