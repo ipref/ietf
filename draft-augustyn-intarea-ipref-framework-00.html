@@ -36,7 +36,7 @@
     wcwidth 0.2.6
     weasyprint 57.2
 -->
-<link href="/usr/src/app/tmp/ad3734c6-480e-4d28-9017-5dd552e58092/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
+<link href="/usr/src/app/tmp/f098ef74-2157-4183-809a-4a3f9e9d1ad2/draft-augustyn-intarea-ipref-framework-00.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">/*
 
@@ -1214,7 +1214,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Augustyn</td>
-<td class="center">Expires 10 August 2023</td>
+<td class="center">Expires 13 August 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1227,12 +1227,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-augustyn-intarea-ipref-framework-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-02-06" class="published">6 February 2023</time>
+<time datetime="2023-02-09" class="published">9 February 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-10">10 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-08-13">13 August 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1270,7 +1270,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1423,7 +1423,7 @@ li > p:last-of-type:only-child {
         </h3>
 <p id="section-1.2-1">IPREF - short name referring to the technology described in this document, pronounced I-P-REF<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2"><em>third</em> network - network connecting communicating private networks, e.g.: the Internet<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3"><em>encoding</em> network - network representing hosts on peer private network<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-3"><em>encoding</em> network - network representing hosts on peer private networks<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1477,7 +1477,7 @@ li > p:last-of-type:only-child {
 <p id="section-2.1-3">In the notation, a plus sign '+' is used to separate the IP address from the reference. In a packet exchange,
           there is a source IPREF address and a destination IPREF address, thus two references. The destination reference
           is allocated by the destination private network while the source reference is allocated by the source private
-          network. There are no negotiations. Each peer defines their own references and accept peer references as opaque
+          network. There are no negotiations. Each peer defines their own references and accepts peer references as opaque
           values.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.2">
@@ -1506,29 +1506,29 @@ li > p:last-of-type:only-child {
             <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-3.1.1">
 <pre>
 
-                  ╲                   ╲     Encoding Network B: 10.192.0.0/10
-                                               Local Network B: 172.18.2.0/24
-                    ╲                   ╲
-                                                                   ┌──────┐
-                      ╲                   ╲                   ┃ .66│      │
-                                         ┏━━━━━━━┓            ┠────┤ host │
-                        ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
-                                       ╭─┨ g-way ┠────────────┨    └──────┘
-    ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
-    │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
-    │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
-    │  A5  │    ┃                Third Network                ┃ .64│      │
-    └──────┘    ┃             ╲                   ╲           ┠────┤ host │
-                ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
-                ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
-    ┌──────┐    ┠────────────┨ g-way ┠─╯
-    │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
-    │ host ├────┨            ┗━━━━━━━┛
-    │  A7  │    ┃                   ╲                   ╲
-    └──────┘
-                                      ╲                   ╲
-     Local Network A: 172.17.1.0/24
-  Encoding Network A: 10.128.0.0/10     ╲                   ╲
+               ╲                   ╲   Encoding Network B: 10.192.0.0/10
+                                          Local Network B: 172.18.2.0/24
+                 ╲                   ╲
+                                                                ┌──────┐
+                   ╲                   ╲                   ┃ .66│      │
+                                      ┏━━━━━━━┓            ┠────┤ host │
+                     ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
+                                    ╭─┨ g-way ┠────────────┨    └──────┘
+ ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
+ │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
+ │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
+ │  A5  │    ┃                Third Network                ┃ .64│      │
+ └──────┘    ┃             ╲                   ╲           ┠────┤ host │
+             ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
+             ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
+ ┌──────┐    ┠────────────┨ g-way ┠─╯
+ │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
+ │ host ├────┨            ┗━━━━━━━┛
+ │  A7  │    ┃                   ╲                   ╲
+ └──────┘
+                                   ╲                   ╲
+    Local Network A: 172.17.1.0/24
+ Encoding Network A: 10.128.0.0/10   ╲                   ╲
 
 </pre><a href="#section-2.2-3.1.1" class="pilcrow">¶</a>
 </div>
@@ -1570,31 +1570,31 @@ li > p:last-of-type:only-child {
 
   Sending a packet from A5 to B4 and receiving a response back at A5:
 
-         ┌───────────────────┬───────────────────┬─────────┐
-  1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  3                  GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  4                  B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 3              GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 4              B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
 
-                          ┌───────────────────┬───────────────────┬─────────┐
-  5                  B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  6                  GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 5              B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 6              GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
 </pre><a href="#section-2.2-6.1.1" class="pilcrow">¶</a>
 </div>
 </div>
@@ -1602,7 +1602,7 @@ li > p:last-of-type:only-child {
 <a href="#name-address-rewriting" class="selfRef">address rewriting</a>
           </figcaption></figure>
 </div>
-<p id="section-2.2-7">In step (5), host B4 sends a response back to host A5. I reverses source and destination addresses and sends a
+<p id="section-2.2-7">In step (5), host B4 sends a response back to host A5. It reverses source and destination addresses and sends a
           packet to gateway GWB. In step (6), the packet arrives at gateway GWB. The gateway recognizes the destination address
           as an <em>encoded</em> address previously created to represent IPREF address 198.51.100.11+500. It places this IPREF
           address in the packet as the new destination address. The gateway also recognizes the source address as corresponding
@@ -1622,7 +1622,7 @@ li > p:last-of-type:only-child {
           interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
           knows, or cares about, how the references are interpreted outside of their own administrative domains. In cases
           where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
-          repackaging of the packets. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
+          repackaging of the payload. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
           practical.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.3">
@@ -1685,7 +1685,7 @@ li > p:last-of-type:only-child {
            allocate one on the fly if mapping is not available. The resulting <em>encoded</em> IP address is then
            returned to the querying hosts.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.3-5">Local network administrator may decide to publish IPREF addresses of some internal hosts via DNS. The
-           IPREF gateway must be aware which hosts are made available externally and what IPREF addresses
+           IPREF gateway must be aware which hosts have been made available externally and what IPREF addresses
            have been assigned to them. Typically, this is a semi-static configuration which remains stable for long
            periods of time. The gateways may query those DNS servers for information periodically or some other
            mechanism may be employed to pass that information to the IPREF gateways.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
@@ -1719,7 +1719,7 @@ li > p:last-of-type:only-child {
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-ipref-address-2" class="section-name selfRef">IPREF Address</a>
       </h2>
 <p id="section-4-1">An IPREF address is a combination of a layer 3 network address and a reference carried in the
-        same packet. In notation, a plus sign '+' is used to separate the two components. For example:
+        same packet. In notation, a plus sign '+' separates the two components. For example:
         198.51.100.11+700 or 2001:db8::abc:11+700.<a href="#section-4-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5">
@@ -1788,47 +1788,72 @@ li > p:last-of-type:only-child {
       <h2 id="name-distributing-ipref-addresse">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-distributing-ipref-addresse" class="section-name selfRef">Distributing IPREF Addresses</a>
       </h2>
-<p id="section-6-1">text distributing IPREF addresses<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">IPREF addresses can be distributed via DNS or possibly other name resolution systems. In this
+        document only the case of DNS is described.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses consist
+        of two components which must be considered as a single address entity. It is not possibly to
+        separate references from their related <em>third</em> network IP addresses. For that reason, there
+        is a need for a new type of a resource record.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <section id="section-6.1">
         <h3 id="name-dns-records">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-dns-records" class="section-name selfRef">DNS Records</a>
         </h3>
-<p id="section-6.1-1">text dns records<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">IPREF addresses are published using new resource record tentatively called AA. This record
+          type has not been registered yet. Until such time, a TXT record may be used. The TXT record
+          simply holds a textual representation of an AA record.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2"> Here are some examples of what the records might look like:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<div class="lang-c sourcecode" id="section-6.1-3">
+<pre>&lt;CODE BEGINS&gt;
+
+&lt;CODE ENDS&gt;</pre><a href="#section-6.1-3" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1-4">The IP portion may be provided in direct form or as a domain name. The format for the reference
+          would allow unsigned decimal integers as well as unsigned hex integers. Other formats maybe be
+          defined as well.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">The definition of the new resource record, its use, notation, and registration with IANA should
+          be made in a separate document.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 </section>
 <section id="section-6.2">
         <h3 id="name-local-network-resolver">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-local-network-resolver" class="section-name selfRef">Local Network Resolver</a>
         </h3>
-<p id="section-6.2-1">text local network resolver<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">Local network resolver must provide capability to replace IPREF addresses with IP addresses from
+         <em>encoded</em> network in consultation with IPREF mappers. It's not clear if the details may be left
+         to implementations or whether some sort of an exchange protocol needs to be defined. If so, a
+         separate document would describe it.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-6.3">
         <h3 id="name-dns-agent">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-dns-agent" class="section-name selfRef">DNS Agent</a>
         </h3>
-<p id="section-6.3-1">text dns agent<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">IPREF mappers must be aware of any local hosts whose IPREF addresses are advertised via DNS.
+          There is a number of existing mechanisms to accomplish this. There is probably no need to
+          define another one. In case, there is some reason for doing so, it would be described in a
+          separate document.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-7">
       <h2 id="name-related-technologies">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-related-technologies" class="section-name selfRef">Related Technologies</a>
       </h2>
-<p id="section-7-1">It may be useful to describe how IPREF works with related technologies.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">IPREF works well with related technologies. It does not create conflicts and it does
+        not attempt to step on their functionality.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-2.1">IPv4 - IPREF does not replace IPv4, it is an add-on to enhance IPv4 capabilities
-             in the area of address rewriting. It relies on IPv4 in all other functions of a
-             network protocol.<a href="#section-7-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-2.1">IPv4 - IPREF does not replace IPv4, it is an optional add-on to enhance IPv4
+             capabilities in the area of address rewriting. It relies on IPv4 in all other
+             functions of a network protocol.<a href="#section-7-2.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-7-2.2">IPv6 - IPREF does not replace IPv6, it is an add-on to enhance IPv6 capabilities
-             in the area of address rewriting. It relies on IPv6 in all other functions of a
-             network protocol.<a href="#section-7-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-2.2">IPv6 - IPREF does not replace IPv6, it is an optional add-on to enhance IPv6
+             capabilities in the area of address rewriting. It relies on IPv6 in all other
+             functions of a network protocol.<a href="#section-7-2.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-7-2.3">NAT - IPREF is an address rewriting technology but operates differently than NAT. It
              operates exclusively at the network layer. It does not reach to upper layer protocols
              or lower layer protocols. For example, there is no manipulation of TCP/UDP ports. All
-             ports are carried transparently as-is. IPREF does not conflict with NAT. In a common
-             configuration, a NAT gateway connects to the <em>third</em> network without any changes.
-             IPREF may operate in parallel to NAT on the same gateway, or it may operate on another
-             gateway within the local network 'behind NAT'.<a href="#section-7-2.3" class="pilcrow">¶</a>
+             layer 4 port fields are carried transparently as-is. IPREF does not conflict with NAT.
+             In a common configuration, a NAT gateway connects to the <em>third</em> network without
+             any changes. IPREF may operate in parallel to NAT on the same gateway, or it may operate
+             on another gateway within the local network 'behind NAT'.<a href="#section-7-2.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-7-2.4">VPN - IPREF deals mostly with addressing. It does not perform typical functions of
              a VPN and it does not replace it. It behaves differently. A typical VPN makes hosts
@@ -1836,16 +1861,16 @@ li > p:last-of-type:only-child {
              to a VPN are managed by that other private networks. This involves a substantial level
              of trust between the two private networks. IPREF does not do any of that. Hosts
              reachable through IPREF are firmly in their respective private networks and remain
-             managed by their respective administrators. There is far less trust involved. There
-             may be cases where IPREF may be deemed sufficient but in general IPREF is not a substitute
+             managed by their respective administrators. There may be cases where IPREF may be
+             deemed sufficient for a particular purpose but in general IPREF is not a substitute
              for a VPN. IPREF does not conflict with VPNs. A VPN might use IPREF to establish
              a VPN connection.<a href="#section-7-2.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-7-2.5">Firewall - IPREF is not a firewall. While it is true that allocation or lack of allocation
-             of references to local hosts has the effect of blocking or allowing access to them, such
-             function is best vested with a firewall. IPREF mappers deal with address rewriting, they
-             are not packet filters. There is no conflict between firewalls and IPREF. Firewalls might
-             need to be made aware of IPREF to be effective in their mission.<a href="#section-7-2.5" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-2.5">Firewall - IPREF is not a firewall. While allocation or lack of allocation of references
+             to local hosts has the effect of blocking or allowing access to them, blocking policy is
+             best vested with a firewall. IPREF mappers deal with address rewriting, they are not packet
+             filters. There is no conflict between firewalls and IPREF. Firewalls might need to be made
+             aware of IPREF to be effective in their mission.<a href="#section-7-2.5" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
@@ -1862,7 +1887,9 @@ li > p:last-of-type:only-child {
       <h2 id="name-security-considerations">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">This document should not affect the security of the Internet.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-1">This document should not affect the security of the Internet. Documents describing particular
+        pieces of IPREF might. Proper security consideration statements would be included in those
+        documents.<a href="#section-9-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-10">
@@ -1885,16 +1912,8 @@ li > p:last-of-type:only-child {
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
-        <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="exampleRefMin">[exampleRefMin]</dt>
-        <dd>
-<span class="refAuthor">Surname, Initials.</span>, <span class="refTitle">"Title"</span>, <time datetime="2006" class="refDate">2006</time>. </dd>
-<dd class="break"></dd>
-<dt id="exampleRefOrg">[exampleRefOrg]</dt>
       <dd>
-<span class="refAuthor">Organization</span>, <span class="refTitle">"Title"</span>, <time datetime="1984" class="refDate">1984</time>, <span>&lt;<a href="http://www.example.com/">http://www.example.com/</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

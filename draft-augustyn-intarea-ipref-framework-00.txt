@@ -3,9 +3,9 @@
 
 
 Internet Engineering Task Force                         W. Augustyn, Ed.
-Internet-Draft                                           6 February 2023
+Internet-Draft                                           9 February 2023
 Intended status: Informational                                          
-Expires: 10 August 2023
+Expires: 13 August 2023
 
 
           Framework for IP Addressing with References (IPREF)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 August 2023.
+   This Internet-Draft will expire on 13 August 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 1]
+Augustyn                 Expires 13 August 2023                 [Page 1]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -84,15 +84,15 @@ Table of Contents
      5.3.  UDP Tunnel  . . . . . . . . . . . . . . . . . . . . . . .  11
    6.  Distributing IPREF Addresses  . . . . . . . . . . . . . . . .  12
      6.1.  DNS Records . . . . . . . . . . . . . . . . . . . . . . .  12
-     6.2.  Local Network Resolver  . . . . . . . . . . . . . . . . .  12
-     6.3.  DNS Agent . . . . . . . . . . . . . . . . . . . . . . . .  12
-   7.  Related Technologies  . . . . . . . . . . . . . . . . . . . .  12
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
+     6.2.  Local Network Resolver  . . . . . . . . . . . . . . . . .  13
+     6.3.  DNS Agent . . . . . . . . . . . . . . . . . . . . . . . .  13
+   7.  Related Technologies  . . . . . . . . . . . . . . . . . . . .  13
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  14
      10.2.  Informative References . . . . . . . . . . . . . . . . .  14
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 2]
+Augustyn                 Expires 13 August 2023                 [Page 2]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -145,7 +145,7 @@ Internet-Draft               IPREF Framework               February 2023
    e.g.: the Internet
 
    _encoding_ network - network representing hosts on peer private
-   network
+   networks
 
 2.  Overview
 
@@ -165,7 +165,7 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 3]
+Augustyn                 Expires 13 August 2023                 [Page 3]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -210,7 +210,7 @@ Internet-Draft               IPREF Framework               February 2023
    destination reference is allocated by the destination private network
    while the source reference is allocated by the source private
    network.  There are no negotiations.  Each peer defines their own
-   references and accept peer references as opaque values.
+   references and accepts peer references as opaque values.
 
 
 
@@ -221,7 +221,7 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 4]
+Augustyn                 Expires 13 August 2023                 [Page 4]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -277,34 +277,34 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 5]
+Augustyn                 Expires 13 August 2023                 [Page 5]
 
 Internet-Draft               IPREF Framework               February 2023
 
 
-                  ╲                   ╲     Encoding Network B: 10.192.0.0/10
-                                               Local Network B: 172.18.2.0/24
-                    ╲                   ╲
-                                                                   ┌──────┐
-                      ╲                   ╲                   ┃ .66│      │
-                                         ┏━━━━━━━┓            ┠────┤ host │
-                        ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
-                                       ╭─┨ g-way ┠────────────┨    └──────┘
-    ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
-    │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
-    │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
-    │  A5  │    ┃                Third Network                ┃ .64│      │
-    └──────┘    ┃             ╲                   ╲           ┠────┤ host │
-                ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
-                ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
-    ┌──────┐    ┠────────────┨ g-way ┠─╯
-    │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
-    │ host ├────┨            ┗━━━━━━━┛
-    │  A7  │    ┃                   ╲                   ╲
-    └──────┘
-                                      ╲                   ╲
-     Local Network A: 172.17.1.0/24
-  Encoding Network A: 10.128.0.0/10     ╲                   ╲
+               ╲                   ╲   Encoding Network B: 10.192.0.0/10
+                                          Local Network B: 172.18.2.0/24
+                 ╲                   ╲
+                                                                ┌──────┐
+                   ╲                   ╲                   ┃ .66│      │
+                                      ┏━━━━━━━┓            ┠────┤ host │
+                     ╲  198.51.100.22 ┃ IPREF ┃.2          ┃    │  B6  │
+                                    ╭─┨ g-way ┠────────────┨    └──────┘
+ ┌──────┐              ╲            ╎ ┃  GWB  ┃            ┃
+ │      │.75 ┃                      ╎ ┗━━━━━━━┛            ┃
+ │ host ├────┨           ╲                   ╲             ┃    ┌──────┐
+ │  A5  │    ┃                Third Network                ┃ .64│      │
+ └──────┘    ┃             ╲                   ╲           ┠────┤ host │
+             ┃            ┏━━━━━━━┓ ╎                      ┃    │  B4  │
+             ┃         .1 ┃ IPREF ┃ ╎            ╲              └──────┘
+ ┌──────┐    ┠────────────┨ g-way ┠─╯
+ │      │.77 ┃            ┃  GWA  ┃ 198.51.100.11  ╲
+ │ host ├────┨            ┗━━━━━━━┛
+ │  A7  │    ┃                   ╲                   ╲
+ └──────┘
+                                   ╲                   ╲
+    Local Network A: 172.17.1.0/24
+ Encoding Network A: 10.128.0.0/10   ╲                   ╲
 
                       Figure 2: private networks
 
@@ -333,7 +333,7 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 6]
+Augustyn                 Expires 13 August 2023                 [Page 6]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -357,31 +357,31 @@ Internet-Draft               IPREF Framework               February 2023
 
   Sending a packet from A5 to B4 and receiving a response back at A5:
 
-         ┌───────────────────┬───────────────────┬─────────┐
-  1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  3                  GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  4                  B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 3              GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 4              B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
 
-                          ┌───────────────────┬───────────────────┬─────────┐
-  5                  B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-                          ┌───────────────────┬───────────────────┬─────────┐
-  6                  GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
-                          └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 5              B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+                     ┌───────────────────┬───────────────────┬─────────┐
+ 6              GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
+                     └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
+        ┌───────────────────┬───────────────────┬─────────┐
+ 8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
+        └───────────────────┴───────────────────┴─────────┘
 
                      Figure 3: address rewriting
 
@@ -389,12 +389,12 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 7]
+Augustyn                 Expires 13 August 2023                 [Page 7]
 
 Internet-Draft               IPREF Framework               February 2023
 
 
-   In step (5), host B4 sends a response back to host A5.  I reverses
+   In step (5), host B4 sends a response back to host A5.  It reverses
    source and destination addresses and sends a packet to gateway GWB.
    In step (6), the packet arrives at gateway GWB.  The gateway
    recognizes the destination address as an _encoded_ address previously
@@ -428,7 +428,7 @@ Internet-Draft               IPREF Framework               February 2023
    cares about, how the references are interpreted outside of their own
    administrative domains.  In cases where interpretation involves
    changing network protocols, the local gateway must run dual stacks
-   and perform proper repackaging of the packets.  Of course, higher
+   and perform proper repackaging of the payload.  Of course, higher
    level protocols such as TCP/UDP, must be compatible for this to be
    practical.
 
@@ -445,7 +445,7 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 8]
+Augustyn                 Expires 13 August 2023                 [Page 8]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -501,15 +501,15 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                 [Page 9]
+Augustyn                 Expires 13 August 2023                 [Page 9]
 
 Internet-Draft               IPREF Framework               February 2023
 
 
    Local network administrator may decide to publish IPREF addresses of
    some internal hosts via DNS.  The IPREF gateway must be aware which
-   hosts are made available externally and what IPREF addresses have
-   been assigned to them.  Typically, this is a semi-static
+   hosts have been made available externally and what IPREF addresses
+   have been assigned to them.  Typically, this is a semi-static
    configuration which remains stable for long periods of time.  The
    gateways may query those DNS servers for information periodically or
    some other mechanism may be employed to pass that information to the
@@ -550,14 +550,14 @@ Internet-Draft               IPREF Framework               February 2023
 
    An IPREF address is a combination of a layer 3 network address and a
    reference carried in the same packet.  In notation, a plus sign '+'
-   is used to separate the two components.  For example:
-   198.51.100.11+700 or 2001:db8::abc:11+700.
+   separates the two components.  For example: 198.51.100.11+700 or
+   2001:db8::abc:11+700.
 
 
 
 
 
-Augustyn                 Expires 10 August 2023                [Page 10]
+Augustyn                 Expires 13 August 2023                [Page 10]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -613,7 +613,7 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 10 August 2023                [Page 11]
+Augustyn                 Expires 13 August 2023                [Page 11]
 
 Internet-Draft               IPREF Framework               February 2023
 
@@ -637,52 +637,98 @@ Internet-Draft               IPREF Framework               February 2023
 
 6.  Distributing IPREF Addresses
 
-   text distributing IPREF addresses
+   IPREF addresses can be distributed via DNS or possibly other name
+   resolution systems.  In this document only the case of DNS is
+   described.
+
+   IPREF addresses are unlike well known IPv4 addresses or IPv6
+   addresses.  These addresses consist of two components which must be
+   considered as a single address entity.  It is not possibly to
+   separate references from their related _third_ network IP addresses.
+   For that reason, there is a need for a new type of a resource record.
 
 6.1.  DNS Records
 
-   text dns records
+   IPREF addresses are published using new resource record tentatively
+   called AA.  This record type has not been registered yet.  Until such
+   time, a TXT record may be used.  The TXT record simply holds a
+   textual representation of an AA record.
 
-6.2.  Local Network Resolver
+   Here are some examples of what the records might look like:
 
-   text local network resolver
+   <CODE BEGINS> file "helloworld.c"
 
-6.3.  DNS Agent
+       Host-B4     AA      198.51.100.22 + 400
+       Host-A5     AA      net-A + 500
+       Host-A5     AA      2001:db8::abc:11 + 700
 
-   text dns agent
-
-7.  Related Technologies
-
-   It may be useful to describe how IPREF works with related
-   technologies.
-
-   *  IPv4 - IPREF does not replace IPv4, it is an add-on to enhance
-      IPv4 capabilities in the area of address rewriting.  It relies on
-      IPv4 in all other functions of a network protocol.
-
-   *  IPv6 - IPREF does not replace IPv6, it is an add-on to enhance
-      IPv6 capabilities in the area of address rewriting.  It relies on
-      IPv6 in all other functions of a network protocol.
+   <CODE ENDS>
 
 
 
 
 
 
-Augustyn                 Expires 10 August 2023                [Page 12]
+Augustyn                 Expires 13 August 2023                [Page 12]
 
 Internet-Draft               IPREF Framework               February 2023
 
+
+   The IP portion may be provided in direct form or as a domain name.
+   The format for the reference would allow unsigned decimal integers as
+   well as unsigned hex integers.  Other formats maybe be defined as
+   well.
+
+   The definition of the new resource record, its use, notation, and
+   registration with IANA should be made in a separate document.
+
+6.2.  Local Network Resolver
+
+   Local network resolver must provide capability to replace IPREF
+   addresses with IP addresses from _encoded_ network in consultation
+   with IPREF mappers.  It's not clear if the details may be left to
+   implementations or whether some sort of an exchange protocol needs to
+   be defined.  If so, a separate document would describe it.
+
+6.3.  DNS Agent
+
+   IPREF mappers must be aware of any local hosts whose IPREF addresses
+   are advertised via DNS.  There is a number of existing mechanisms to
+   accomplish this.  There is probably no need to define another one.
+   In case, there is some reason for doing so, it would be described in
+   a separate document.
+
+7.  Related Technologies
+
+   IPREF works well with related technologies.  It does not create
+   conflicts and it does not attempt to step on their functionality.
+
+   *  IPv4 - IPREF does not replace IPv4, it is an optional add-on to
+      enhance IPv4 capabilities in the area of address rewriting.  It
+      relies on IPv4 in all other functions of a network protocol.
+
+   *  IPv6 - IPREF does not replace IPv6, it is an optional add-on to
+      enhance IPv6 capabilities in the area of address rewriting.  It
+      relies on IPv6 in all other functions of a network protocol.
 
    *  NAT - IPREF is an address rewriting technology but operates
       differently than NAT.  It operates exclusively at the network
       layer.  It does not reach to upper layer protocols or lower layer
       protocols.  For example, there is no manipulation of TCP/UDP
-      ports.  All ports are carried transparently as-is.  IPREF does not
-      conflict with NAT.  In a common configuration, a NAT gateway
-      connects to the _third_ network without any changes.  IPREF may
-      operate in parallel to NAT on the same gateway, or it may operate
-      on another gateway within the local network 'behind NAT'.
+      ports.  All layer 4 port fields are carried transparently as-is.
+      IPREF does not conflict with NAT.  In a common configuration, a
+      NAT gateway connects to the _third_ network without any changes.
+      IPREF may operate in parallel to NAT on the same gateway, or it
+      may operate on another gateway within the local network 'behind
+      NAT'.
+
+
+
+
+Augustyn                 Expires 13 August 2023                [Page 13]
+
+Internet-Draft               IPREF Framework               February 2023
+
 
    *  VPN - IPREF deals mostly with addressing.  It does not perform
       typical functions of a VPN and it does not replace it.  It behaves
@@ -692,19 +738,18 @@ Internet-Draft               IPREF Framework               February 2023
       substantial level of trust between the two private networks.
       IPREF does not do any of that.  Hosts reachable through IPREF are
       firmly in their respective private networks and remain managed by
-      their respective administrators.  There is far less trust
-      involved.  There may be cases where IPREF may be deemed sufficient
-      but in general IPREF is not a substitute for a VPN.  IPREF does
-      not conflict with VPNs.  A VPN might use IPREF to establish a VPN
-      connection.
+      their respective administrators.  There may be cases where IPREF
+      may be deemed sufficient for a particular purpose but in general
+      IPREF is not a substitute for a VPN.  IPREF does not conflict with
+      VPNs.  A VPN might use IPREF to establish a VPN connection.
 
-   *  Firewall - IPREF is not a firewall.  While it is true that
-      allocation or lack of allocation of references to local hosts has
-      the effect of blocking or allowing access to them, such function
-      is best vested with a firewall.  IPREF mappers deal with address
-      rewriting, they are not packet filters.  There is no conflict
-      between firewalls and IPREF.  Firewalls might need to be made
-      aware of IPREF to be effective in their mission.
+   *  Firewall - IPREF is not a firewall.  While allocation or lack of
+      allocation of references to local hosts has the effect of blocking
+      or allowing access to them, blocking policy is best vested with a
+      firewall.  IPREF mappers deal with address rewriting, they are not
+      packet filters.  There is no conflict between firewalls and IPREF.
+      Firewalls might need to be made aware of IPREF to be effective in
+      their mission.
 
 8.  IANA Considerations
 
@@ -713,6 +758,9 @@ Internet-Draft               IPREF Framework               February 2023
 9.  Security Considerations
 
    This document should not affect the security of the Internet.
+   Documents describing particular pieces of IPREF might.  Proper
+   security consideration statements would be included in those
+   documents.
 
 10.  References
 
@@ -722,14 +770,6 @@ Internet-Draft               IPREF Framework               February 2023
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-
-
-
-Augustyn                 Expires 10 August 2023                [Page 13]
-
-Internet-Draft               IPREF Framework               February 2023
-
-
 10.2.  Informative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -737,11 +777,14 @@ Internet-Draft               IPREF Framework               February 2023
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [exampleRefMin]
-              Surname, Initials., "Title", 2006.
 
-   [exampleRefOrg]
-              Organization, "Title", 1984, <http://www.example.com/>.
+
+
+
+Augustyn                 Expires 13 August 2023                [Page 14]
+
+Internet-Draft               IPREF Framework               February 2023
+
 
 Author's Address
 
@@ -781,4 +824,17 @@ Author's Address
 
 
 
-Augustyn                 Expires 10 August 2023                [Page 14]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augustyn                 Expires 13 August 2023                [Page 15]
