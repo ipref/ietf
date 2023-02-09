@@ -492,18 +492,54 @@
 
     <section><name>Distributing IPREF Addresses</name>
 
-      <t>text distributing IPREF addresses</t>
+      <t>IPREF addresses can be distributed via DNS or possibly other name resolution systems. In this
+        document only the case of DNS is described.
+      </t>
+      <t>IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses consist
+        of two components which must be considered as a single address entity. It is not possibly to
+        separate references from their related <em>third</em> network IP addresses. For that reason, there
+        is a need for a new type of a resource record.
+      </t>
 
       <section><name>DNS Records</name>
-        <t>text dns records</t>
+        <t>IPREF addresses are published using new resource record tentatively called AA. This record
+          type has not been registered yet. Until such time, a TXT record may be used. The TXT record
+          simply holds a textual representation of an AA record.
+        </t>
+        <t> Here are some examples of what the records might look like:
+        </t>
+
+        <sourcecode name="helloworld.c" type="c" markers="true"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#sourcecode -->
+          <![CDATA[
+    Host-B4     AA      198.51.100.22 + 400
+    Host-A5     AA      net-A + 500
+    Host-A5     AA      2001:db8::abc:11 + 700
+          ]]>
+        </sourcecode>
+
+        <t>The IP portion may be provided in direct form or as a domain name. The format for the reference
+          would allow unsigned decimal integers as well as unsigned hex integers. Other formats maybe be
+          defined as well.
+        </t>
+        <t>The definition of the new resource record, its use, notation, and registration with IANA should
+          be made in a separate document.
+        </t>
       </section>
 
       <section><name>Local Network Resolver</name>
-        <t>text local network resolver</t>
+        <t>Local network resolver must provide capability to replace IPREF addresses with IP addresses from
+         <em>encoded</em> network in consultation with IPREF mappers. It's not clear if the details may be left
+         to implementations or whether some sort of an exchange protocol needs to be defined. If so, a
+         separate document would describe it.
+        </t>
       </section>
 
       <section><name>DNS Agent</name>
-        <t>text dns agent</t>
+        <t>IPREF mappers must be aware of any local hosts whose IPREF addresses are advertised via DNS.
+          There is a number of existing mechanisms to accomplish this. There is probably no need to
+          define another one. In case, there is some reason for doing so, it would be described in a
+          separate document.
+        </t>
       </section>
 
     </section>  <!-- ^^Distributing IPREF Addresses^^ -->
