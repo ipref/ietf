@@ -3,13 +3,13 @@
 
 
 Internet Engineering Task Force                         W. Augustyn, Ed.
-Internet-Draft                                           9 February 2023
+Internet-Draft                                          10 February 2023
 Intended status: Informational                                          
-Expires: 13 August 2023
+Expires: 14 August 2023
 
 
-          Framework for IP Addressing with References (IPREF)
-               draft-augustyn-intarea-ipref-framework-00
+                 IP Addressing with References (IPREF)
+                    draft-augustyn-intarea-ipref-00
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 August 2023.
+   This Internet-Draft will expire on 14 August 2023.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 1]
+Augustyn                 Expires 14 August 2023                 [Page 1]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 2]
+Augustyn                 Expires 14 August 2023                 [Page 2]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    This document describes a different way of accessing hosts on private
@@ -165,9 +165,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 3]
+Augustyn                 Expires 14 August 2023                 [Page 3]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    normally reside on private networks anyway.  They are made available
@@ -221,9 +221,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 4]
+Augustyn                 Expires 14 August 2023                 [Page 4]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
 2.2.  Packet Exchange
@@ -277,9 +277,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 5]
+Augustyn                 Expires 14 August 2023                 [Page 5]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
                 ╲                   ╲  Encoding Network B: 10.192.0.0/10
@@ -306,7 +306,7 @@ Internet-Draft               IPREF Framework               February 2023
    Local Network A: 172.17.1.0/24
    Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
-                        Figure 2: private networks
+                         Figure 2: private networks
 
    Let's assume host A5 wants to send a packet to host B4 and receive a
    response.  Prior to the packet exchange, an administrator from local
@@ -333,9 +333,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 6]
+Augustyn                 Expires 14 August 2023                 [Page 6]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    networks A and B connect to.  In step (3) the packet arrives at
@@ -349,49 +349,49 @@ Internet-Draft               IPREF Framework               February 2023
    and recognizes the destination address as its own.  It consumes the
    packet and processes it according to the payload.
 
-   Host B4 has IPREF address: 198.51.100.22+400
-           encoded at GWA as: 10.128.0.40
+     Host B4 has IPREF address: 198.51.100.22+400
+             encoded at GWA as: 10.128.0.40
 
-   Host A5 is allocated IPREF address: 198.51.100.11+500
-                    encoded at GWB as: 10.192.0.70
+     Host A5 is allocated IPREF address: 198.51.100.11+500
+                      encoded at GWB as: 10.192.0.70
 
-   Sending a packet from A5 to B4 and receiving a response back at A5:
+     Sending a packet from A5 to B4 and receiving a response back at A5:
 
-         ┌───────────────────┬───────────────────┬─────────┐
-  1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
-         └───────────────────┴───────────────────┴─────────┘
+          ┌───────────────────┬───────────────────┬─────────┐
+   1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
+          └───────────────────┴───────────────────┴─────────┘
+          ┌───────────────────┬───────────────────┬─────────┐
+   2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
+          └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
-  3             GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
+   3            GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
-  4             B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
+   4            B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
 
                      ┌───────────────────┬───────────────────┬─────────┐
-  5             B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
+   5            B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
                      └───────────────────┴───────────────────┴─────────┘
                      ┌───────────────────┬───────────────────┬─────────┐
-  6             GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
+   6            GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
                      └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
-         ┌───────────────────┬───────────────────┬─────────┐
-  8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
-         └───────────────────┴───────────────────┴─────────┘
+          ┌───────────────────┬───────────────────┬─────────┐
+   7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
+          └───────────────────┴───────────────────┴─────────┘
+          ┌───────────────────┬───────────────────┬─────────┐
+   8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
+          └───────────────────┴───────────────────┴─────────┘
 
-                      Figure 3: address rewriting
-
-
+                        Figure 3: address rewriting
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 7]
+
+
+Augustyn                 Expires 14 August 2023                 [Page 7]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    In step (5), host B4 sends a response back to host A5.  It reverses
@@ -445,9 +445,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 8]
+Augustyn                 Expires 14 August 2023                 [Page 8]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    IPREF can also take full advantage of DNS.  IPREF addresses are
@@ -501,9 +501,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                 [Page 9]
+Augustyn                 Expires 14 August 2023                 [Page 9]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    Local network administrator may decide to publish IPREF addresses of
@@ -557,9 +557,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 10]
+Augustyn                 Expires 14 August 2023                [Page 10]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
 5.  Embedding References in IP Packets
@@ -578,11 +578,11 @@ Internet-Draft               IPREF Framework               February 2023
 
 5.1.  IPv4 Option
 
-   With IPv4, references may be embedded in an IPv4 header option.  It
-   would be a new option type.  It would contain an octet with option
-   type and option number, an octet with length, and two octets reserved
-   for possible future use while padding to four octet boundary.  The
-   source and destination references would then follow.
+   With IPv4, references may be embedded in an IPv4 header option
+   [RFC791].  It would be a new option type.  It would contain an octet
+   with option type and option number, an octet with length, and two
+   octets reserved for possible future use while padding to four octet
+   boundary.  The source and destination references would then follow.
 
    A new option number would be registered with IANA.  Until then,
    experimental option, 30, could be used.  A separate document should
@@ -590,13 +590,13 @@ Internet-Draft               IPREF Framework               February 2023
 
 5.2.  IPv6 Extension Header
 
-   With IPv6, references may be embedded in an IPv6 extension header.
-   It would be a new header type.  It would contain an octet with next
-   header type value, an octet with length, and two octets reserved for
-   possible future use.  This would be followed by four octets of
-   padding to 8 octet boundary.  Padding octets would not be intended
-   for any future use.  The source and destination references would then
-   follow.
+   With IPv6, references may be embedded in an IPv6 extension header
+   [RFC8200].  It would be a new header type.  It would contain an octet
+   with next header type value, an octet with length, and two octets
+   reserved for possible future use.  This would be followed by four
+   octets of padding to 8 octet boundary.  Padding octets would not be
+   intended for any future use.  The source and destination references
+   would then follow.
 
    A new protocol type would be registered with IANA.  Until then,
    experimental protocol, 254, could be used.  A separate document
@@ -613,9 +613,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 11]
+Augustyn                 Expires 14 August 2023                [Page 11]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
       Tunnel encapsulation record
@@ -637,9 +637,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 6.  Distributing IPREF Addresses
 
-   IPREF addresses can be distributed via DNS or possibly other name
-   resolution systems.  In this document only the case of DNS is
-   described.
+   IPREF addresses can be distributed via DNS [RFC1035] or possibly via
+   other name resolution systems.  In this document only the case of DNS
+   is described.
 
    IPREF addresses are unlike well known IPv4 addresses or IPv6
    addresses.  These addresses consist of two components which must be
@@ -669,9 +669,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 12]
+Augustyn                 Expires 14 August 2023                [Page 12]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    The definition of the new resource record, its use, notation, and
@@ -725,9 +725,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 13]
+Augustyn                 Expires 14 August 2023                [Page 13]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
       substantial level of trust between the two private networks.
@@ -781,9 +781,9 @@ Internet-Draft               IPREF Framework               February 2023
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 14]
+Augustyn                 Expires 14 August 2023                [Page 14]
 
-Internet-Draft               IPREF Framework               February 2023
+Internet-Draft    IP Addressing with References (IPREF)    February 2023
 
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -837,4 +837,4 @@ Author's Address
 
 
 
-Augustyn                 Expires 13 August 2023                [Page 15]
+Augustyn                 Expires 14 August 2023                [Page 15]
