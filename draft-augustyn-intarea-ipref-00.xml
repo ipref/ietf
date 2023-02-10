@@ -23,7 +23,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-augustyn-intarea-ipref-framework-00"
+  docName="draft-augustyn-intarea-ipref-00"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -39,10 +39,10 @@
 -->
 
   <front>
-    <title abbrev="IPREF Framework">Framework for IP Addressing with References (IPREF)</title> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#title-4 -->
+    <title>IP Addressing with References (IPREF)</title> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#title-4 -->
     <!--  The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-framework-00"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
+    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-00"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
     <!-- Set value to the name of the draft  -->
 
     <author fullname="Waldemar Augustyn" initials="W" role="editor" surname="Augustyn"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#author -->
