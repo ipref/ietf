@@ -22,7 +22,6 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  category="info"
   docName="draft-augustyn-intarea-ipref-00"
   ipr="trust200902"
   obsoletes=""
@@ -123,10 +122,6 @@
 
       <section anchor="terminology"><name>IPREF Terminology</name>
         <t>IPREF - short name referring to the technology described in this document, pronounced I-P-REF</t>
-        <!--<t><em>ea</em> - encoded address, a native address presented to hosts in lieu of an IPREF address </t>-->
-        <!--<t><em>our</em> - pertaining to IP address, IPREF address, or reference controlled by the local network</t>-->
-        <!--<t><em>ref</em> - IPREF reference</t>-->
-        <!--<t><em>their</em> - pertaining to IP address, IPREF address, or reference controlled by the remote network</t>-->
         <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
         <t><em>encoding</em> network - network representing hosts on peer private networks</t>
       </section>
@@ -148,14 +143,15 @@
         filtering. Since they reside on private networks, they can be reached through IPREF directly without NAT mapping
         or creating special filters.
       </t>
-      <t>In case of IPv6 private networks, local addresses may be globally routable. In spite of that, they may or may
-        not be reachable from peer private networks. IPREF is not concerned with that, it works the same way regardless.
-        Similarly, IPv4 private networks may include hosts with globally routable addresses, it makes no difference.
-        Peer networks still don't know, and don't need to know, what those addresses are and to which protocol they
-        belong.
+      <t>In case of IPv6 private networks, local addresses may be globally routable. In spite of that,
+        they may or may not be reachable from peer private networks. IPREF is not concerned with it, it
+        works the same way regardless. Similarly, IPv4 private networks may include hosts with globally
+        routable addresses, it's immaterial. With IPREF, peer networks still don't know, and don't need
+        to know, what those addresses are and to which protocol they belong.
       </t>
-      <t>IPREF is a form of network address translation but it is never referred to it by this term to avoid confusion
-        with well known NAT. It is always referred to as IPREF. It is an evolution of address rewriting technology.
+      <t>IPREF is a form of network address translation but it is never referred to it by this term to
+        avoid confusion with well known NAT. It is always referred to as IPREF. It is an evolution of
+        address rewriting technology.
       </t>
 
       <section><name>IPREF Addresses</name>
@@ -198,8 +194,8 @@
             A are odd while addresses related to local network B are even.
         </t>
         <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without
-          knowing the IP addresses on the peer network or even without knowing the network protocol employed by the
-          peer network. An <em>encoding</em> network is used in lieu of the peer private network addresses. The peer
+          knowing IP addresses on the peer networks or even without knowing network protocols employed by the
+          peer networks. An <em>encoding</em> network is used in lieu of the peer private network addresses. The peer
           hosts appear as if they were hosted on the <em>encoding</em> network. This is a compatibility feature. It
           is possible to avoid such mapping at the cost of making local hosts IPREF aware. That case is not described
           here as it is dramatically simpler to use <em>encoding</em> networks and leave existing hosts as-is, without
@@ -318,7 +314,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           their native network protocol domains. The references are interpreted independently by both communicating networks.
           In the example above, network B allocates reference '400' to represent host B4. At network B, that reference is
           interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
-          knows, or cares about, how the references are interpreted outside of their own administrative domains. In cases
+          knows, or is concerned with, how the references are interpreted outside of their own administrative domains. In cases
           where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
           repackaging of the payload. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
           practical.
@@ -328,16 +324,15 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
       <section><name>DNS with IPREF</name>
 
-        <t>Similarly to standard IP, IPREF can operate without DNS relying on IPREF addresses manually entered
-          and distributed. For example, an /etc/hosts file could be used for the purpose. Such use makes sense
-          in certain cases and is available with IPREF the same way as it is with standard IP. Especially on
-          private networks, the practice of using direct addresses is common even if local DNS names are allocated
-          to the hosts.
+        <t>Similarly to standard IP, IPREF can operate with or without DNS. IPREF addresses may be entered and
+          distributed manually. For example, an /etc/hosts file could be used for the purpose. Such use makes
+          sense in certain cases. Especially on private networks, the practice of using direct addresses is
+          common even if local DNS names are allocated to the hosts.
         </t>
         <t>IPREF can also take full advantage of DNS. IPREF addresses are publishable. When resolving names that
           render IPREF addresses, local resolvers must obtain translation into <em>encoded</em> addresses for
           standard hosts on local networks. This is the normal case, only IPREF gateways understand IPREF addresses,
-          the vast majority of hosts are standard hosts which are unaware of IPREF addressing. The necessary mapping
+          the vast majority of hosts are standard hosts which are unaware of IPREF. The necessary mapping
           to <em>encoded</em> addresses is typically made by IPREF gateways and presented back to resolvers which
           pass them to the querying hosts. In addition, IPREF gateways must be aware of all local hosts whose IPREF
           addresses are published through DNS. This is illustrated in <xref target="dns-with-ipref"/>.
@@ -434,12 +429,11 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
       <t>A reference is a network layer entity and the most natural place for embedding it would
          be a network layer header, such as an IPv4 option or an IPv6 extension header.
       </t>
-      <t>Unfortunately, many Internet Service Providers drop options and extensions headers that
-         they deem not worthy processing. Even if they don't, network devices tend to put them on
-         a slow processing path resulting in poor performance. For that reason, the most reliable
-         way to embed references is to place them in the payload. One such common technique is
-         tunneling where a reference could be placed in the payload along with the network packet
-         being tunneled.
+      <t>Unfortunately, many Internet Service Providers drop options and extensions headers for
+         various reasons. Even if they don't, network devices tend to put them on a slow processing
+         path resulting in poor performance. For that reason, the most reliable way to embed
+         references is to place them in the payload. One such common technique is tunneling where
+         a reference could be placed in the payload along with the network packet being tunneled.
       </t>
 
       <section><name>IPv4 Option</name>
@@ -560,8 +554,8 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           <li>NAT - IPREF is an address rewriting technology but operates differently than NAT. It
              operates exclusively at the network layer. It does not reach to upper layer protocols
              or lower layer protocols. For example, there is no manipulation of TCP/UDP ports. All
-             layer 4 port fields are carried transparently as-is. IPREF does not conflict with NAT.
-             In a common configuration, a NAT gateway connects to the <em>third</em> network without
+             layer 4 ports are carried transparently as-is. IPREF does not conflict with NAT. In a
+             common configuration, a NAT gateway connects to the <em>third</em> network without
              any changes. IPREF may operate in parallel to NAT on the same gateway, or it may operate
              on another gateway within the local network 'behind NAT'.
           </li>
