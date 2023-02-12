@@ -27,6 +27,7 @@
   obsoletes=""
   updates=""
   submissionType="IETF"
+  category="std"
   xml:lang="en"
   version="3">
 <!--
