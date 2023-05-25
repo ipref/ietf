@@ -182,7 +182,7 @@
 
       </section>  <!-- ^^ IPREF Addresses ^^ -->
 
-      <section><name>Packet Exchange</name>
+      <section><name>Traversing Address Spaces, Same Protocol</name>
 
         <t><xref target="private-networks"/> depicts how two local networks communicate with one another. Local
             network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em>
@@ -321,7 +321,145 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           practical.
         </t>
 
-      </section>  <!-- ^^ Packet Exchange ^^ -->
+      </section>  <!-- ^^ Traversing Address Spaces, Same Protocol ^^ -->
+
+      <section><name>Delegating References</name>
+
+        <t>Many organizations maintain large private networks with complex topologies managed by
+          many administrators responsible for different parts of the network. In some cases,
+          traffic from one internal network must go through another internal network, managed
+          by a different administrator, before reaching the Internet. This creates a case, where
+          an internal network is effectively nested inside another internal network.
+        </t>
+
+        <t>In <xref target="nested-networks"/>, gateway GWB connects network B 172.18.2.0/24 directly
+          to the Internet. In contrast, network C 172.19.9.0/24 does not connect to the Internet
+          directly. Traffic from network C must go through network B to reach the Internet. In terms of
+          managing references, the administrator of network B can only allocate references to hosts
+          on its own network. Anything destined to network C would be passed to gateway GWC unchanged.
+          Network C must employ its own IPREF reference management and processing if it wants to
+          support IPREF addressing.
+        </t>
+
+        <figure anchor="nested-networks"><name>nested private networks</name>
+          <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
+            <artwork type="ascii-art" name="nested networks diagram">
+              <![CDATA[
+             |  Encoding Network B: 10.192.0.0/10
+                Local Network B: 172.18.2.0/24
+             | 
+                                   ┌──────┐
+               ╲              ┃ .66│      │
+              ┏━━━━━━━┓       ┠────┤ host │
+198.51.100.22 ┃ IPREF ┃.2     ┃    │  B6  │
+            ╭─┨ g-way ┠───────┨    └──────┘
+            ╎ ┃  GWB  ┃       ┃
+            ╎ ┗━━━━━━━┛       ┃    ┌──────┐
+                     ╲        ┃ .64│      │
+      Third Network           ┠────┤ host │
+       (Internet)     |       ┃    │  B4  │
+                              ┃    └──────┘
+                      |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                              ┃           /
+                      |       ┃          /         ┃    ┌──────┐
+                              ┃    ┏━━━━━━━┓       ┃ .39│      │
+                      |       ┃  .3┃ IPREF ┃.9     ┠────┤ host │
+                              ┠────┨ g-way ┠───────┨    │  C3  │
+                      |       ┃    ┃  GWC  ┃       ┃    └──────┘
+                              ┃    ┗━━━━━━━┛       ┃
+                      |             /
+                                   /  Local Network C: 172.19.9.0/24
+                      |           |   Encoding Network C: 10.254.0/12
+              ]]>
+            </artwork>
+          </artset>
+        </figure>
+
+        <t>Nested networks pose no issues in terms of traversing address spaces but they have an
+          impact on visibility of services published via IPREF.
+        </t>
+        <section><name>No services published via IPREF</name>
+          <t>Let's first consider a case where a nested network does not publish any services through
+            IPREF. Hosts on this network can still reach services published as IPREF addresses
+            that are hosted elsewhere. For example, let's say host C3 wants to reach host A5 from
+            a previous example above. In that case, the addresses would be translated as follows,
+            where the first address is the source, and the second address is the destination:
+          </t>
+          <ul>
+            <li>at C3:  |  172.19.9.39  |  10.254.0.45  |</li>
+            <li>at GWC: |  172.18.2.3 + 794  |  198.51.100.11 + 537  |</li>
+            <li>at GWB: |  198.51.100.22 + 486  |  198.51.100.11 + 537  |</li>
+            <li>at GWA: |  10.128.0.82  |  172.17.1.75  |</li>
+            <li>at A5:  |  10.128.0.82  |  172.17.1.75  |</li>
+          </ul>
+          <t>Explanations and assumptions to the sequence above. In step 1, C3 uses its own internal
+            address as source. The destination is assumed to be provided by network A in form of
+            an IPREF address of 198.51.100.11 + 537. That IPREF address is encoded on network C as
+            10.254.0.45. The encoding would be done by the GWC mapper upon learning A5's IPREF
+            address (either manually or via DNS). In step 2, GWC does not recognize source address
+            172.19.9.39, so it allocates an IPREF address to it 172.18.2.3 + 794. The native portion
+            of the IPREF address is the outer address on the gateway as usual. It then looks up the
+            encoded address of the destination as corresponding to 198.51.100.11 + 537. In step 3,
+            GWB does not recognize the source IPREF address, so it allocates its own IPREF address
+            as 198.51.100.22 + 486. The destination IPREF address remains unchanged. In step 4, GWA
+            does not recognize source IPREF address, so it encodes it as 10.128.0.82. It recognizes
+            the destination IPREF address as one representing local host A5 172.17.1.5. In step 5,
+            destination host A5 recognizes the destination as its own and consumes the packet.
+          </t>
+          <t>There is one additional step in this sequence as compared to an earlier example. GWB
+            performs additional IPREF mapping on a source that is already an IPREF address. Indeed,
+            IPREF may perform several steps of that kind depending on the level of nesting of
+            private networks. In theory, there is no limit to it. In practice, hop count determines
+            how deeply this can go.
+          </t>
+        </section>
+        <section><name>Services potentially published via IPREF</name>
+          <t>If there were any services to be published via IPREF on network C, then GWC cannot use
+            its outer IP address as the native portion of an IPREF address because that address is not
+            visible on the Internet. This is strictly DNS publishing issues. Packets would reach
+            relevant hosts regardless (because GWB would re-translate to an address with Internet
+            visible native portion) but at a cost of a very complicated configuration that would need
+            to be done in two places and kept in sync. This is not a practical solution.
+          </t>
+          <t>A better approach is delegation. The gateway that directly connects to the Internet would
+            delegate some of the references from its pool to nested gateways. That way nested gateways
+            could allocate IPREF address with Internet visible native portion. This only needed if
+            there are any services hosted on the nested networks intended for publishing in DNS. The
+            gateway that delegates its references, GWB in the example, knows which gateways the
+            references were delegated to and thus it can forward incoming packets accordingly.
+          </t>
+          <t>Let's assume network C publishes a website on host C3. Let's also assume that GWB delegated
+            references 6000 thru 8000 to gateway GWC. Now, gateway GWC allocates IPREF addresses with
+            native portion equal to GWB's outer address and with references from the delegated range.
+            Let's say it allocated IPREF address 198.51.100.22 + 6789 to the website hosted on C3. Now,
+            host A7 can reach that website with addresses undergoing the following translations:
+          </t>
+          <ol>
+            <li>at A7:  |  172.17.1.77  |  10.128.0.217  |</li>
+            <li>at GWA: |  198.51.100.11 + 591  |  198.51.100.22 + 6789  |
+            <li>at GWB: |  198.51.100.11 + 591  |  172.18.2.3 + 6789  |
+            <li>at GWC: |  10.254.7.221  |  172.19.9.39  |
+            <li>at C3:  |  10.254.7.221  |  172.19.9.33  |
+          </ol>
+          <t>Explanation. Host A7 wants to reach a website hosted at C3. In step 1, A7 uses its own
+            address as source. It uses an encoded address of 10.128.0.217 as destination. That encoded
+            address was allocated by gateway GWA upon learning C3's IPREF address. In step 2, GWA
+            does not recognize A7's address so it allocates an IPREF address 198.51.100.11 + 591
+            to represent 172.17.1.77. In step 3, GWB recognizes the destination IPREF address as
+            one from the range delegated to gateway GWC. In that case, it simply forwards it to GWC. 
+            Since IPREF is strictly about addressing, it does not forward packets by itself. Rather,
+            it relies on the underlying native network protocol to do so. It rewrites the destination
+            IPREF address so that the native portion points to GWC. The local network protocol may
+            now forward the packet to GWC. In step 4, GWC recognizes the destination IPREF address
+            as its own but since it was delegated references from GWB it replaces the native portion
+            of the IPREF address with the outer address of the gateway where the references were
+            deleted from, i.e. GWB. It then finds the IPREF address as corresponding to host C3. It
+            allocates an encoding address to the source IPREF address as 10.254.7.221 since this is
+            the first time it sees that source IPREF address. In step 5, C3 recognizes destination
+            address as its own and consumes the packet.
+          </t>
+        </section>
+      </section>  <!-- ^^ Delegating References ^^ -->
 
       <section><name>DNS with IPREF</name>
 
