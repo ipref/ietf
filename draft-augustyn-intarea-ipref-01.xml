@@ -182,17 +182,18 @@
 
       </section>  <!-- ^^ IPREF Addresses ^^ -->
 
-      <section><name>Traversing Address Spaces, Same Protocol</name>
+      <section><name>Traversing Address Spaces in the Same Protocol Domain</name>
 
-        <t><xref target="private-networks"/> depicts how two local networks communicate with one another. Local
-            network A has two standard hosts A5, A7, and a gateway GWA. The gateway connects to the <em>third</em>
-            network, the Internet. Local network B has hosts B4, B6, and a gateway GWB. The gateway connects to
-            the same <em>third</em> network as gateway GWA. Only the gateways are aware of, and implement, IPREF
-            processing. The hosts on both local networks, as well as any hosts or routers on the <em>third</em>
-            network are standard network devices, unaware of IPREF. For simplicity, the examples shows the case of
-            IPv4 running on all three networks. The IP addresses on local networks may overlap but for simplicity
-            are shown as distinct. Further, for ease of following the example, addresses related to local network
-            A are odd while addresses related to local network B are even.
+        <t><xref target="private-networks-same-protocol"/> depicts how two local networks communicate
+          with one another. Local network A has two standard hosts A5, A7, and a gateway GWA. The
+          gateway connects to the <em>third</em> network, the Internet. Local network B has hosts
+          B4, B6, and a gateway GWB. The gateway connects to the same <em>third</em> network as
+          gateway GWA. Only the gateways are aware of, and implement, IPREF processing. The hosts
+          on both local networks, as well as any hosts or routers on the <em>third</em> network are
+          standard network devices, unaware of IPREF. For simplicity, the examples shows the case
+          of IPv4 running on all three networks. The IP addresses on local networks may overlap but
+          for simplicity are shown as distinct. Further, for ease of following the example, addresses
+          related to local network A are odd while addresses related to local network B are even.
         </t>
         <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without
           knowing IP addresses on the peer networks or even without knowing network protocols employed by the
@@ -203,9 +204,9 @@
           any modifications.
         </t>
 
-        <figure anchor="private-networks"><name>private networks</name>
+        <figure anchor="private-networks-same-protocol"><name>private networks in the same protocol domain</name>
           <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
-            <artwork type="ascii-art" name="private networks diagram">
+            <artwork type="ascii-art" name="private networks same protocol diagram">
               <![CDATA[
              ╲                   ╲  Encoding Network B: 10.192.0.0/10
                                        Local Network B: 172.18.2.0/24
@@ -321,7 +322,83 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           practical.
         </t>
 
-      </section>  <!-- ^^ Traversing Address Spaces, Same Protocol ^^ -->
+      </section>  <!-- ^^ Traversing Address Spaces in the Same Protocol Domain ^^ -->
+
+      <sectiom><name>Traversing Address Spaces in Different Protocol Domains</name>
+
+        <t>If address spaces reside in different protocol domains, then the gateways have an
+          additional responsibility to repackage packets into proper protocol frames. Other
+          than that, addresses are rewritten in the same manner.
+        </t>
+        <t><xref target="private-networks-different-protocols"/> depicts two private networks,
+          one is an IPv4 network and the other is an IPv6 network. The <em>third</em> network
+          runs IPv6. It's worth noting that the IPv6 private network employs globally routable
+          addresses which may or may not be globally reachable, depending on filtering. From
+          the IPREF perspective it makes no difference. Processing works the same way.
+        </t>
+
+        <figure anchor="private-networks-different-protocols"><name>private networks in different protocol domains</name>
+          <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
+            <artwork type="ascii-art" name="private networks different protocols diagram">
+              <![CDATA[
+           \     DNS:  B2  AA  2001:db8:bb::2 + 4286
+
+             ╲                   ╲  Encoding Network B: fdee:eeee::/64
+                                       Local Network B: 2001:db8:bb:2::/64
+               ╲                   ╲
+                                                             ┌──────┐
+                 ╲                   ╲                  ┃ :46│      │
+                                    ┏━━━━━━━┓           ┠────┤ host │
+                   ╲ 2001:db8:bb::2 ┃ IPREF ┃:2         ┃    │  B8  │
+                                  ╭─┨ g-way ┠───────────┨    └──────┘
+┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
+│      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
+│ host ├────┨          ╲                   ╲            ┃    ┌──────┐
+│  A5  │    ┃               Third Network               ┃ :28│      │
+└──────┘    ┃            ╲                   ╲          ┠────┤ host │
+            ┃           ┏━━━━━━━┓ ╎                     ┃    │  B2  │
+            ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
+┌──────┐    ┠───────────┨ g-way ┠─╯
+│      │.77 ┃           ┃  GWA  ┃ 2001:db8:aa::1 ╲
+│ host ├────┨           ┗━━━━━━━┛
+│  A7  │    ┃                  ╲                   ╲
+└──────┘
+                                 ╲                   ╲
+Local Network A: 172.17.1.0/24
+Encoding Network A: 10.128.0.0/10  ╲                   ╲
+              ]]>
+            </artwork>
+          </artset>
+        </figure>
+
+        <t>Let's assume host A7 wants to communicate with host B2. The IPREF address of B2 can be
+          obtain from DNS as 2001:db8:bb::2 + 4286. Local resolver realizes it's an IPREF address
+          and asks local mapper to allocate an encoded address for it. Let's assume, the encoded
+          address is 10.128.0.214. The addresses are rewritten as below. The first address is
+          the source and the second address is the destination:
+        </t>
+        <ol>
+          <li>at A7:  |  172.17.1.77  |  10.254.0.214  |  payload  |</li>
+          <li>at GWA: |  2001:db8:aa::1 + 7935  |  2001:db8:bb::2 + 4286  |  payload  |</li>
+          <li>at GWB: |  fdee:eeee::3b9e  |  2001:db8:bb:2::28  |  payload  |</li>
+          <li>at B2:  |  fdee:eeee::3b9e  |  2001:db8:bb:2::28  |  payload  |</li>
+        </ol>
+        <t>Explanation. In step 1, A7 places its own address as the source. The destination is
+          obtained via DNS with local resolver returning the encoded address of B2 as 10.254.0.214
+          in lieu of the IPREF address 2001:db8:bb::2 + 4286. In step 2, GWA first recognizes
+          that it has to convert the IPv4 packet to an IPv6 packet. It then deals with addresses
+          in their respective protocol domains. It does not recognize the source IPv4 address
+          so it allocates an IPREF address for it with an IPv6 native portion as 2001:db8:aa::1 + 7935.
+          It finds the destination address 10.254.0.14 as corresponding to an IPREF address of
+          2001:db8:bb::2 + 4286 that already has an IPv6 native portion so it can place it
+          as destination without further conversions. In step 3, GWB does not recognize the
+          source IPREF address, so  it allocates an encoded address for it fdee:eeee::3b9e.
+          It recognizes the destination address as corresponding to the address of the local
+          host b2 and places its local IP address of 2001:db8:bb:2::28. In step 4, local host
+          recognizes the destination address as its own and consumes the packet.
+        </t>
+
+      </section>  <!-- ^^ Traversing Address Spaces in Different Protocol Domains ^^ -->
 
       <section><name>Delegating References</name>
 
@@ -376,22 +453,24 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
         </figure>
 
         <t>Nested networks pose no issues in terms of traversing address spaces but they have an
-          impact on visibility of services published via IPREF.
+          impact on visibility of services published via IPREF. There are two cases. In one case,
+          there are no services published via DNS on any host on the nested network. In the other
+          case, there is at least one host that publishes services advertised via DNS.
         </t>
-        <section><name>No services published via IPREF</name>
+        <section><name>No services published via DNS</name>
           <t>Let's first consider a case where a nested network does not publish any services through
-            IPREF. Hosts on this network can still reach services published as IPREF addresses
-            that are hosted elsewhere. For example, let's say host C3 wants to reach host A5 from
-            a previous example above. In that case, the addresses would be translated as follows,
-            where the first address is the source, and the second address is the destination:
+            IPREF advertised via DNS. Hosts on this network can still reach services published 
+            elsewhere. For example, let's say host C3 wants to reach host A5 from a previous example
+            above. In that case, the addresses would be translated as listed below. The first address
+            is the source, and the second address is the destination:
           </t>
-          <ul>
-            <li>at C3:  |  172.19.9.39  |  10.254.0.45  |</li>
-            <li>at GWC: |  172.18.2.3 + 794  |  198.51.100.11 + 537  |</li>
-            <li>at GWB: |  198.51.100.22 + 486  |  198.51.100.11 + 537  |</li>
-            <li>at GWA: |  10.128.0.82  |  172.17.1.75  |</li>
-            <li>at A5:  |  10.128.0.82  |  172.17.1.75  |</li>
-          </ul>
+          <ol>
+            <li>at C3:  |  172.19.9.39  |  10.254.0.45  |  payload  |</li>
+            <li>at GWC: |  172.18.2.3 + 794  |  198.51.100.11 + 537  |  payload  |</li>
+            <li>at GWB: |  198.51.100.22 + 486  |  198.51.100.11 + 537  |  payload  |</li>
+            <li>at GWA: |  10.128.0.82  |  172.17.1.75  |  payload  |</li>
+            <li>at A5:  |  10.128.0.82  |  172.17.1.75  |  payload  |</li>
+          </ol>
           <t>Explanations and assumptions to the sequence above. In step 1, C3 uses its own internal
             address as source. The destination is assumed to be provided by network A in form of
             an IPREF address of 198.51.100.11 + 537. That IPREF address is encoded on network C as
@@ -419,11 +498,11 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
             visible on the Internet. This is strictly DNS publishing issues. Packets would reach
             relevant hosts regardless (because GWB would re-translate to an address with Internet
             visible native portion) but at a cost of a very complicated configuration that would need
-            to be done in two places and kept in sync. This is not a practical solution.
+            to be done in two places and kept in sync. This would be an impractical solution.
           </t>
           <t>A better approach is delegation. The gateway that directly connects to the Internet would
             delegate some of the references from its pool to nested gateways. That way nested gateways
-            could allocate IPREF address with Internet visible native portion. This only needed if
+            could allocate IPREF address with Internet visible native portion. This is only needed if
             there are any services hosted on the nested networks intended for publishing in DNS. The
             gateway that delegates its references, GWB in the example, knows which gateways the
             references were delegated to and thus it can forward incoming packets accordingly.
@@ -435,11 +514,11 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
             host A7 can reach that website with addresses undergoing the following translations:
           </t>
           <ol>
-            <li>at A7:  |  172.17.1.77  |  10.128.0.217  |</li>
-            <li>at GWA: |  198.51.100.11 + 591  |  198.51.100.22 + 6789  |
-            <li>at GWB: |  198.51.100.11 + 591  |  172.18.2.3 + 6789  |
-            <li>at GWC: |  10.254.7.221  |  172.19.9.39  |
-            <li>at C3:  |  10.254.7.221  |  172.19.9.33  |
+            <li>at A7:  |  172.17.1.77  |  10.128.0.217  |  payload  |</li>
+            <li>at GWA: |  198.51.100.11 + 591  |  198.51.100.22 + 6789  |  payload  |</li>
+            <li>at GWB: |  198.51.100.11 + 591  |  172.18.2.3 + 6789  |  payload  |</li>
+            <li>at GWC: |  10.254.7.221  |  172.19.9.39  |  payload  |</li>
+            <li>at C3:  |  10.254.7.221  |  172.19.9.33  |  payload  |</li>
           </ol>
           <t>Explanation. Host A7 wants to reach a website hosted at C3. In step 1, A7 uses its own
             address as source. It uses an encoded address of 10.128.0.217 as destination. That encoded
@@ -451,12 +530,12 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
             it relies on the underlying native network protocol to do so. It rewrites the destination
             IPREF address so that the native portion points to GWC. The local network protocol may
             now forward the packet to GWC. In step 4, GWC recognizes the destination IPREF address
-            as its own but since it was delegated references from GWB it replaces the native portion
-            of the IPREF address with the outer address of the gateway where the references were
-            deleted from, i.e. GWB. It then finds the IPREF address as corresponding to host C3. It
-            allocates an encoding address to the source IPREF address as 10.254.7.221 since this is
-            the first time it sees that source IPREF address. In step 5, C3 recognizes destination
-            address as its own and consumes the packet.
+            as its own. I also recognizes the reference as delegated from GWB, therefore it replaces
+            the native portion of the IPREF address with the outer address of the gateway where the
+            references were deleted from, i.e. GWB. It then looks up that IPREF address as corresponding
+            to host C3. It allocates an encoding address to the source IPREF address as 10.254.7.221
+            since this is the first time it sees that source IPREF address. In step 5, C3 recognizes
+            destination address as its own and consumes the packet.
           </t>
         </section>
       </section>  <!-- ^^ Delegating References ^^ -->
