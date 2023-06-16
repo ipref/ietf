@@ -76,11 +76,18 @@
          use by search engines. -->
 
     <abstract>
-      <t>This document describes IP addressing with references (referred to as IPREF) and how it can be
-         used with IPv4 and IPv6. IPREF is a private-to-private technology where hosts on private networks
-         communicate with hosts on other private networks directly. Special addresses, called IPREF
-         addresses, are used for the purpose. It also describes how hosts on private networks may publish
-         their IPREF addresses via Domain Name System (DNS).
+      <t>This document describes IP addressing with references (referred to as IPREF) and how it
+        can be used with IPv4 and IPv6. IPREF is a highly scalable and reliable technology for
+        traversing private address spaces end-to-end. It can traverse private address spaces within
+        the same protocol domain. For example, it provides NAT traversal for IPv4, or for IPv6 with
+        NAT6 or filters. It can also traverse private address spaces in different protocol domains
+        such as IPv4/IPv6. For example, it allows communication between IPv4 and IPv6 networks,
+        including over NAT, NAT6, or filters.
+      </t>
+      <t>IPREF uses special addresses, called IPREF addresses, which are publishable via Domain
+        Name System (DNS). Any host on any private network may publish its services via DNS. These
+        service are reachable from any network, whether IPv4 or IPv6, provided IPREF is supported
+        on both ends.
       </t>
     </abstract>
 
@@ -308,6 +315,9 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           address 10.128.0.40. It places that address in the packet as the new source address. It then sends the packet to the
           local host A5. in step (8), local host A5 recognizes the destination address 172.17.1.75 as its own and consumes
           the packet for processing. This concludes packet exchange.
+        </t>
+        <t>In subsequent packet exchanges, all necessary mappings have been established. The gateways perform simple lookups
+          without the need to make any additional allocations.
         </t>
         <t>In general case, networks may have overlapping addresses, they may have several local subnets, they may have more
           than one gateway to the <em>third</em> network. They may also run different network protocols. For example
