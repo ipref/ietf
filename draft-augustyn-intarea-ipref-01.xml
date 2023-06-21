@@ -97,22 +97,92 @@
     <section>
     <!-- The default attributes for <section> are numbered="true" and toc="default" -->
       <name>Introduction</name>
-      <t>Normally, hosts on private networks are only reachable by other hosts on the same private networks. To
-         make them visible to hosts on other networks, techniques such as Network Address Translation (NAT),
-         popular with IPv4 private networks, or filtering, more likely found with IPv6 private networks, are
-         used to make them appear on the public Internet. In most cases, only selected services, determined by
-         their layer 4 port numbers, are made available through these methods. Services from different private
-         hosts may share a single public address.
+
+      <t>Most hosts on the Internet are actually not directly attached to the Internet. Instead
+        they reside on local networks that are attached to the Internet through some sort of
+        a firewall that limits external access to them. In the IPv4 case, the firewall commonly
+        runs Network Address Translation (NAT). In the case of IPv6, it may be filters but it
+        also may be NAT6 behaving similarly to NAT. Whichever the case, peer-to-peer connectivity
+        is greatly limited. This creates a problem commonly referred to as NAT traversal.
       </t>
-      <t>This document describes a different way of accessing hosts on private networks. It is done by enhancing
-         capabilities of existing layer 3 protocols. The enhancement provides for addressing with references where
-         the source and destination is specified by means of references rather than concrete addresses. The respective
-         private networks, communicating in this manner, use these references to render actual addresses on their
-         local networks. Reference are single values, unsigned integers, which are carried in addition to the existing
-         addresses by the layer 3 protocols.
+      <t>For common services, especially those advertised through Domain Name System (DNS), the
+        problem is solved by exposing local servers to the Internet as if they were residing
+        directly on the Internet. The solution works because it relies on the client server
+        nature of these services. In this model, the servers wait until some host initiates
+        a connection. Firewalls and NAT make sure the return path for the packets is open. The
+        servers don't initiate connection on their own (unless to other servers that are
+        already exposed to the Internet).
       </t>
-      <t>In theory, any layer 3 protocol can operate in the manner described. For practical purpose, this document
-         discusses only the case of IPv4 and IPv6.
+      <t>For peer-to-peer applications, there is no general solution. Instead, there is a hodgepodge
+        of half solutions suitable for selected cases, none of them scalable. They mostly attempt
+        to temporarily expose internal hosts at the edge router's address and some specific port,
+        or deduce if such an exposure exists which then may be passed to applications that can
+        make use of such information.
+      </t>
+      <t>There is a similar problem when attempting to traverse different protocol domains, such
+        as IPv4/IPv6. It is a somewhat harder problem to solve given different protocols in play.
+        One attempt to do that, known as NAT64/SIIT, illustrates the difficulties. The result cannot
+        be even called a solution as it is severely constrained. It is more of an experiment. It
+        requires external translation devices through which all traffic must go, and which
+        require configuration that needs to be externally maintained. It does not scale beyond
+        very small setups. It also requires allocating global IPv4 addresses for IPv6 peers.
+      </t>
+      <t>All of these attempted solutions suffer great difficulties because they try to render
+        necessary address transformations too early. IPREF takes a different approach. It is
+        based on the observation that the originating hosts actually do not have to know
+        what the destination addresses are, or what protocol they belong to, so long as they
+        can be referred to in a manner understood by both ends. Thus, IPREF uses references to
+        addresses rather than real addresses. This allows to delay the rendering of necessary
+        transformations until a proper context is available to make such a transformations. This
+        approach works not only for NAT traversal but also for protocol traversal since both
+        problems are actually about the same problem: traversing different address domains. It
+        does not matter what protocol domain they belong to, provided sufficient compatibility
+        exists between involved protocols that packet payloads can be repackaged from one to the
+        other while maintaining functionality of higher level protocols such as TCP/UDP. Such a
+        compatibility exists between IPv4 and IPv6.
+      </t>
+      <t>With this approach, IPREF does not need to negotiate anything. It does not need any
+        external devices, any external configurations. It does not require allocating any
+        global IP addresses from involved protocols. The result is a highly scalable solution
+        that works over NAT, NAT6, filters, and across IPv4/IPv6.
+      </t>
+      <t>In practical implementations, all IPREF processing is vested with gateways designated for
+        the purpose. The gateways may be the same as network edge routers but they may also reside
+        inside the networks, behind the edge routers and firewalls ("behind NAT"). The gateways
+        deal with processing of references and with any address mapping. If protocol conversion is
+        necessary, they run dual stacks and perform payload repackaging between the protocols. The
+        references, along with context addresses passed with them, are called 'IPREF addresses' to
+        distinguish them from native addresses. The gateways translate both source and destination
+        IPREF addresses to native addresses of the local network protocol before injecting packets
+        to local networks.
+      </t>
+      <t>The rest of the hosts on the network are standard hosts running whichever local network
+        protocol is employed, IPv4 or IPv6. They never see IPREF addresses or references. They
+        are completely oblivious to any IPREF processing taking place at the gateways. They do not
+        need to run dual stacks, nor is there any advantage doing so. They may run just a single
+        stack which could lead to lowering the cost of building and maintaining networks.
+      </t>
+      <t>IPREF addresses are publishable via DNS. Such publishing does not consume any global
+        addresses of any network protocols. Any host on a private network may publish services
+        at any port they wish. For example there maybe five different hosts publishing web
+        services at port 443 and all five may advertise these services via DNS.
+      </t>
+      <t>Publishing without consuming global IP addresses is very attractive for IPv4 but there
+        are more reasons to publish as IPREF which apply equally to IPv4 and IPv6. Chiefly among
+        them is cross protocol reach. Such service may be accessed from IPv4 and IPv6 clients
+        which very useful in any transition strategy. Further, IPREF references are very light.
+        They may be allocated and discarded easily, at will, or at time intervals. They may expire,
+        may be shadowed by different references pointing to the same services. They may be
+        preferable over exposing internal IP addresses for security reasons. They could be used
+        to help fighting Denial of Service (DoS) attacks. They could be used for easy A/B marketing
+        testing, or they could be used with authenticated DNS servers to identify different classes
+        of users for marketing purpose, forensic purpose, or service level purpose, etc.
+      </t>
+      <t>IPREF allows development of new, specialized protocols by providing easy integration with
+        existing IP networks. Because IPREF does not require negotiations of any sort and it does
+        not depend on any time domain, it is suitable for developing wide range of specialized
+        network protocols for special requirements networks such as space networks, IoT networks,
+        high security financial or military networks, etc.
       </t>
 
       <section anchor="requirements">
