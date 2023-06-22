@@ -707,18 +707,19 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
     <section><name>DNS with IPREF</name>
 
-      <t>Similarly to standard IP, IPREF can operate with or without DNS. IPREF addresses may be entered and
-        distributed manually. For example, an /etc/hosts file could be used for the purpose. Such use makes
-        sense in certain cases. Especially on private networks, the practice of using literal addresses is
-        common even if local DNS names are allocated to the hosts.
+      <t>Similarly to standard IP, IPREF can operate with or without DNS. IPREF addresses may be
+        entered and distributed manually. For example, an /etc/hosts file could be used for the
+        purpose. Such use makes sense in certain cases. Especially on private networks, the
+        practice of using literal addresses is common even if local DNS names are allocated to
+        the hosts.
       </t>
-      <t>IPREF can also take full advantage of DNS. IPREF addresses are publishable. When resolving names that
-        render IPREF addresses, local resolvers must obtain translation into <em>encoded</em> addresses for
-        standard hosts on local networks. This is the normal case, only IPREF gateways understand IPREF addresses,
-        the vast majority of hosts are standard hosts which are unaware of IPREF. The necessary mapping
-        to <em>encoded</em> addresses is typically made by IPREF gateways and presented back to resolvers which
-        pass them to the querying hosts. In addition, IPREF gateways must be aware of all local hosts whose IPREF
-        addresses are published through DNS. This is illustrated in <xref target="dns-with-ipref"/>.
+      <t>IPREF can also take full advantage of DNS <xref target="RFC1035"/>.  IPREF addresses are
+        publishable. When resolving names that render IPREF addresses, local resolvers must obtain
+        translation into <em>encoded</em> addresses for standard hosts on local networks. Mapping
+        to <em>encoded</em> addresses is typically made by IPREF gateways and presented back to
+        resolvers which pass them to the querying hosts. In addition, IPREF gateways must be aware
+        of all local hosts whose IPREF addresses are published through DNS. This is illustrated
+        in <xref target="dns-with-ipref"/>.
       </t>
 
       <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
@@ -753,41 +754,39 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
         </artset>
       </figure>
 
-      <t>Local hosts A5 and A7 resolve DNS names via a local resolver. The resolver queries DNS servers on their
-         behalf. A query may return a standard IPv4 or IPv6 address, or it may return an IPREF address. In the
-         former cases, the IP addresses are simply returned to the querying hosts. In case of IPREF addresses,
-         the resolvers consults related IPREF gateway for a mapping to an <em>encoded</em> network. The gateway may
-         allocate one on the fly if mapping is not available. The resulting <em>encoded</em> IP address is then
-         returned to the querying hosts.
+      <t>Local hosts A5 and A7 resolve DNS names via local resolvers. The resolvers query DNS
+        servers on their behalf. Queries may return native IPv4 or IPv6 addresses, or it may return
+        IPREF addresses. If the native addresses match local network protocol, the resolvers simply
+        return them unchanged, dropping otherwise. In case of IPREF addresses, the resolvers obtain
+        a mapping to a native address on an <em>encoded</em> network from related IPREF gateways.
+        The gateways may allocate mappings on the fly if missing. The resulting <em>encoded</em> IP
+        addresses are then returned to the querying hosts.
       </t>
-      <t>Local network administrator may decide to publish IPREF addresses of some internal hosts via DNS. The
-         IPREF gateway must be aware which hosts have been made available externally and what IPREF addresses
-         have been assigned to them. Typically, this is a semi-static configuration which remains stable for long
-         periods of time. The gateways may query those DNS servers for information periodically or some other
-         mechanism may be employed to pass that information to the IPREF gateways.
+      <t>If any hosts on local networks advertise services via DNS using IPREF addresses, the
+        related IPREF gateways must be made aware of it. The gateways must know which hosts have
+        been made available externally and what IPREF addresses have been assigned to them. This
+        is typically a semi-static configuration which remains stable for long periods of time. The
+        gateways may query those DNS servers for information periodically or some other mechanism
+        may be employed to convey that information.
       </t>
-      <t>Returning to the packet exchange example shown in <xref target="address-rewriting"/>, the IPREF
-         address of host B4 may be published via a public DNS server maintained by the administrator of local
-         network B. In that case, host A5 may simply use a DNS name of that host and ask local resolver to provide
-         the corresponding IP address. The resolver would query the DNS server, recognize the response as an
-         IPREF address and consult local IPREF gateway for proper mapping to an <em>encoded</em> IP address.
-         That IP address would then be returned to host A5 which in turn would use it as the destination IP
-         address.
-      </t>
-
-      <t>IPREF addresses can be distributed via DNS <xref target="RFC1035"/> or possibly via other
-        name resolution systems. In this document only the case of DNS is described.
-      </t>
-      <t>IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses consist
-        of two components which must be considered as a single address entity. It is not possibly to
-        separate references from their related <em>third</em> network IP addresses. For that reason, there
-        is a need for a new type of a resource record.
+      <t>To illustrate, in the example shown in <xref target="address-rewriting"/>, the IPREF
+        address of host B4 may be published via a public DNS server maintained by administrators
+        of local network B. Host A5 may obtain the address of host B4 by querying DNS via a local
+        resolver. The resolver would query the DNS servers, recognize the response as an IPREF
+        address and consult related IPREF gateway for proper mapping to an <em>encoded</em> IP
+        address. That IP address would then be returned to host A5 which in turn would use it as
+        the destination IP address.
       </t>
 
       <section><name>DNS Records</name>
-        <t>IPREF addresses are published using new resource record tentatively called AA. This record
-          type has not been registered yet. Until such time, a TXT record may be used. The TXT record
-          simply holds a textual representation of an AA record.
+
+        <t>IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses
+          consist of two components which must be considered as a single address entity. It is not
+          possibly to separate references from their related <em>third</em> network IP addresses.
+          For that reason, there is a need for a new resource record type. The new record type is
+          tentatively called AA. This record type has not been registered yet. Until such time, a
+          TXT record may be used instead. The TXT record simply holds a textual representation of
+          an AA record.
         </t>
         <t> Here are some examples of what the records might look like:
         </t>
@@ -818,9 +817,8 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
 
       <section><name>DNS Agent</name>
         <t>A DNS Agent is a component of IPREF mappers that detects if any local hosts are advertised
-          as reachable via IPREF addresses. There is a number of existing mechanisms to accomplish this.
-          There is probably no need to define another one. In case, there is some reason for doing so, it
-          would be described in a separate document.
+          as reachable via IPREF addresses. There is a number of existing mechanisms to accomplish
+          this. There is probably no need to define another one.
         </t>
       </section>
 
