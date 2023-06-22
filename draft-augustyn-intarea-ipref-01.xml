@@ -121,25 +121,24 @@
       </t>
       <t>There is a similar problem when attempting to traverse different protocol domains, such
         as IPv4/IPv6. It is a somewhat harder problem to solve given different protocols in play.
-        One attempt to do that, known as NAT64/SIIT, illustrates the difficulties. The result cannot
-        be even called a solution as it is severely constrained. It is more of an experiment. It
+        One attempt to do that, known as NAT64/SIIT, illustrates the difficulties. The result
+        cannot be even called a solution as it is severely constrained. It is more of a study. It
         requires external translation devices through which all traffic must go, and which
         require configuration that needs to be externally maintained. It does not scale beyond
         very small setups. It also requires allocating global IPv4 addresses for IPv6 peers.
       </t>
       <t>All of these attempted solutions suffer great difficulties because they try to render
         necessary address transformations too early. IPREF takes a different approach. It is
-        based on the observation that the originating hosts actually do not have to know
-        what the destination addresses are, or what protocol they belong to, so long as they
-        can be referred to in a manner understood by both ends. Thus, IPREF uses references to
-        addresses rather than real addresses. This allows to delay the rendering of necessary
-        transformations until a proper context is available to make such a transformations. This
-        approach works not only for NAT traversal but also for protocol traversal since both
-        problems are actually about the same problem: traversing different address domains. It
-        does not matter what protocol domain they belong to, provided sufficient compatibility
-        exists between involved protocols that packet payloads can be repackaged from one to the
-        other while maintaining functionality of higher level protocols such as TCP/UDP. Such a
-        compatibility exists between IPv4 and IPv6.
+        based on the observation that the originating hosts actually do not have to know what the
+        destination addresses are, or what protocol they belong to, so long as they can be referred
+        to in a manner understood by both ends. Thus, IPREF uses references to addresses rather
+        than real addresses. This allows to delay the rendering of necessary transformations until
+        a proper context is available. This approach works not only for NAT traversal but also for
+        protocol traversal since both problems are actually about the same problem: traversing
+        different address domains. It does not matter what protocol domain they belong to, provided
+        sufficient compatibility exists between involved protocols that packet payloads can be
+        repackaged from one to the other while maintaining functionality of higher level protocols
+        such as TCP/UDP. Such a compatibility exists between IPv4 and IPv6.
       </t>
       <t>With this approach, IPREF does not need to negotiate anything. It does not need any
         external devices, any external configurations. It does not require allocating any
@@ -165,12 +164,13 @@
       <t>IPREF addresses are publishable via DNS. Such publishing does not consume any global
         addresses of any network protocols. Any host on a private network may publish services
         at any port they wish. For example there maybe five different hosts publishing web
-        services at port 443 and all five may advertise these services via DNS.
+        services at port 443 and all five will be reachable and all five may advertise their
+        services via DNS.
       </t>
       <t>Publishing without consuming global IP addresses is very attractive for IPv4 but there
         are more reasons to publish as IPREF which apply equally to IPv4 and IPv6. Chiefly among
         them is cross protocol reach. Such service may be accessed from IPv4 and IPv6 clients
-        which very useful in any transition strategy. Further, IPREF references are very light.
+        which is very useful in any transition strategy. Further, IPREF references are very light.
         They may be allocated and discarded easily, at will, or at time intervals. They may expire,
         may be shadowed by different references pointing to the same services. They may be
         preferable over exposing internal IP addresses for security reasons. They could be used
@@ -178,9 +178,9 @@
         testing, or they could be used with authenticated DNS servers to identify different classes
         of users for marketing purpose, forensic purpose, or service level purpose, etc.
       </t>
-      <t>IPREF allows development of new, specialized protocols by providing easy integration with
-        existing IP networks. Because IPREF does not require negotiations of any sort and it does
-        not depend on any time domain, it is suitable for developing wide range of specialized
+      <t>IPREF allows development of new, specialized protocols by providing easy interoperation
+        with existing IP networks. Because IPREF does not require negotiations of any sort and it
+        does not depend on any time domain, it is suitable for developing a range of specialized
         network protocols for special requirements networks such as space networks, IoT networks,
         high security financial or military networks, etc.
       </t>
