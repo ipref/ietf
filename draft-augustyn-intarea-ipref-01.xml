@@ -135,10 +135,11 @@
         than real addresses. This allows to delay the rendering of necessary transformations until
         a proper context is available. This approach works not only for NAT traversal but also for
         protocol traversal since both problems are actually about the same problem: traversing
-        different address domains. It does not matter what protocol domain they belong to, provided
-        sufficient compatibility exists between involved protocols that packet payloads can be
-        repackaged from one to the other while maintaining functionality of higher level protocols
-        such as TCP/UDP. Such a compatibility exists between IPv4 and IPv6.
+        different address spaces potentially in different protocol domains. The protocol domain
+        matters only to the extent that a sufficient compatibility exists between the protocols
+        that packet payloads may be repackaged from one to the other while keeping functionality
+        of higher level protocols, such as TCP/UDP, intact. Such a compatibility exists between
+        IPv4 and IPv6.
       </t>
       <t>With this approach, IPREF does not need to negotiate anything. It does not need any
         external devices, any external configurations. It does not require allocating any
@@ -164,23 +165,23 @@
       <t>IPREF addresses are publishable via DNS. Such publishing does not consume any global
         addresses of any network protocols. Any host on a private network may publish services
         at any port they wish. For example there maybe five different hosts publishing web
-        services at port 443 and all five will be reachable and all five may advertise their
-        services via DNS.
+        services at port 443 and all five will be reachable at that port and all five may
+        advertise their services via DNS.
       </t>
       <t>Publishing without consuming global IP addresses is very attractive for IPv4 but there
         are more reasons to publish as IPREF which apply equally to IPv4 and IPv6. Chiefly among
-        them is cross protocol reach. Such service may be accessed from IPv4 and IPv6 clients
+        them is cross protocol reach. Such services may be accessed from IPv4 and IPv6 clients
         which is very useful in any transition strategy. Further, IPREF references are very light.
         They may be allocated and discarded easily, at will, or at time intervals. They may expire,
         may be shadowed by different references pointing to the same services. They may be
         preferable over exposing internal IP addresses for security reasons. They could be used
-        to help fighting Denial of Service (DoS) attacks. They could be used for easy A/B marketing
+        to help fighting Denial of Service (DoS) attacks. They could be used for A/B marketing
         testing, or they could be used with authenticated DNS servers to identify different classes
         of users for marketing purpose, forensic purpose, or service level purpose, etc.
       </t>
-      <t>IPREF allows development of new, specialized protocols by providing easy interoperation
-        with existing IP networks. Because IPREF does not require negotiations of any sort and it
-        does not depend on any time domain, it is suitable for developing a range of specialized
+      <t>IPREF allows development of new, specialized protocols by providing interoperation with
+        existing IP networks. Because IPREF does not require negotiations of any sort and it does
+        not depend on any time domain, it is suitable for developing a range of specialized
         network protocols for special requirements networks such as space networks, IoT networks,
         high security financial or military networks, etc.
       </t>
@@ -207,17 +208,17 @@
 
     <section><name>IPREF Operations Framework</name>
 
-      <t>IPREF traverses different address domains in the same protocol domain as well as across
+      <t>IPREF traverses different address spaces in the same protocol domain as well as across
         protocol domains. IPREF uses references to IP addresses rather than actual addresses. The
-        references are provided with context addresses that identify different address domains. The
-        combination of a context address and a reference forms an IPREF address. IPREF addresses
-        are transformed to native addresses of the local address domains when injecting packets to
-        local address domains. Conversely, addresses of the local address domains are transformed
-        to IPREF addresses when leaving local address domains. The transformations are performed by
-        network nodes, IPREF gateways, designed for this purpose. IPREF gateways transfer packets
-        over a <em>third</em> network to other IPREF gateways for the purpose of traversing address
-        domains. Typically, the <em>third</em> network is the public Internet. In case of protocol
-        traversal, IPREF gateways perform necessary payload repackaging.
+        references are provided with context addresses that identify the different address spaces.
+        A combination of a context address and a reference forms an IPREF address. IPREF addresses
+        are transformed to native addresses of the local network when injecting packets to that
+        network. Conversely, native addresses of the local network are transformed to IPREF
+        addresses when leaving the network. The transformations are performed by specialized nodes,
+        called IPREF gateways, designed for this purpose. IPREF gateways transfer packets over a
+        <em>third</em> network to other IPREF gateways for the purpose of traversing different
+        address spaces. Typically, the <em>third</em> network is the public Internet. In case of
+        protocol domain traversal, IPREF gateways perform necessary payload repackaging.
       </t>
 
       <section><name>IPREF References</name>
@@ -229,11 +230,11 @@
         <t>The registry of reserved reference values should be vested with IANA. For now, these values are
           listed here until a suitable request to establish such registry is made with IANA.
         </t>
-        <t>References are meaningful only in the context of their local networks (local address
-          domains to be exact). Local administrators may divide them into fields for any purpose
-          they deem useful. For example, the fields may reflect different sources of allocations,
-          or provide extra security bits, or provide load balancing options, or provide A/B address
-          ranges etc. The definition of these fields, their values, their use are fully under local
+        <t>References are unsigned integers meaningful only in the context of the local address
+          space. Local administrators may divide their values into fields for any purpose deemed
+          useful. For example, the fields may reflect different sources of allocations, or provide
+          extra security bits, or provide load balancing options, or provide A/B address ranges
+          etc. The definition of these fields, their values, and their use are fully under local
           administration control. The peers are unaware of these fields and treat the references as
           single opaque values.
         </t>
@@ -243,13 +244,15 @@
       <section><name>IPREF Addresses</name>
 
         <t>An IPREF address is a combination of a layer 3 network address and a reference carried in the
-          same packet. In notation, a plus sign '+' separates the two components. For example:
+          same packet. In the notation, a plus sign '+' separates the two components. For example:
           198.51.100.11+700 or 2001:db8::abc:11+700.
         </t>
 
-        <t>The references are used in conjunction with standard IP addresses from the <em>third</em> network. These
-          are typically addresses of gateway interfaces where the packets arrive at or where they are being sent
-          from. A combination of a <em>third</em> network IP address and the reference is called an IPREF address,
+        <t>The references are used in conjunction with native IP addresses from the <em>third</em>
+          network. These are typically addresses of gateway interfaces where the packets arrive at
+          or where they are being sent from. These addresses provide the context indicating which
+          address space the references pertain to. A combination of such native IP address and the
+          reference is called an IPREF address,
           <xref target="ipref-address"/>.
         </t>
 
@@ -263,26 +266,26 @@
               ]]> </artwork> </artset>
         </figure>
 
-        <t>In the notation, a plus sign '+' is used to separate the IP address from the reference.
-         In a packet exchange, there is a source IPREF address and a destination IPREF address,
-         thus two references. The destination references are allocated by the administrators of the
-         destination networks while the source references are allocated by the administrators of
-         the source networks. There are no negotiations. Each peer defines their own references
-         and accepts peer references as opaque values.
+        <t>In the notation, a plus sign '+' is used to separate context addresses from references.
+          In packet exchanges, there are source IPREF addresses and a destination IPREF addresses,
+          thus a pair of references. The destination references are allocated by the administrators
+          of the destination networks while the source references are allocated by the administrators
+          of the source networks. There are no negotiations. Each peer defines their own references
+          and accepts peer references as opaque values.
         </t>
 
       </section>  <!-- ^^ IPREF Addresses ^^ -->
 
       <section><name>Embedding References in IP Packets</name>
 
-        <t>A reference is a network layer entity and the most natural place for embedding it would
-           be a network layer header, such as an IPv4 option or an IPv6 extension header.
+        <t>References are network layer entities and the most natural place for embedding them
+          would be a network layer headers, such as IPv4 options or IPv6 extension headers.
         </t>
-        <t>Unfortunately, many Internet Service Providers drop options and extensions headers for
-           various reasons. Even if they don't, network devices tend to put them on a slow processing
+        <t>Unfortunately, many Internet Service Providers drop options and extension headers for
+           various reasons. Even if they don't, routers tend to put them on a slow processing
            path resulting in poor performance. For that reason, the most reliable way to embed
            references is to place them in the payload. One common technique to accomplish this is
-           tunneling where a reference could be placed in the payload of the packet being tunneled.
+           tunneling where references could be placed in the payload of the packet being tunneled.
         </t>
 
         <section><name>IPv4 Option</name>
@@ -310,7 +313,7 @@
 
         <section><name>UDP Tunnel</name>
           <t>Placing references in a UDP tunnel works for both IPv4 and IPv6. In both cases, the
-             references are embedded in the form of respective option or extension header. In
+             references are embedded in the form of respective options or extension headers. In
              addition, a tunnel encapsulation record is added. The order of items is as follows:
           </t>
           <ul spacing="compact" empty="true">
@@ -346,13 +349,14 @@
           for simplicity are shown as distinct. Further, for ease of following the example, addresses
           related to local network A are odd while addresses related to local network B are even.
         </t>
-        <t>Hosts on local network A communicate with hosts on other local networks, such as local network B, without
-          knowing IP addresses on the peer networks or even without knowing network protocols employed by the
-          peer networks. An <em>encoding</em> network is used in lieu of the peer private network addresses. The peer
-          hosts appear as if they were hosted on the <em>encoding</em> network. This is a compatibility feature. It
-          is possible to avoid such mapping at the cost of making local hosts IPREF aware. That case is not described
-          here as it is dramatically simpler to use <em>encoding</em> networks and leave existing hosts as-is, without
-          any modifications.
+        <t>Hosts on local network A communicate with hosts on other local networks, such as local
+          network B, without knowing IP addresses on the peer networks or even without knowing
+          network protocols employed by the peer networks. An <em>encoding</em> network is used in
+          lieu of the peer addresses which are in form of IPREF addresses. The peer hosts appear
+          as if they were hosted on the <em>encoding</em> network. This is a compatibility feature.
+          It is possible to avoid such mapping at the cost of making local hosts IPREF aware. That
+          case is not described here as it is dramatically simpler to use <em>encoding</em>
+          networks and leave existing hosts as-is, without any modifications.
         </t>
 
         <figure anchor="private-networks-same-protocol"><name>private networks in the same protocol domain</name>
@@ -472,15 +476,14 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
           knows, or is concerned with, how the references are interpreted outside of their own administrative domains. In cases
           where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
-          repackaging of the payload. Of course, higher level protocols such as TCP/UDP, must be compatible for this to be
-          practical.
+          repackaging of the payload.
         </t>
 
       </section>  <!-- ^^ Traversing Address Spaces in the Same Protocol Domain ^^ -->
 
-      <sectiom><name>Traversing Address Spaces in Different Protocol Domains</name>
+      <section><name>Traversing Address Spaces Across Protocol Domains</name>
 
-        <t>If address domains reside in different protocol domains, then the gateways have an
+        <t>If address spaces reside in different protocol domains, then the gateways have an
           additional responsibility to repackage packets into proper protocol frames. Other
           than that, addresses are rewritten in the same manner.
         </t>
@@ -552,7 +555,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           recognizes the destination address as its own and consumes the packet.
         </t>
 
-      </section>  <!-- ^^ Traversing Address Spaces in Different Protocol Domains ^^ -->
+      </section>  <!-- ^^ Traversing Address Spaces Across Protocol Domains ^^ -->
 
       <section><name>Delegating References</name>
 
@@ -607,16 +610,17 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
         </figure>
 
         <t>Nested networks pose no issues in terms of traversing address spaces but they have an
-          impact on visibility of services published via IPREF. There are two cases. In one case,
-          there are no services published via DNS on any host on the nested network. In the other
-          case, there is at least one host that publishes services advertised via DNS.
+          impact on visibility of services published via DNS in form of IPREF addresses. There are
+          two cases. In one case, there are no services published via DNS on any host on the nested
+          network. In the other case, there is at least one host that publishes services advertised
+          via DNS.
         </t>
         <section><name>No Services Published via DNS</name>
           <t>Let's first consider a case where a nested network does not publish any services via
-            DNS. Hosts on this network can still reach services published elsewhere. For example,
-            let's say host C3 wants to reach host A5 from a previous example above. In that case,
-            the addresses would be translated as listed below. The first address is the source,
-            and the second address is the destination:
+            DNS. Hosts on this network can still reach services published in form of IPREF
+            addresses elsewhere. For example, let's say host C3 wants to reach host A5 from a
+            previous example above. In that case, the addresses would be translated as listed
+            below. The first address is the source, and the second address is the destination:
           </t>
           <ol>
             <li>at C3:  |  172.19.9.39  |  10.254.0.45  |  payload  |</li>
@@ -647,19 +651,21 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           </t>
         </section>
         <section><name>Services Potentially Published via DNS</name>
-          <t>If there were any services to be published via DNS on network C, then GWC cannot use
-            its outer IP address as the native portion of an IPREF address because that address is
-            not visible on the Internet. This is strictly DNS publishing issue. Packets would reach
-            relevant hosts regardless (because GWB would re-translate to an address with Internet
-            visible native portion) but at a cost of a very complicated configuration that would
-            need to be maintained in two places and kept in sync. This would be an impractical solution.
+          <t>If there were any services to be published via DNS in form of IPREF addresses on
+            network C, then GWC cannot use its outer IP address as the context portion of an IPREF
+            address because that address is not visible on the Internet. This is strictly DNS
+            publishing issue. Packets would reach relevant hosts regardless (because GWB would
+            re-translate to an Internet visible context address) but at a cost of a complicated
+            DNS configuration that would need to be maintained in two places and kept in sync.
+            This would be an impractical solution.
           </t>
-          <t>A better approach is delegation. The gateway that directly connects to the Internet would
-            delegate some of the references from its pool to nested gateways. That way nested gateways
-            could allocate IPREF addresses with Internet visible native portion. This is only needed if
-            there are any services hosted on the nested networks intended for publishing in DNS. The
-            gateway that delegates its references, GWB in the example, knows which gateways the
-            references were delegated to and thus it can forward incoming packets accordingly.
+          <t>A better approach is delegation. The gateway that directly connects to the Internet
+            would delegate some of the references from its pool to nested gateways. That way nested
+            gateways could allocate IPREF addresses with Internet visible context addresses. This
+            is only needed if there are any services hosted on the nested networks intended for
+            publishing in DNS. The gateway that delegates its references, GWB in the example, knows
+            which gateways the references were delegated to and therefore it can forward incoming
+            packets accordingly.
           </t>
           <t>Let's assume network C publishes a website on host C3. Let's also assume that GWB delegated
             references 6000 thru 8000 to gateway GWC. Now, gateway GWC allocates IPREF addresses with
@@ -803,7 +809,7 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
         ]]> </sourcecode>
 
         <t>The IP portion may be provided numerically or as a domain name. The format for the reference
-          would allow unsigned decimal integers as well as unsigned hex integers. Other formats maybe be
+          would allow unsigned decimal integers as well as unsigned hex integers. Other formats may be
           defined as well.
         </t>
         <t>The definition of the new resource record, its use, notation, and registration with IANA should
