@@ -3,9 +3,9 @@
 
 
 Internet Engineering Task Force                         W. Augustyn, Ed.
-Internet-Draft                                              24 June 2023
+Internet-Draft                                              26 June 2023
 Intended status: Standards Track                                        
-Expires: 26 December 2023
+Expires: 28 December 2023
 
 
                  IP Addressing with References (IPREF)
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2023.
+   This Internet-Draft will expire on 28 December 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Augustyn                Expires 26 December 2023                [Page 1]
+Augustyn                Expires 28 December 2023                [Page 1]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Augustyn                Expires 26 December 2023                [Page 2]
+Augustyn                Expires 28 December 2023                [Page 2]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -165,7 +165,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 3]
+Augustyn                Expires 28 December 2023                [Page 3]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -221,7 +221,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 4]
+Augustyn                Expires 28 December 2023                [Page 4]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -277,7 +277,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 5]
+Augustyn                Expires 28 December 2023                [Page 5]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -333,7 +333,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 6]
+Augustyn                Expires 28 December 2023                [Page 6]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -389,7 +389,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 7]
+Augustyn                Expires 28 December 2023                [Page 7]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -445,7 +445,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 8]
+Augustyn                Expires 28 December 2023                [Page 8]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -501,7 +501,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023                [Page 9]
+Augustyn                Expires 28 December 2023                [Page 9]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -557,7 +557,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 10]
+Augustyn                Expires 28 December 2023               [Page 10]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -613,7 +613,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 11]
+Augustyn                Expires 28 December 2023               [Page 11]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -625,33 +625,35 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
    IPREF perspective it makes no difference.  Processing works the same
    way.
 
-           \     DNS:  B2  AA  2001:db8:bb::2 + 4286
+            ╲  DNS:  B2  AA  2001:db8:bb::2 + 4286
 
-             ╲                   ╲  Encoding Network B: fdee:eeee::/64
-                                       Local Network B: 2001:db8:bb:2::/64
-               ╲                   ╲
-                                                             ┌──────┐
-                 ╲                   ╲                  ┃ :46│      │
-                                    ┏━━━━━━━┓           ┠────┤ host │
-                   ╲ 2001:db8:bb::2 ┃ IPREF ┃:2         ┃    │  B8  │
-                                  ╭─┨ g-way ┠───────────┨    └──────┘
-┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
-│      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
-│ host ├────┨          ╲                   ╲            ┃    ┌──────┐
-│  A5  │    ┃               Third Network               ┃ :28│      │
-└──────┘    ┃            ╲                   ╲          ┠────┤ host │
-            ┃           ┏━━━━━━━┓ ╎                     ┃    │  B2  │
-            ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
-┌──────┐    ┠───────────┨ g-way ┠─╯
-│      │.77 ┃           ┃  GWA  ┃ 2001:db8:aa::1 ╲
-│ host ├────┨           ┗━━━━━━━┛
-│  A7  │    ┃                  ╲                   ╲
-└──────┘
-                                 ╲                   ╲
-Local Network A: 172.17.1.0/24
-Encoding Network A: 10.128.0.0/10  ╲                   ╲
+              ╲                   ╲  Encoding Network B: fdee:eeee::/64
+                                     Local Network B: 2001:db8:bb:2::/64
+                ╲                   ╲
 
-       Figure 4: private networks in different protocol domains
+                  ╲                   ╲
+                                                                ┌──────┐
+                    ╲                   ╲                  ┃ :46│      │
+                                       ┏━━━━━━━┓           ┠────┤ host │
+                      ╲ 2001:db8:bb::2 ┃ IPREF ┃:2         ┃    │  B8  │
+                                     ╭─┨ g-way ┠───────────┨    └──────┘
+   ┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
+   │      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
+   │ host ├────┨          ╲                   ╲            ┃    ┌──────┐
+   │  A5  │    ┃               Third Network               ┃ :28│      │
+   └──────┘    ┃            ╲                   ╲          ┠────┤ host │
+               ┃           ┏━━━━━━━┓ ╎                     ┃    │  B2  │
+               ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
+   ┌──────┐    ┠───────────┨ g-way ┠─╯
+   │      │.77 ┃           ┃  GWA  ┃ 2001:db8:aa::1 ╲
+   │ host ├────┨           ┗━━━━━━━┛
+   │  A7  │    ┃                  ╲                   ╲
+   └──────┘
+                                    ╲                   ╲
+   Local Network A: 172.17.1.0/24
+   Encoding Network A: 10.128.0.0/10  ╲                   ╲
+
+          Figure 4: private networks in different protocol domains
 
    Let's assume host A7 wants to communicate with host B2.  The IPREF
    address of B2 can be obtain from DNS as 2001:db8:bb::2 + 4286.  Local
@@ -663,16 +665,17 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
    1.  at A7: | 172.17.1.77 | 10.254.0.214 | payload |
 
-   2.  at GWA: | 2001:db8:aa::1 + 7935 | 2001:db8:bb::2 + 4286 |
-       payload |
 
 
 
 
-Augustyn                Expires 26 December 2023               [Page 12]
+Augustyn                Expires 28 December 2023               [Page 12]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
+
+   2.  at GWA: | 2001:db8:aa::1 + 7935 | 2001:db8:bb::2 + 4286 |
+       payload |
 
    3.  at GWB: | fdee:eeee::3b9e | 2001:db8:bb:2::28 | payload |
 
@@ -722,10 +725,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-
-
-
-Augustyn                Expires 26 December 2023               [Page 13]
+Augustyn                Expires 28 December 2023               [Page 13]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -744,7 +744,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
          Third Network           ┠────┤ host │
           (Internet)     |       ┃    │  B4  │
                                  ┃    └──────┘
-                         |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                         |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
                                  ┃           /
                          |       ┃          /         ┃    ┌──────┐
                                  ┃    ┏━━━━━━━┓       ┃ .39│      │
@@ -753,8 +753,10 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
                          |       ┃    ┃  GWC  ┃       ┃    └──────┘
                                  ┃    ┗━━━━━━━┛       ┃
                          |             /
-                                      /  Local Network C: 172.19.9.0/24
-                         |           |   Encoding Network C: 10.254.0/12
+                                      /
+                         |           /
+                                    / Local Network C: 172.19.9.0/24
+                         |         /  Encoding Network C: 10.254.0/12
 
                      Figure 5: nested private networks
 
@@ -777,14 +779,14 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
    1.  at C3: | 172.19.9.39 | 10.254.0.45 | payload |
 
-   2.  at GWC: | 172.18.2.3 + 794 | 198.51.100.11 + 537 | payload |
 
 
-
-Augustyn                Expires 26 December 2023               [Page 14]
+Augustyn                Expires 28 December 2023               [Page 14]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
+
+   2.  at GWC: | 172.18.2.3 + 794 | 198.51.100.11 + 537 | payload |
 
    3.  at GWB: | 198.51.100.22 + 486 | 198.51.100.11 + 537 | payload |
 
@@ -832,16 +834,16 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
    to the Internet would delegate some of the references from its pool
    to nested gateways.  That way nested gateways could allocate IPREF
    addresses with Internet visible context addresses.  This is only
-   needed if there are any services hosted on the nested networks
-   intended for publishing in DNS.  The gateway that delegates its
 
 
 
-Augustyn                Expires 26 December 2023               [Page 15]
+Augustyn                Expires 28 December 2023               [Page 15]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
+   needed if there are any services hosted on the nested networks
+   intended for publishing in DNS.  The gateway that delegates its
    references, GWB in the example, knows which gateways the references
    were delegated to and therefore it can forward incoming packets
    accordingly.
@@ -891,9 +893,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-
-
-Augustyn                Expires 26 December 2023               [Page 16]
+Augustyn                Expires 28 December 2023               [Page 16]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -949,7 +949,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 17]
+Augustyn                Expires 28 December 2023               [Page 17]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 18]
+Augustyn                Expires 28 December 2023               [Page 18]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 19]
+Augustyn                Expires 28 December 2023               [Page 19]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
 
 
-Augustyn                Expires 26 December 2023               [Page 20]
+Augustyn                Expires 28 December 2023               [Page 20]
 
 Internet-Draft    IP Addressing with References (IPREF)        June 2023
 
@@ -1173,4 +1173,4 @@ Author's Address
 
 
 
-Augustyn                Expires 26 December 2023               [Page 21]
+Augustyn                Expires 28 December 2023               [Page 21]

@@ -40,7 +40,7 @@
     wcwidth 0.2.6
     weasyprint 59.0
 -->
-<link href="/usr/src/app/tmp/5eab978f-e156-48ab-9b80-9156241db92e/draft-augustyn-intarea-ipref-01.xml" rel="alternate" type="application/rfc+xml">
+<link href="/usr/src/app/tmp/7b792cee-1118-4b22-bddb-4731e628418d/draft-augustyn-intarea-ipref-01.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">/*
 
@@ -1218,7 +1218,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Augustyn</td>
-<td class="center">Expires 26 December 2023</td>
+<td class="center">Expires 28 December 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1231,12 +1231,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-augustyn-intarea-ipref-01</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-24" class="published">24 June 2023</time>
+<time datetime="2023-06-26" class="published">26 June 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-26">26 December 2023</time></dd>
+<dd class="expires"><time datetime="2023-12-28">28 December 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1279,7 +1279,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1805,10 +1805,12 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
             <div class="alignLeft art-ascii-art art-text artwork" id="section-2.5-3.1.1">
 <pre>
 
-           \     DNS:  B2  AA  2001:db8:bb::2 + 4286
+         ╲  DNS:  B2  AA  2001:db8:bb::2 + 4286
 
-             ╲                   ╲  Encoding Network B: fdee:eeee::/64
-                                       Local Network B: 2001:db8:bb:2::/64
+           ╲                   ╲  Encoding Network B: fdee:eeee::/64
+                                  Local Network B: 2001:db8:bb:2::/64
+             ╲                   ╲
+
                ╲                   ╲
                                                              ┌──────┐
                  ╲                   ╲                  ┃ :46│      │
@@ -1903,7 +1905,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
       Third Network           ┠────┤ host │
        (Internet)     |       ┃    │  B4  │
                               ┃    └──────┘
-                      |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                      |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
                               ┃           /
                       |       ┃          /         ┃    ┌──────┐
                               ┃    ┏━━━━━━━┓       ┃ .39│      │
@@ -1912,8 +1914,10 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
                       |       ┃    ┃  GWC  ┃       ┃    └──────┘
                               ┃    ┗━━━━━━━┛       ┃
                       |             /
-                                   /  Local Network C: 172.19.9.0/24
-                      |           |   Encoding Network C: 10.254.0/12
+                                   /
+                      |           /
+                                 / Local Network C: 172.19.9.0/24
+                      |         /  Encoding Network C: 10.254.0/12
 
 </pre><a href="#section-2.6-3.1.1" class="pilcrow">¶</a>
 </div>
