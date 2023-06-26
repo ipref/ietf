@@ -501,7 +501,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
            \     DNS:  B2  AA  2001:db8:bb::2 + 4286
 
              ╲                   ╲  Encoding Network B: fdee:eeee::/64
-                                       Local Network B: 2001:db8:bb:2::/64
+                                    Local Network B: 2001:db8:bb:2::/64
                ╲                   ╲
                                                              ┌──────┐
                  ╲                   ╲                  ┃ :46│      │
