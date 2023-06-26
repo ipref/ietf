@@ -28,6 +28,7 @@
   updates=""
   submissionType="IETF"
   category="std"
+  consensus="true"
   xml:lang="en"
   version="3">
 <!--
