@@ -498,10 +498,12 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
           <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
             <artwork type="ascii-art" name="private networks different protocols diagram">
               <![CDATA[
-           \     DNS:  B2  AA  2001:db8:bb::2 + 4286
+         ╲  DNS:  B2  AA  2001:db8:bb::2 + 4286
 
-             ╲                   ╲  Encoding Network B: fdee:eeee::/64
-                                    Local Network B: 2001:db8:bb:2::/64
+           ╲                   ╲  Encoding Network B: fdee:eeee::/64
+                                  Local Network B: 2001:db8:bb:2::/64
+             ╲                   ╲
+                                  
                ╲                   ╲
                                                              ┌──────┐
                  ╲                   ╲                  ┃ :46│      │
@@ -593,7 +595,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
       Third Network           ┠────┤ host │
        (Internet)     |       ┃    │  B4  │
                               ┃    └──────┘
-                      |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                      |       ┃             . ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
                               ┃           /
                       |       ┃          /         ┃    ┌──────┐
                               ┃    ┏━━━━━━━┓       ┃ .39│      │
@@ -602,8 +604,10 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
                       |       ┃    ┃  GWC  ┃       ┃    └──────┘
                               ┃    ┗━━━━━━━┛       ┃
                       |             /
-                                   /  Local Network C: 172.19.9.0/24
-                      |           |   Encoding Network C: 10.254.0/12
+                                   /
+                      |           /
+                                 / Local Network C: 172.19.9.0/24
+                      |         /  Encoding Network C: 10.254.0/12
               ]]>
             </artwork>
           </artset>
