@@ -951,4 +951,5 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
 
  </back>
 </rfc>
-<!-- vim: tabstop=2 softtabstop=2 shiftwidth=2 expandtab: -->
+<!-- vim: tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+-->
