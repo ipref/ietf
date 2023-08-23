@@ -28,7 +28,7 @@ IPv4 Internet is now dropped. It takes place very early in the process thus IPv4
 
 ![step 1](./stop-ipv4-creep.s6.jpg)
 
-Each side may now switch to IPv6 independently. Each side may also elect to stay with IPv4 for an extended amount of time. The Internet is not affected by these decisions.
+Each side may now switch to IPv6 independently. The switch is to pure IPv6, no dual stacks. Each side may also elect to stay with IPv4 for an extended amount of time. The Internet is not affected by these decisions.
 
 ![step 1](./stop-ipv4-creep.s7.jpg)
 
