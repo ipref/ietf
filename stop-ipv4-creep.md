@@ -8,11 +8,13 @@ A far better strategy is to use IPREF. IPREF does not use dual stacks and it doe
 
 ![step 1](./stop-ipv4-creep.s1.jpg)
 
-IPREF gateways are installed but not used yet.
+IPREF gateways are installed but not used.
 
 ![step 1](./stop-ipv4-creep.s2.jpg)
 
-IPREF gateways are configured. References are assigned. Traffic goes through the IPREF gateways.
+IPREF gateways are configured. References are assigned. Traffic goes through the IPREF gateways. All services subject to transition are now accessed via IPREF. Tests should be run to confirm this.
+
+Transition effort of local networks is decoupled from transition efforts of peer networks. Local networks may now start internal transition to IPv6 independently.
 
 ![step 1](./stop-ipv4-creep.s3.jpg)
 
@@ -20,7 +22,7 @@ Each side acquires IPv6 Internet addresses independently.
 
 ![step 1](./stop-ipv4-creep.s4.jpg)
 
-Both sides are connected to IPv6 Internet now. IPREF gateways pass traffic over the IPv6 Internet.
+Both sides are connected to IPv6 Internet now. IPREF gateways pass traffic over the IPv6 Internet. Tests should be run to confirm all services are now reachable via IPREF over the IPv6 Internet.
 
 ![step 1](./stop-ipv4-creep.s5.jpg)
 
