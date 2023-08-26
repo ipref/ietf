@@ -6,8 +6,6 @@ Traditional transition strategy has a structural deficiency. It perpetuates IPv4
 
 IPREF does not have such deficiency. It does not use dual stacks and it does not use any translator devices that require IPv4 addresses. IPREF gateways are set up first which makes it possible to drop IPv4 Internet very early in the process. The actual transition of the local networks takes place after the Internet connection has been switched to IPv6. In this way, the life of the IPv4 Internet is never extended by the transitioning effort, instead it is dropped very early, on the first opportunity.
 
-IPREF is the only viable technology that can bring the two Internets into one in a reasonable time.
-
 Transitioning process with IPREF takes advantage of IPREF's flexibility to operate in all combinations of IPv4/IPv6 configurations:
 
 ```
