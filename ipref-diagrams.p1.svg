@@ -65,7 +65,7 @@
   </font>
  </defs>
  <defs class="TextShapeIndex">
-  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19 id20 id21 id22 id23 id24 id25 id26 id27 id28 id29 id30 id31 id32 id33 id34 id35 id36 id37 id38 id39 id40 id41 id42 id43 id44 id45 id46 id47 id48 id49 id50 id51 id52 id53 id54 id55 id56 id57 id58 id59 id60 id61"/>
+  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19 id20 id21 id22 id23 id24 id25 id26 id27 id28 id29 id30 id31 id32 id33 id34 id35 id36 id37 id38 id39 id40 id41 id42 id43 id44 id45 id46 id47 id48 id49 id50 id51 id52 id53 id54 id55 id56 id57 id58 id59 id60"/>
  </defs>
  <defs class="EmbeddedBulletChars">
   <g id="bullet-char-template-57356" transform="scale(0.00048828125,-0.00048828125)">
@@ -473,19 +473,13 @@
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id57">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1952" y="1634" width="17781" height="4128"/>
-        <path fill="rgb(80,32,12)" stroke="none" d="M 10842,5761 L 1952,5761 1952,1634 19732,1634 19732,5761 10842,5761 Z"/>
-       </g>
-      </g>
-      <g class="TextShape">
-       <g id="id58">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2415" y="2052" width="3983" height="709"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400"><tspan class="TextPosition" x="2466" y="2577"><tspan fill="rgb(255,255,255)" stroke="none" style="white-space: pre">IPREF Address</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1952" y="1952" width="17781" height="3811"/>
+        <path fill="rgb(80,32,12)" stroke="none" d="M 10842,5762 L 1952,5762 1952,1952 19732,1952 19732,5762 10842,5762 Z"/>
        </g>
       </g>
       <g class="Group">
        <g class="com.sun.star.drawing.CustomShape">
-        <g id="id59">
+        <g id="id58">
          <rect class="BoundingBox" stroke="none" fill="none" x="6992" y="2930" width="3558" height="637"/>
          <path fill="rgb(175,208,149)" stroke="none" d="M 8771,3540 L 7018,3540 7018,2956 10523,2956 10523,3540 8771,3540 Z"/>
          <path fill="none" stroke="rgb(128,128,128)" stroke-width="51" stroke-linejoin="round" d="M 8771,3540 L 7018,3540 7018,2956 10523,2956 10523,3540 8771,3540 Z"/>
@@ -493,7 +487,7 @@
         </g>
        </g>
        <g class="com.sun.star.drawing.CustomShape">
-        <g id="id60">
+        <g id="id59">
          <rect class="BoundingBox" stroke="none" fill="none" x="10485" y="2930" width="3558" height="637"/>
          <path fill="rgb(175,208,149)" stroke="none" d="M 12264,3540 L 10511,3540 10511,2956 14016,2956 14016,3540 12264,3540 Z"/>
          <path fill="none" stroke="rgb(128,128,128)" stroke-width="51" stroke-linejoin="round" d="M 12264,3540 L 10511,3540 10511,2956 14016,2956 14016,3540 12264,3540 Z"/>
@@ -502,7 +496,7 @@
        </g>
       </g>
       <g class="TextShape">
-       <g id="id61">
+       <g id="id60">
         <rect class="BoundingBox" stroke="none" fill="none" x="8302" y="4110" width="4763" height="1018"/>
         <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4537"><tspan fill="rgb(255,255,255)" stroke="none" style="white-space: pre">2001:db8::abc:11 + 700</tspan></tspan></tspan><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4969"><tspan fill="rgb(255,255,255)" stroke="none" style="white-space: pre">198.51.100.11 + 700</tspan></tspan></tspan></text>
        </g>
