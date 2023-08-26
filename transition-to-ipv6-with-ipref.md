@@ -24,34 +24,51 @@ Transitioning process with IPREF takes advantage of IPREF's flexibility to opera
 ```
 This has the effect of making the transition effort independent of what protocol the Internet runs, and what transition effort, if any, takes place at the peer networks. Generally, the process looks like this:
 
-![](./transition-to-ipv6-with-ipref.s1.jpg)
+1. #### Starting point
 
-IPREF gateways are installed but not used.
+	![](./transition-to-ipv6-with-ipref.s1.jpg)
 
-![](./transition-to-ipv6-with-ipref.s2.jpg)
+	IPREF gateways are installed but not used.
+	
+1. #### Switching traffic to IPREF
 
-IPREF gateways are configured. References are assigned. Traffic goes through the IPREF gateways. All services subject to transition are now accessed via IPREF. Tests should be run to confirm that.
+	![](./transition-to-ipv6-with-ipref.s2.jpg)
 
-Transition effort of local networks is decoupled from transition efforts of any peer networks. Local networks may now start internal transition to IPv6 independently. Traffic between the gateways will remain over IPv4 until both sides connect their IPREF gateways to IPv6. This does not affect transitioning of internal networks to IPv6.
+	IPREF gateways are configured. References are assigned. Traffic goes through the IPREF gateways. All services subject to transition are now accessed via IPREF. Tests should be run to confirm that.
 
-![](./transition-to-ipv6-with-ipref.s3.jpg)
+	Transition effort of local networks is decoupled from transition efforts of any peer networks.
+Local networks may now start internal transition to IPv6 independently. Traffic between the
+gateways will remain over IPv4 until both sides connect their IPREF gateways to IPv6. This does
+not affect transitioning of internal networks to IPv6.
 
-Each side acquires IPv6 Internet addresses at their own pace.
+1. #### Acquiring IPv6 Internet addresses
 
-![](./transition-to-ipv6-with-ipref.s4.jpg)
+	![](./transition-to-ipv6-with-ipref.s3.jpg)
 
-At some point both sides are connected to IPv6 Internet. IPREF gateways may now pass traffic over the IPv6 Internet. Tests should be run to confirm all services are still reachable via IPREF.
+	Each side acquires IPv6 Internet addresses at their own pace.
+	
+1. #### Switching IPREF gateway traffic to IPv6
 
-![](./transition-to-ipv6-with-ipref.s5.jpg)
+	![](./transition-to-ipv6-with-ipref.s4.jpg)
 
-IPv4 Internet may now be dropped. It takes place very early in the process. From the Internet's point of view, the transition of these sites to IPv6 has been completed. The Internet does not have to wait until every local network transitions to IPv6. Local networks may run whatever protocol they wish so long as they connect to the IPv6 Internet.
+	At some point both sides are connected to IPv6 Internet. IPREF gateways may now pass traffic over the IPv6 Internet. Tests should be run to confirm all services are still reachable via IPREF.
+	
+1. #### Dropping IPv4 Internet
 
-From local networks' point of view, the transition to IPv6 might not even started but this has no bearing on the Internet. Local networks are free to take as much time as they need for the transition.
+	![](./transition-to-ipv6-with-ipref.s5.jpg)
 
-![](./transition-to-ipv6-with-ipref.s6.jpg)
+	IPv4 Internet may now be dropped. It takes place very early in the process. From the Internet's point of view, the transition of these sites to IPv6 has been completed. The Internet does not have to wait until every local network transitions to IPv6. Local networks may run whatever protocol they wish so long as they connect to the IPv6 Internet.
 
-Each side switches to IPv6 independently. The switch is to pure IPv6, no dual stacks. Each side may also elect to stay with IPv4 for an extended amount of time. The Internet is not affected by these decisions.
+	From local networks' point of view, the transition to IPv6 might not even started but this has no bearing on the Internet. Local networks are free to take as much time as they need for the transition.
+	
+1. #### Switching to IPv6 independently
 
-![](./transition-to-ipv6-with-ipref.s7.jpg)
+	![](./transition-to-ipv6-with-ipref.s6.jpg)
 
-Transition is completed when both sides switch to IPv6. IPREF gateways remain in place to allow communication with third party sites that have not transitioned.
+	Each side switches to IPv6 independently. The switch is to pure IPv6, no dual stacks. Each side may also elect to stay with IPv4 for an extended amount of time. The Internet is not affected by these decisions.
+	
+1. #### Completing transition
+
+	![](./transition-to-ipv6-with-ipref.s7.jpg)
+
+	Transition is completed when both sides switch to IPv6. IPREF gateways remain in place to allow communication with third party sites that have not transitioned.
