@@ -13,9 +13,9 @@ Key characteristics of IPREF:
 
 1. ### Fundamental Concepts
 
-The biggest problem, when traversing different address spaces, is to convey the destination address to the originating host. Such address is either not understood by the host or it is potentially in conflict with an address within the originating address space. There have been many complicated solutions to this problem but the best solution is not to try to convey those addresses at all.
+	The biggest problem, when traversing different address spaces, is to convey the destination address to the originating host. Such address is either not understood by the host or it is potentially in conflict with an address within the originating address space. There have been many complicated solutions to this problem but the best solution is not to try to convey those addresses at all.
 
-As it turns out, the originating host does not need to know the destination address so long as it can be referred to in a manner understood by both peers. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. Therefore IPREF does not use real addresses, it uses references to real addresses instead.
+	As it turns out, the originating host does not need to know the destination address so long as it can be referred to in a manner understood by both peers. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. Therefore IPREF does not use real addresses, it uses references to real addresses instead.
 
 1. ### IPREF Address
 
