@@ -5,15 +5,16 @@ IPREF is a method for traversing address spaces - such as private networks behin
 Key characteristics of IPREF:
 
 - massively scalable
-- no need for external translators, shared configurations, or any negotiations
+- cross protocol, cross address space
 - strictly layer 3 (no port manipulation, all ports available)
-- traverses NAT, NAT6, filters, including cross protocol without need for any global IPv4 addresses
-- works the same way in any combination of IPv4/IPv6 local networks and the IPv4/IPv6 Internet
-- IPREF addresses publishable via DNS
+- host addresses publishable via DNS
+- works the same way in any combination of IPv4/IPv6 local networks and IPv4/IPv6 Internet
+- no need for external translators, shared configurations, or any negotiations
+- does not consume any global addresses from any protocol domain, IPv4 or IPv6
 
 1. ### Fundamental Concepts
 
-	IPREF is based on an observation that the originating host does not need to know the destination address so long as that address can be referred to in a manner understood by both peers. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. This approach produces highly scalable communication system that does not need any shared configuration or any negotiations.
+	IPREF is based on an observation that the originating host does not need to know the destination address so long as that address can be referred to in a manner understood by both peers. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. This approach produces highly scalable, cross protocol, cross address space communication system that does not need any shared configuration or any negotiations.
 
 1. ### IPREF Address
 
