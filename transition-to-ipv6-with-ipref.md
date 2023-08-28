@@ -5,8 +5,8 @@ Transitioning to IPv6 Internet with IPREF offers significant benefits to both th
 - massively scalable
 - ability to drop IPv4 Internet early in the process
 - transition to pure IPv6 (no dual stacks, no two step transition)
-- no reliance on IPv4-as-a-service or any other IPv4 services from the Internet
-- no global IPv4 addresses needed
+- no need for IPv4-as-a-service or any other IPv4 services from the Internet
+- no need for global IPv4 addresses
 - ability to transition at own pace
 - huge cost savings
 
