@@ -131,15 +131,17 @@ Let's say an IPv4 host A1 wants to send a packet to an IPv6 host B6:
 			
 	Host A1 recognizes destination address as its own and consumes the packet. OS passes the packet to the application that sent the original packet.
 		
+At this point any missing mappings have been allocated. Subsequent packet exchange continues without additional allocations.
+
 
 ### IPREF with DNS
 
 ![](./how-ipref-works-in-detail.img3.jpg)
 
-IPREF addresses are publishable via DNS. These addresses will most likely require a new RR type. Until a new record type is allocated, TXT records may be used. In the diagram above, an AA record is used for illustration purpose.
+IPREF addresses are publishable in DNS. These addresses will most likely require a new RR type. Until a new record type is allocated, TXT records may be used. In the diagram above, an AA record is used for illustration purpose.
 	
 Local networks may publish IPREF addresses of their servers using standard authoritative DNS servers. All such published IPREF addresses must be communicated to the local IPREF gateway so that it can properly map destination addresses of incoming packets to local hosts.
 	
 For resolution of DNS names, a modified recursive resolver, that recognizes IPREF addresses, is required. The resolver must be able to encode returned IPREF addresses into local private addresses in cooperation with local IPREF gateway. This is needed because local hosts do not understand IPREF addresses. Instead, local hosts use encoded equivalents which are then replaced with the actual IPREF addresses by the gateway.
 	
-IPREF address records may be protected by DNSSEC. Packets leaving local networks contain the exact addresses returned from DNS. Internally, in the local networks, encoded versions of these addresses are used which complicates things a little but the gateways replace these encoded addresses with actual IPREF addresses listed in DNS before sending packets out of the local network.
+IPREF address records may be protected by DNSSEC. Packets leaving local networks contain the exact addresses returned from DNS. Internally, local hosts use encoded versions of these addresses which complicates things a little but the gateways replace them with the original IPREF addresses listed in DNS before sending packets out of the local network.
