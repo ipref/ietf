@@ -28,11 +28,11 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 
 ### Detailed description
 
-1. ### Fundamental Concepts
+- ### Fundamental Concepts
 
 	IPREF is based on an observation that the originating host does not need to know the destination address so long as that address can be referred to in a manner understood by both ends. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. Thus IPREF uses references to IP addresses instead of real addresses. This approach produces highly scalable, cross protocol, cross address space communication system without a need for any kind of negotiations or shared configurations.
 
-1. ### IPREF Address
+- ### IPREF Address
 
     ![](./how-ipref-works-in-detail.img1.jpg)
     
@@ -42,7 +42,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 
     References are allocated by admins of respective networks where hosts reside. There is no negotiations involved since these references are interpreted in the context of respective networks.
 
-1. ### Packet Exchange
+- ### Packet Exchange
 
 	![](./how-ipref-works-in-detail.img2.jpg)
 
@@ -66,7 +66,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 		
 			B6 has address:  10.128.48.62
 			
-	1. #### Host A1 send a packet out to B6
+	1. #### Host A1 sends a packet out to B6
 	
 		Host A1 places its own address as source and the address of host B6 returned by the local resolver as destination.
 		
@@ -89,7 +89,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 	
 			packet in:  | 2001:db8:aa:1::9 + 1579 | 2001:db8:bb:2::8 + 2466 | payload |
 			
-		The gateway notices that it does not have an econding for the source IPREF address, so it creates one on the fly:
+		The gateway notices that it does not have an encoding for the source IPREF address, so it creates one on the fly:
 		
 			map: 2001:db8:aa:1::9 + 1579 = fdee:eeee::1377:5951
 			
@@ -118,7 +118,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 		
 			packet out: | 2001:db8:bb:2::8 + 2466 | 2001:db8:aa:1::9 + 1579 | payload |
 			
-	2. #### Packet arrives at gateway GWA
+	1. #### Packet arrives at gateway GWA
 	
 			packet in:  | 2001:db8:bb:2::8 + 2466 | 2001:db8:aa:1::9 + 1579 | payload |
 			
@@ -126,14 +126,14 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 		
 			packet out: | 10.128.48.62 | 172.17.1.75 | payload |
 			
-	2. #### Packet arrives at host A1
+	1. #### Packet arrives at host A1
 	
 			packet in:  | 10.128.48.62 | 172.17.1.75 | payload |
 			
 		Host A1 recognizes destination address as its own and consumes the packet. OS passes the packet to the application that sent the original packet.
 		
 
-1. ### IPREF with DNS
+- ### IPREF with DNS
 
 	![](./how-ipref-works-in-detail.img3.jpg)
 
