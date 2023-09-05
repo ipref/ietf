@@ -50,7 +50,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 
 	Let's say an IPv4 host A1 wants to send a packet to an IPv6 host B6:
 	
-	2. #### Host A1 finds out the address of host B6
+	1. #### Host A1 finds out the address of host B6
 	
 		Host  A1 issues a DNS query for host B6. The query goes through  the local resolver.
 		
@@ -66,13 +66,13 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 		
 			B6 has address:  10.128.48.62
 			
-	2. #### Host A1 send a packet out to B6
+	1. #### Host A1 send a packet out to B6
 	
 		Host A1 places its own address as source and the address of host B6 returned by the local resolver as destination.
 		
 			packet out: | 172.17.1.75 | 10.128.48.62 | payload |
 			
-	2. #### Packet arrives at gateway GWA
+	1. #### Packet arrives at gateway GWA
 	
 			packet in:  | 172.17.1.75 | 10.128.48.62 | payload |
 			
@@ -85,7 +85,7 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 			packet out: | 2001:db8:aa:1::9 + 1579 | 2001:db8:bb:2::8 + 2466 | payload |
 
 
-	2. #### Packet arrives at gateway GWB
+	1. #### Packet arrives at gateway GWB
 	
 			packet in:  | 2001:db8:aa:1::9 + 1579 | 2001:db8:bb:2::8 + 2466 | payload |
 			
@@ -98,19 +98,19 @@ Using IPREF for transitioning to IPv6 Internet simplifies network design, making
 			packet out: | fdee:eeee::1377:5951 | 2001:db8:bb:12::28 | payload |
 			
 			
-	2. #### Packet arrives at host B6
+	1. #### Packet arrives at host B6
 	
 			packet in:  | fdee:eeee::1377:5951 | 2001:db8:bb:12::28 | payload |
 			
 		Host B6 recognizes destination address as its own and consumes the packet. OS passes the packet to an application implied by layer 4.
 		
-	2. #### Host B6 sends a reply back to A1
+	1. #### Host B6 sends a reply back to A1
 	
 		Host B6 gets a reply payload from the application, swaps source and destination addresses, and sends the packet back to A1
 		
 			packet out: | 2001:db8:bb:12::28 | fdee:eeee::1377:5951 | payload |
 			
-	2. #### Packet arrives at gateway GWB
+	1. #### Packet arrives at gateway GWB
 	
 			packet in:  | 2001:db8:bb:12::28 | fdee:eeee::1377:5951 | payload |
 			
