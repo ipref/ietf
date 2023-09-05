@@ -10,9 +10,9 @@ IPREF is a method for traversing address spaces - such as private networks behin
 - host addresses publishable in DNS
 - supports any combination of IPv4/IPv6 local networks and IPv4/IPv6 Internet
 - no need for external translators or shared configurations
-- does not need any global addresses from any protocol domain, IPv4 or IPv6
+- no need for any global addresses from any protocol domain, IPv4 or IPv6
 
-#### Perfect for transition to IPv6 Internet
+#### Perfect tool for transitioning to IPv6 Internet
 
 Using IPREF for transitioning to IPv6 Internet simplifies network design, making the entire process much cleaner.
 
@@ -35,7 +35,7 @@ IPREF is based on an observation that the originating host does not need to know
 
 ![](./how-ipref-works-in-detail.img1.jpg)
     
-IPREF does not use real addresses. Instead, it uses references which are opaque integers. Such references need contexts to be meaningful, therefore IPREF uses addressing units, called IPREF addresses, that are a combination of a native IP address and a reference. The native address is the context.
+IPREF does not use real addresses. Instead, it uses references which are opaque integers. Such references need context to be meaningful, therefore IPREF uses addressing units, called IPREF addresses, that are a combination of a native IP address and a reference. The native address is the context.
 
 Typically, the context address is an Internet address of an edge router of the source or destination network. It is a convenience, not a requirement, other addresses known to the network may also be used. Originating hosts send packets to the network with this address and have that network calculate the actual address of the destination based on the supplied reference.
 
