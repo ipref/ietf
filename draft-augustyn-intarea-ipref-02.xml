@@ -22,7 +22,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-augustyn-intarea-ipref-01"
+  docName="draft-augustyn-intarea-ipref-02"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -43,7 +43,7 @@
     <title>IP Addressing with References (IPREF)</title> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#title-4 -->
     <!--  The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-01"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
+    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-02"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
     <!-- Set value to the name of the draft  -->
 
     <author fullname="Waldemar Augustyn" initials="W" role="editor" surname="Augustyn"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#author -->
@@ -336,6 +336,101 @@
         </section>
 
       </section>  <!-- ^^Embedding References^^ -->
+
+      <section><name>Traversing Address Spaces</name>
+
+        <t>Conceptually, packets travel across different address spaces based on the IPREF
+          addresses. Since the network protocols employed at these address spaces do not
+          understand IPREF addresses, these addresses must be interpreted and mapped to the
+          local network protocol addresses. The same IPREF addresses are interpreted differently
+          at each address space.
+        </t>
+
+        <figure anchor="traversing-address-spaces"><name>traversing address spaces</name>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+src:  2001:db8::9 + 1579   2001:db8::9 + 1579   2001:db8::9 + 1579
+dst:  2001:db8::8 + 2466   2001:db8::8 + 2466   2001:db8::8 + 2466
+
+           🡳                    🡳                    🡳
+
+src:  172.17.1.75          2001:db8::9          fdee:eeee::5951
+dst:  10.128.48.62         2001:db8::8          2001:db8:bb::28
+
+
+
+ ┌──────┐      IPv4       │      IPv6      │       IPv6      ┌──────┐
+ │ host │.75┃                                            ┃   │ host │
+ │  A1  ├───┨  ┏━━━━━━━┓  │                │  ┏━━━━━━━┓  ┠───┤  B4  │
+ └──────┘   ┃  ┃ IPREF ┃ :9                :8 ┃ IPREF ┃  ┃   └──────┘
+            ┠──┨ g-way ┠─────  Internet  ─────┨ g-way ┠──┨
+ ┌──────┐   ┃  ┃  GWA  ┃                      ┃  GWB  ┃  ┃:28┌──────┐
+ │ host ├───┨  ┗━━━━━━━┛  │                │  ┗━━━━━━━┛  ┠───┤ host │
+ │  A3  │   ┃                                            ┃   │  B6  │
+ └──────┘                 │                │                 └──────┘
+
+
+Local net A:  172.17.1.0/24            Local net B:  2001:db8:bb::/64
+Encoding net: 10.128.0.0/10            Encoding net: fdee:eeee::/64
+          ]]></artwork>
+        </figure>
+
+        <t><xref target="traversing-address-spaces"/> shows how IPREF addresses are interpreted
+          as a packet sent from hot A1 reaches its destination host B6.
+        </t>
+        <t>On the left side, there is an IPv4 network A. It has an IPREF gateway GWA and two
+          hosts A1 and A3. On the right side, there is an IPv6 network B. It has an IPREF
+          gateway GWB and two hosts B4 and B6. In the middle, there is an IPv6 Internet which
+          both networks A and B connect to via their respective IPREF gateways. At the
+          bottom, there are example parameters for networks A and B for illustrative purpose.
+          Network A is an IPv4 private network 172.17.1.0/24. It has an encoding network
+          10.128.0.0/10. Encoding networks represent IPREF addresses which are not understood
+          by local network protocols. Local gateways encode IPREF addresses into addresses
+          from that network. Network B is an IPv6 network 2001:db8:bb::/64. It is treated
+          as a private network for the purpose of cross-protocol communication. It has its
+          own encoding network fdee:eeee::/64 to represent IPREF addresses.
+        </t>
+        <t>At the top, the interpretation of IPREF addresses in each of the address spaces a
+          packet goes through is shown. In this example, a packet is sent from an IPv4 host A1
+          to an IPv6 host B6. The path, the packet travels, is determined by source and
+          destination IPREF addresses. This works in an analogous manner to native IP protocols,
+          IPv4 or IPv6. Since IPREF addresses are not understood by native network protocols,
+          proper native addresses must be rendered based on the addresses themselves and the
+          context of the address space. In this example, the packet goes through three
+          different address spaces, and the IPREF addresses must be interpreted at each
+          address space to produce native addresses. Such interpretation involves only
+          locally accessible information. This is key to IPREF. There is no shared configuration,
+          there are no negotiations of any kind, there are no control protocols. It's only
+          source and destination IPREF addresses and local configuration at each address
+          space traversed.
+        </t>
+        <t>IPREF addresses are assigned by local authorities, either statically by local
+          admins, or dynamically by local gateways. Here, host B6 is the destination, a
+          server of some kind. An admin from network B allocated an IPREF address for it
+          2001:db8::8 + 2466. Host A1. Host A1 is a client, it does not have any IPREF
+          addresses assigned, so the gateways assigns one for it on the fly. We can see
+          how the source and destination addresses are interpreted differently at
+          different address spaces. Network A is an IPv4 network so the IPREF addresses
+          are interpreted as IPv4 addresses. Host A1 simply uses its own address as
+          source with the gateway allocating an IPREF address to it dynamically. The
+          destination IPREF address is encoded into a local IPv4 address from some private
+          network 10.128.48.62. That encoded address will be decoded back to the original IPREF
+          address by the gateway. The gateway will also repackage the packet into
+          IPv6 because the next address space is IPv6. The Internet is next. It interprets
+          IPREF addresses trivially by simply ignoring the references and forwarding
+          based on the context portion of the IPREF addresses. Thus the rendered native
+          source and destination addresses are the Internet facing interface addresses
+          of respective gateways. Finally, network B is an IPv6 network, so it must
+          render IPv6 address out of the IPREF addresses. The source address is encoded
+          dynamically by gateway GWB into some local private IPv6 address fdee:eeee::5951.
+          The destination address represent local address of host B6, so that address
+          is used as destination. The packet is then send to host B6.
+        </t>
+        <t>
+        </t>
+
+      </section>  <!-- ^^Traversing Address Spaces^^ -->
 
       <section><name>Traversing Address Spaces in the Same Protocol Domain</name>
 
@@ -693,6 +788,153 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
       </section>
 
     </section>  <!-- ^^ DNS with IPREF ^^ -->
+
+    <section><name>Using IPREF for Transitioning to IPv6</name>
+
+    <t>Transitioning to IPv6 with IPREF offers significant benefits to both the transitioning
+      organizations as well as to the Internet providers, carriers, and operators.
+    </t>
+
+      <ol>
+        <li><t>Starting point</t>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+             ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓
+             ┫ IPREF ┣                          ┫ IPREF ┣
+   IPv4      ┃ g-way ┃    │      IPv4      │    ┃ g-way ┃      IPv4
+  ════════╗  ┫  GWA  ┣  ╔════════════════════╗  ┫  GWB  ┣  ╔════════
+          ║  ┗━━━━━━━┛  ║ │                │ ║  ┗━━━━━━━┛  ║
+          ╚═════════════╝                    ╚═════════════╝
+                          │                │
+          ]]></artwork>
+          <t>IPREF gateways are installed but not used. All connectivity is pure IPv4.
+          </t>
+        </li>
+
+        <li><t>Switching traffic to IPREF</t>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓
+  ╌ ╌ ╌ ╌ ╌ ╌┫ IPREF ┣                          ┫ IPREF ┣
+   IPv4      ┃ g-way ┃    │      IPv4      │    ┃ g-way ┃      IPv4
+  ═══════════┫  GWA  ┣══════════════════════════┫  GWB  ┣═══════════
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+ 
+                          │                │
+          ]]></artwork>
+          <t>IPREF gateways are configured. References are assigned. Traffic goes through the
+            gateways. All services subject to transition are now accessed via IPREF. Some local
+            IPv6 subnets may be setup but they're not used yet.
+          </t>
+          <t>Transition process at local networks is decoupled from any transition effort taking
+            place at peer networks. It is also decoupled from the type of Internet connection.
+            Traffic between gateways remains over IPv4 Internet until both ends connect to IPv6
+            Internet. This does not affect transitioning of internal networks to IPv6.
+          </t>
+        </li>
+
+        <li><t>Connecting to IPv6 Internet</t>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓
+  ═══════════┫ IPREF ┣╌ ╌ ╌ ╌                   ┫ IPREF ┣
+   IPv4      ┃ g-way ┃    │      IPv4      │    ┃ g-way ┃      IPv4
+  ═══════════┫  GWA  ┣══════════════════════════┫  GWB  ┣═══════════
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+
+                          │                │
+          ]]></artwork>
+          <t>Each side connects to IPv6 Internet at their own pace. Local IPv6 subnets may start
+            to appear. These are pure IPv6 subnets, no dual stacks. Connectivity between internal
+            IPv4/IPv6 subnets is provided by the same IPREF gateway.
+          </t>
+        </li>
+
+        <li><t>Switching gateway traffic to IPv6</t>
+           <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓      IPv6
+  ═══════════┫ IPREF ┣══════════════════════════┫ IPREF ┣╌ ╌ ╌ ╌ ╌ ╌
+   IPv4      ┃ g-way ┃    │      IPv4      │    ┃ g-way ┃      IPv4
+  ═══════════┫  GWA  ┣╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ╌ ┫  GWB  ┣═══════════
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+
+                          │                │
+          ]]></artwork>
+          <t>After both ends connect to IPv6 Internet, IPREF gateways may switch to passing
+            traffic to the IPv6 Internet. Transition process at local networks is not affected
+            by this change.
+          </t>
+        </li>
+
+        <li><t>Dropping IPv4 Internet</t>
+            <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓      IPv6
+  ═══════════┫ IPREF ┣══════════════════════════┫ IPREF ┣╌ ╌ ╌ ╌ ╌ ╌
+   IPv4      ┃ g-way ┃    │                │    ┃ g-way ┃      IPv4
+  ═══════════┫  GWA  ┣                          ┫  GWB  ┣═══════════
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+
+                          │                │
+          ]]></artwork>
+          <t>IPv4 Internet may now be dropped. It takes place early in the process. From the
+            Internet's point of view, transition to IPv6 has completed. The Internet does not
+            have to wait until every local networks transitions to IPv6. As sites keep dropping
+            their IPv4 Internet connections, the entire IPv4 Internet may be taken down well
+            before every network out there in the world completes its transition. This is
+            possible thanks to decoupling transitioning of local networks from transitioning
+            of the Internet itself.
+          </t>
+          <t>From local networks point of view, the disappearance of IPv4 Internet is invisible.
+            It does not affect local transitioning process.
+          </t>
+        </li>
+
+        <li><t>Switching to IPv6 independently</t>
+             <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓      IPv6
+  ═══════════┫ IPREF ┣══════════════════════════┫ IPREF ┣═══════════
+   IPv4      ┃ g-way ┃    │                │    ┃ g-way ┃
+  ═══════════┫  GWA  ┣                          ┫  GWB  ┣
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+
+                          │                │
+          ]]></artwork>
+          <t>Each respective local network switches to IPv6 independently and may progress at
+            its own pace. It may elect to stay with a mix IPv4/IPv6 for as long as necessary
+            or convenient. This does not affect other networks.
+          </t>
+        </li>
+
+        <li><t>Completing transition</t>
+              <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓      IPv6
+  ═══════════┫ IPREF ┣══════════════════════════┫ IPREF ┣═══════════
+             ┃ g-way ┃    │                │    ┃ g-way ┃
+             ┫  GWA  ┣                          ┫  GWB  ┣
+             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
+
+                          │                │
+          ]]></artwork>
+          <t>Transition is completed when each side switches its internal network to IPv6. All
+            internal networks are pure IPv6. The Internet is also pure IPv6. IPREF gateways may
+            remain in place to allow communication with third party sites that have not
+            transitioned.
+          </t>
+        </li>
+      </ol>
+
+    </section>  <!-- ^^ Using IPREF for Transitioning to IPv6 ^^ -->
 
     <section><name>Related Technologies</name>
 
