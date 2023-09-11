@@ -498,7 +498,7 @@
       <g class="TextShape">
        <g id="id60">
         <rect class="BoundingBox" stroke="none" fill="none" x="8302" y="4110" width="4763" height="1018"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4537"><tspan fill="rgb(255,255,255)" stroke="none" style="white-space: pre">2001:db8::abc:11 + 700</tspan></tspan></tspan><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4969"><tspan fill="rgb(255,255,255)" stroke="none" style="white-space: pre">198.51.100.11 + 700</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4537"><tspan fill="rgb(119,188,101)" stroke="none" style="white-space: pre">2001:db8::abc:11 + 700</tspan></tspan></tspan><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="388px" font-weight="400"><tspan class="TextPosition" x="8353" y="4969"><tspan fill="rgb(119,188,101)" stroke="none" style="white-space: pre">198.51.100.11 + 700</tspan></tspan></tspan></text>
        </g>
       </g>
      </g>
