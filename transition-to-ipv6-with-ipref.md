@@ -2,12 +2,12 @@
 
 Transitioning to IPv6 Internet with IPREF offers significant benefits to both the transitioning organizations as well as to the Internet providers, carriers, and operators.
 
-- needs only pure IPv6 Internet (no need for IPv4 services, or translators)
-- transition to pure IPv6 networks (no dual stacks, not two-step transition)
+- needs only pure IPv6 Internet (no need for IPv4 services or translators)
+- transition to pure IPv6 networks (no dual stacks, no two-step transition)
 - no need for global IPv4 addresses
 - eliminates NAT/NAT6 (no need for port manipulation)
 - plays nicely with DNSSEC
-- allows to drop IPv4 Internet early in the process
+- allows to drop IPv4 Internet early
 - allows to transition at own pace
 - massively scalable
 - dramatically speeds up adoption of IPv6 Internet
@@ -15,7 +15,7 @@ Transitioning to IPv6 Internet with IPREF offers significant benefits to both th
 
 The ability to drop IPv4 Internet early is the key to speeding up adoption of IPv6 Internet.
 
-Relying on only pure IPv6 Internet and transitioning to pure IPv6 greatly simplifies network designs and operations. Transition based on IPREF produces far cleaner, simpler networks and a cleaner, simpler Internet.
+Relying on only pure IPv6 Internet and transitioning to pure IPv6 greatly simplifies network designs and operations. Transition based on IPREF produces cleaner, simpler networks and a cleaner, simpler Internet.
 
 The ability to transition at own pace, service by service, subnet by subnet results in huge reduction in costs and risks.
 
@@ -25,7 +25,7 @@ IPREF does not have such deficiencies. It does not use dual stacks and it does n
 
 ### Transitioning Process
 
-Transitioning process with IPREF takes advantage of IPREF's flexibility to operate in all combinations of IPv4/IPv6 configurations:
+Transitioning process with IPREF takes advantage of IPREF's flexibility to operate in all combinations of address spaces:
 
 ```
         network A   Internet   Network B
@@ -51,7 +51,7 @@ Because different address spaces - network A, Internet, and network B - are proc
 
 	![](./transition-to-ipv6-with-ipref.s2.jpg)
 
-	IPREF gateways are configured. References are assigned. Traffic goes through the gateways. All services subject to transition are now accessed via IPREF. Some local IPv6 subnets may be set up but remain unused.
+	IPREF gateways are configured. References are assigned. Traffic goes through the gateways. All services subject to transition are now accessed via IPREF. Some local IPv6 subnets may be set up but not used.
 
 	Transition process at local networks is now decoupled from transition efforts at peer networks. Local networks may now start internal transition to IPv6 independently. Traffic between the gateways will remain over IPv4 Internet. This does not affect transitioning of internal networks to IPv6.
 
@@ -71,7 +71,7 @@ Because different address spaces - network A, Internet, and network B - are proc
 
 	![](./transition-to-ipv6-with-ipref.s5.jpg)
 
-	IPv4 Internet may now be dropped. It takes place early in the process. From the Internet's point of view, transition IPv6 has been completed. The Internet does not have to wait until every local network transitions to IPv6. As sites keep dropping their IPv4 Internet connections, the entire IPv4 Internet may be taken down well before every network out there in the world completes their transitions. This is possible because IPREF does not rely on IPv4 addresses and because it decouples transitioning at local networks from the Internet.
+	IPv4 Internet may now be dropped. It takes place early in the process. From the Internet's point of view, transition to IPv6 has been completed. The Internet does not have to wait until every local network transitions to IPv6. As sites keep dropping their IPv4 Internet connections, the entire IPv4 Internet may be taken down well before every network out there in the world completes their transitions. This is possible because IPREF does not rely on IPv4 addresses and because it decouples transitioning at local networks from the Internet.
 	
 	From local networks' point of view, the disappearance of IPv4 Internet is invisible. It does not affect the transitioning process.
 	
