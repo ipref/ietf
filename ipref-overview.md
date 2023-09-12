@@ -13,7 +13,7 @@ Key characteristics of IPREF:
 
 1. ### References
 
-	An common problem with cross protocol communication is how to deal with addresses. Communicating peers do not understand each other's addresses therefore some other method of directing packets to proper destinations must be devised.
+	A common problem with cross protocol communication is how to deal with addresses. Communicating peers do not understand each other's addresses therefore some other method of directing packets to proper destinations must be devised.
 
 	IPREF solves this problem by using references to addresses instead of actual addresses. The references are then evaluated by each address space to render proper native addresses suitable for forwarding. Each address space performs the evaluation independently from other address spaces. As a result the same references render different addresses at different address spaces.
 
