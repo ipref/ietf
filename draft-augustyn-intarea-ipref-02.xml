@@ -59,7 +59,7 @@
 
     <date year="2023"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
     <!--<date year="2023" month="2" day="5"/>--> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
-    <!-- On draft subbmission:
+    <!-- On draft submission:
          * If only the current year is specified, the current day and month will be used.
          * If the month and year are both specified and are the current ones, the current day will
            be used
@@ -201,81 +201,292 @@
 
       <section anchor="terminology"><name>IPREF Terminology</name>
         <t>IPREF - short name referring to the technology described in this document, pronounced I-P-REF</t>
-        <t><em>third</em> network - network connecting communicating private networks, e.g.: the Internet</t>
         <t><em>encoding</em> network - network representing hosts on peer private networks</t>
       </section>
 
     </section>
 
-    <section><name>IPREF Operations Framework</name>
+    <section><name>IPREF Overview</name>
 
-      <t>IPREF traverses different address spaces in the same protocol domain as well as across
-        protocol domains. IPREF uses references to IP addresses rather than actual addresses. The
-        references are provided with context addresses that identify the different address spaces.
-        A combination of a context address and a reference forms an IPREF address. IPREF addresses
-        are transformed to native addresses of the local network when injecting packets to that
-        network. Conversely, native addresses of the local network are transformed to IPREF
-        addresses when leaving the network. The transformations are performed by specialized nodes,
-        called IPREF gateways, designed for this purpose. IPREF gateways transfer packets over a
-        <em>third</em> network to other IPREF gateways for the purpose of traversing different
-        address spaces. Typically, the <em>third</em> network is the public Internet. In case of
-        protocol domain traversal, IPREF gateways perform necessary payload repackaging.
+      <t>IPREF is a method for communication across different address spaces, i.e.: address
+        spaces that are not reachable by native network protocols. Examples are private networks
+        behind NAT, NAT6, or filters, as well as networks employing different network protocols
+        IPv4/IPv6.
       </t>
+      <t>Key characteristics of IPREF:</t>
+      <ul>
+        <li>massively scalable</li>
+        <li>cross protocol, cross address space (such as NAT/NAT6)</li>
+        <li>strictly layer 3 (no port manipulation, all ports available)</li>
+        <li>addresses publishable in DNS</li>
+        <li>no need for external translators or shared configurations</li>
+        <li>no need for any global addresses IPv4 or IPv6</li>
+      </ul>
 
-      <section><name>IPREF References</name>
+      <section><name>References</name>
 
-        <t>An IPREF reference is an unsigned integer 16 octets in size. Values 0-255 are reserved. Of the
-          reserved values, only one is defined. The value of 0 indicates a null reference, i.e. a reference
-          which is not subject to mapping and which should be discarded instead.
+        <t>A common problem with cross address space communication is to decide how to deal with
+          addressing. Communicating peers cannot interpret each other's addresses therefore some
+          other method of directing packets to proper destinations must be devised.
         </t>
-        <t>The registry of reserved reference values should be vested with IANA. For now, these values are
-          listed here until a suitable request to establish such registry is made with IANA.
+        <t>IPREF solves this problem by using references to addresses rather than actual
+          addresses. The references are then evaluated by each address space to render proper
+          native addresses suitable for forwarding. Each address space performs the evaluation
+          independently. As a result the same references render different addresses at different
+          address spaces.
         </t>
-        <t>References are unsigned integers meaningful only in the context of the local address
-          space. Local administrators may divide their values into fields for any purpose deemed
-          useful. For example, the fields may reflect different sources of allocations, or provide
-          extra security bits, or provide load balancing options, or provide A/B address ranges
-          etc. The definition of these fields, their values, and their use are fully under local
-          administration control. The peers are unaware of these fields and treat the references as
-          single opaque values.
+        <t>References are unsigned integers meaningful only in the context of the address space
+          where they were defined. Local administrators may divide their values into fields for
+          any purpose believed useful. For example, the fields may reflect different sources of
+          allocations, or provide extra security bits, or provide load balancing options, or
+          provide A/B address ranges etc. Peers are unaware of these fields and treat the
+          references as opaque values.
         </t>
 
-      </section>  <!-- ^^ IPREF References ^^ -->
+      </section>  <!-- ^^ References ^^ -->
 
       <section><name>IPREF Addresses</name>
 
-        <t>An IPREF address is a combination of a layer 3 network address and a reference carried in the
-          same packet. In the notation, a plus sign '+' separates the two components. For example:
-          198.51.100.11+700 or 2001:db8::abc:11+700.
-        </t>
-
-        <t>The references are used in conjunction with native IP addresses from the <em>third</em>
-          network. These are typically addresses of gateway interfaces where the packets arrive at
-          or where they are being sent from. These addresses provide the context indicating which
-          address space the references pertain to. A combination of such native IP address and the
-          reference is called an IPREF address,
-          <xref target="ipref-address"/>.
-        </t>
-
         <figure anchor="ipref-address"><name>IPREF address</name>
-          <artset> <artwork type="ascii-art" name="ipref address diagram"> <![CDATA[
+          <artwork type="ascii-art"> <![CDATA[
          ┌───────────────────┬───────────────────┐
-         │    IP address     │    reference      │
+         │  context address  │     reference     │
          └───────────────────┴───────────────────┘
-            198.51.100.11+700
-            2001:db8::abc:11+700
-              ]]> </artwork> </artset>
+            198.51.100.11 + 700
+            2001:db8::abc:11 + 700
+          ]]> </artwork>
         </figure>
 
-        <t>In the notation, a plus sign '+' is used to separate context addresses from references.
-          In packet exchanges, there are source IPREF addresses and a destination IPREF addresses,
-          thus a pair of references. The destination references are allocated by the administrators
-          of the destination networks while the source references are allocated by the administrators
-          of the source networks. There are no negotiations. Each peer defines their own references
-          and accepts peer references as opaque values.
+        <t>IPREF uses references to addresses in lieu of actual addresses. Such references need
+          context to be meaningful, therefore IPREF uses addressing units that combine a context
+          address, which MUST be a native address, and a reference. These addressing units are
+          called IPREF addresses.
+        </t>
+        <t>The context address portion of an IPREF address is an address within adjacent address
+          space. Typically, this is the Internet, so this is usually an Internet address of an
+          edge router of the source or destination network. This is a convenience, not a
+          requirement, other addresses known to the network may also be used.
+        </t>
+        <t>References are allocated by administrators of respective address spaces. The references
+          may only refer to hosts from those address space. Thus, the destination references are
+          allocated by the administrators of the destination networks while the source references
+          are allocated by the administrators of the source networks. There are no conflicts and
+          there is no need for negotiations. Each peer defines their own references and accepts
+          peer references as opaque values.
+        </t>
+        <t><xref target="ipref-address"/> shows two examples of IPREF addresses. In the notation,
+          a plus sign '+' separates context address from the reference. A packet carries two
+          addresses: source IPREF address and a destination IPREF address.
+        </t>
+        <t>IPREF addresses are publishable in DNS.
         </t>
 
       </section>  <!-- ^^ IPREF Addresses ^^ -->
+
+      <section><name>Gateways and Encoding Networks</name>
+
+        <t>IPREF addresses are placed in packets by gateways. The gateways must be installed at
+          each address space participating in IPREF communication. Intermediate address spaces,
+          such as the Internet, don't need gateways.
+        </t>
+        <5>The gateways inject and remove IPREF addresses as packets leave and enter local
+          networks. They also encode IPREF addresses for internal use as local network protocols
+          only understand native addresses. The encoding networks are local private networks to
+          which the gateways map IPREF addresses. For example, IPv4 networks could use a 10/8
+          network while IPv6 networks could use an fd::/64 network. For local hosts, these
+          encoded addresses represent peers they communicate with. The peers appear as if on
+          the local network. This is a common consequence of cross protocol communication. The
+          gateways replace these encoded addresses with IPREF addresses when sending packets
+          outside local networks.
+        </t>
+
+      </section>  <!-- ^^ Gateways and Encoding Networks ^^ -->
+
+      <section><name>Traversing Address Spaces</name>
+
+        <t>Conceptually, packets travel through address spaces based on source and destination
+          IPREF addresses. This is analogous to IP protocols. The IPREF addresses are interpreted
+          at each address space to render native addresses suitable for forwarding.
+        </t>
+
+        <figure anchor="traversing-address-spaces"><name>traversing address spaces</name>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+src:  2001:db8::9 + 1579   2001:db8::9 + 1579   2001:db8::9 + 1579
+dst:  2001:db8::8 + 2466   2001:db8::8 + 2466   2001:db8::8 + 2466
+
+           🡳                    🡳                    🡳
+
+src:  172.17.1.75          2001:db8::9          fdee:eeee::5951
+dst:  10.128.48.62         2001:db8::8          2001:db8:b::28
+
+
+ ┌──────┐        IPv4     │      IPv6      │     IPv6        ┌──────┐
+ │ host │.75┃                                            ┃   │ host │
+ │  A1  ├───┨  ┏━━━━━━━┓  │                │  ┏━━━━━━━┓  ┠───┤  B4  │
+ └──────┘   ┃  ┃ IPREF ┃:9                  :8┃ IPREF ┃  ┃   └──────┘
+            ┠──┨ g-way ┠─────  Internet  ─────┨ g-way ┠──┨
+ ┌──────┐   ┃  ┃  GWA  ┃                      ┃  GWB  ┃  ┃:28┌──────┐
+ │ host ├───┨  ┗━━━━━━━┛  │                │  ┗━━━━━━━┛  ┠───┤ host │
+ │  A3  │   ┃                                            ┃   │  B6  │
+ └──────┘                 │                │                 └──────┘
+
+          ]]></artwork>
+        </figure>
+
+        <t>For example, in <xref target="traversing-address-spaces"/>, if host A1 wanted to
+          send a packet outside of its own address space to host B6, it would need a source
+          IPREF address for itself and a destination IPREF address for B6.
+        </t>
+        <t>The destination IPREF address of host B6, presumably a server, would be allocated
+          by the admin of network B where B6 resides. It would normally be advertised in DNS.
+          The source IPREF address of A1, presumably a client, would normally be allocated
+          dynamically by the local IPREF gateway.
+        </t>
+        <t>As packets travel from source to destination, the following takes place:</t>
+        <ul>
+          <li>At network A, the IPREF source address is interpreted as a native address of host
+            A1. The destination IPREF address is interpreted as some local private address on
+            the encoding network. This allows host A1 to place native addresses in the packet.
+            The IPREF gateway will replace both source and destination addresses with their
+            IPREF equivalents. It will also repackage IPv4 packets into IPv6 since the next
+            address space is IPv6.
+          </li>
+          <li>In the transient address space, the Internet, IPREF addresses are interpreted
+            as well even though the network is unaware of that. In the transient networks
+            only context addresses are used while the references are ignored. This is
+            accomplished by placing context addresses (which must be native) in the respective
+            source and destination fields of the native network protocol. In this way, transient
+            networks, such as the Internet, don't need to know anything about IPREF.
+          </li>
+          <li>At network B, the IPREF source address is interpreted as some local private address
+            on the encoding network. The IPREF destination address is interpreted as the native
+            address of host B6. In this way, a packet originating at an IPv4 host A1 reaches an
+            IPv6 host B6.
+          </li>
+        </ul>
+        <t>On the way back, source and destination addresses are reversed and their interpretation
+          follows the same pattern, thus a reply packet originating at an IPv6 host B6 reaches an
+          IPv4 host A1.
+        </t>
+        <t>In the example, network A may be IPv4 or IPv6, the Internet may be IPv4 or IPv6, and
+          network B may be IPv4 or IPv6. In any combination, a packet traveling through these
+          address spaces would be processed in the same manner and it would reach its destination
+          in the same way.
+        </t>
+
+      </section>  <!-- ^^Traversing Address Spaces^^ -->
+
+      <section><name>Traversing Address Spaces in Detail</name>
+
+        <figure anchor="traversing-address-spaces-in-detail"><name>traversing address spaces in detail</name>
+          <artwork type="ascii-art"><![CDATA[
+             Network A    │    Internet    │    Network B
+
+ ┌──────┐        IPv4     │      IPv6      │     IPv6        ┌──────┐
+ │ host │.75┃                                            ┃   │ host │
+ │  A1  ├───┨  ┏━━━━━━━┓  │                │  ┏━━━━━━━┓  ┠───┤  B4  │
+ └──────┘   ┃  ┃ IPREF ┃:9                  :8┃ IPREF ┃  ┃   └──────┘
+            ┠──┨ g-way ┠─────  Internet  ─────┨ g-way ┠──┨
+ ┌──────┐   ┃  ┃  GWA  ┃                      ┃  GWB  ┃  ┃:28┌──────┐
+ │ host ├───┨  ┗━━━━━━━┛  │                │  ┗━━━━━━━┛  ┠───┤ host │
+ │  A3  │   ┃                                            ┃   │  B6  │
+ └──────┘                 │                │                 └──────┘
+
+
+Internet ifc: 2001:db8::9                 Internet ifc: 2001:db8::8
+Local net A:  172.17.1.0/24               Local net B:  2001:db8:b::/64
+Encoding net: 10.128.0.0/10               Encoding net: fdee:eeee::/64
+Host A1:  172.17.1.75                     Host B6:  2001:db8:b:28
+DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
+          ]]></artwork>
+        </figure>
+
+        <t>Let's say an IPv4 host A1 wants to send a packet to an IPv6 host B6:</t>
+        <ol>
+          <li><t>Host A1 finds out the address of host B6</t>
+            <t>Host A1 issues a DNS query for host B6. The query goes through the local resolver.
+              Local resolver receives a response:
+            </t>
+            <sourcecode>B6 has address: 2001:db8::8 + 2466</sourcecode>
+            <t>Since local hosts don't understand IPREF addresses, the resolver asks gateway GWA to
+              allocate an encoded address for it. The gateway responds:
+            </t>
+            <sourcecode>map: 2001:db8::8 + 2466  =  10.128.48.62</sourcecode>
+            <t>The resolver returns the encoded result of the DNS query to host A1:</t>
+            <sourcecode>B6 has address:  10.128.48.62</sourcecode>
+          </li>
+          <li><t>Host A1 sends a packet out to B6</t>
+            <t>Host A1 places its own address as source and the address of host B6 returned by the
+              local resolver as destination.
+            </t>
+            <sourcecode>packet out: | 172.17.1.75 | 10.128.48.62 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at gateway GWA</t>
+            <sourcecode>packet in:  | 172.17.1.75 | 10.128.48.62 | payload |</sourcecode>
+            <t>The gateway notices that it does not have mapping for the source address, so it
+              creates one on the fly:
+            </t>
+            <sourcecode>map: 172.17.1.75 = 2001:db8::9 + 1579</sourcecode>
+            <t>It replaces source address with the just created corresponding IPREF address. It
+              replaces encoded destination address with the original IPREF address returned by
+              the DNS query. It also repackages IPv4 packet into IPv6 since the Internet is IPv6.
+            </t>
+            <sourcecode>packet out: | 2001:db8::9 + 1579 | 2001:db8::8 + 2466 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at gateway GWB</t>
+            <sourcecode>packet in:  | 2001:db8::9 + 1579 | 2001:db8::8 + 2466 | payload |</sourcecode>
+            <t>The gateway notices that it does not have encoding for the source IPREF address,
+              so it creates one on the fly:
+            </t>
+            <sourcecode>map: 2001:db8::9 + 1579 = fdee:eeee::5951</sourcecode>
+            <t>It replaces source IPREF address with the just created local encoded address. It
+              replaces destination IPREF address with the local address of host B6.
+            </t>
+            <sourcecode>packet out: | fdee:eeee::5951 | 2001:db8:b::28 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at host B6</t>
+            <sourcecode>packet in:  | fdee:eeee::5951 | 2001:db8:b::28 | payload |</sourcecode>
+            <t>Host B6 recognizes destination address as its own and consumes the packet. OS passes
+              the packet to an application implied by layer 4.
+            </t>
+          </li>
+          <li><t>Host B6 sends a reply back to A1</t>
+            <t>Host B6 gets a reply payload from the application, swaps source and destination
+              addresses, and sends the packet back to A1.
+            </t>
+            <sourcecode>packet out: | 2001:db8:b::28 | fdee:eeee::5951 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at gateway GWB</t>
+            <sourcecode>packet in:  | 2001:db8:b::28 | fdee:eeee::5951 | payload |</sourcecode>
+            <t>The gateway replaces local source address with corresponding IPREF address previously
+              allocated and advertised in DNS. It replaces destination local encoded address with
+              the corresponding IPREF address from mapping created earlier.
+            </t>
+            <sourcecode>packet out: | 2001:db8::8 + 2466 | 2001:db8::9 + 1579 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at gateway GWA</t>
+            <sourcecode>packet in:  | 2001:db8::8 + 2466 | 2001:db8::9 + 1579 | payload |</sourcecode>
+            <t>The gateway replaces source IPREF address with the corresponding local encoded
+              address from mapping created earlier. It replaces destination IPREF address with
+              the local address of host A1. It also realizes that the local network is IPv4, so
+              it repackages the packet into IPv4.
+            </t>
+            <sourcecode>packet out: | 10.128.48.62 | 172.17.1.75 | payload |</sourcecode>
+          </li>
+          <li><t>Packet arrives at host A1</t>
+            <sourcecode>packet in:  | 10.128.48.62 | 172.17.1.75 | payload |</sourcecode>
+            <t>Host A1 recognizes destination address as its own and consumes the packet. OS passes
+              the packet to the application that sent the original packet.
+            </t>
+          </li>
+        </ol>
+        <t>At this point any missing mappings have been allocated. Subsequent packet exchange
+          continues without additional allocations.
+        </t>
+
+      </section>  <!-- ^^Traversing Address Spaces in Detail^^ -->
 
       <section><name>Embedding References in IP Packets</name>
 
@@ -337,324 +548,6 @@
 
       </section>  <!-- ^^Embedding References^^ -->
 
-      <section><name>Traversing Address Spaces</name>
-
-        <t>Conceptually, packets travel across different address spaces based on the IPREF
-          addresses. Since the network protocols employed at these address spaces do not
-          understand IPREF addresses, these addresses must be interpreted and mapped to the
-          local network protocol addresses. The same IPREF addresses are interpreted differently
-          at each address space.
-        </t>
-
-        <figure anchor="traversing-address-spaces"><name>traversing address spaces</name>
-          <artwork type="ascii-art"><![CDATA[
-             Network A    │    Internet    │    Network B
-
-src:  2001:db8::9 + 1579   2001:db8::9 + 1579   2001:db8::9 + 1579
-dst:  2001:db8::8 + 2466   2001:db8::8 + 2466   2001:db8::8 + 2466
-
-           🡳                    🡳                    🡳
-
-src:  172.17.1.75          2001:db8::9          fdee:eeee::5951
-dst:  10.128.48.62         2001:db8::8          2001:db8:bb::28
-
-
-
- ┌──────┐      IPv4       │      IPv6      │       IPv6      ┌──────┐
- │ host │.75┃                                            ┃   │ host │
- │  A1  ├───┨  ┏━━━━━━━┓  │                │  ┏━━━━━━━┓  ┠───┤  B4  │
- └──────┘   ┃  ┃ IPREF ┃ :9                :8 ┃ IPREF ┃  ┃   └──────┘
-            ┠──┨ g-way ┠─────  Internet  ─────┨ g-way ┠──┨
- ┌──────┐   ┃  ┃  GWA  ┃                      ┃  GWB  ┃  ┃:28┌──────┐
- │ host ├───┨  ┗━━━━━━━┛  │                │  ┗━━━━━━━┛  ┠───┤ host │
- │  A3  │   ┃                                            ┃   │  B6  │
- └──────┘                 │                │                 └──────┘
-
-
-Local net A:  172.17.1.0/24            Local net B:  2001:db8:bb::/64
-Encoding net: 10.128.0.0/10            Encoding net: fdee:eeee::/64
-          ]]></artwork>
-        </figure>
-
-        <t><xref target="traversing-address-spaces"/> shows how IPREF addresses are interpreted
-          as a packet sent from hot A1 reaches its destination host B6.
-        </t>
-        <t>On the left side, there is an IPv4 network A. It has an IPREF gateway GWA and two
-          hosts A1 and A3. On the right side, there is an IPv6 network B. It has an IPREF
-          gateway GWB and two hosts B4 and B6. In the middle, there is an IPv6 Internet which
-          both networks A and B connect to via their respective IPREF gateways. At the
-          bottom, there are example parameters for networks A and B for illustrative purpose.
-          Network A is an IPv4 private network 172.17.1.0/24. It has an encoding network
-          10.128.0.0/10. Encoding networks represent IPREF addresses which are not understood
-          by local network protocols. Local gateways encode IPREF addresses into addresses
-          from that network. Network B is an IPv6 network 2001:db8:bb::/64. It is treated
-          as a private network for the purpose of cross-protocol communication. It has its
-          own encoding network fdee:eeee::/64 to represent IPREF addresses.
-        </t>
-        <t>At the top, the interpretation of IPREF addresses in each of the address spaces a
-          packet goes through is shown. In this example, a packet is sent from an IPv4 host A1
-          to an IPv6 host B6. The path, the packet travels, is determined by source and
-          destination IPREF addresses. This works in an analogous manner to native IP protocols,
-          IPv4 or IPv6. Since IPREF addresses are not understood by native network protocols,
-          proper native addresses must be rendered based on the addresses themselves and the
-          context of the address space. In this example, the packet goes through three
-          different address spaces, and the IPREF addresses must be interpreted at each
-          address space to produce native addresses. Such interpretation involves only
-          locally accessible information. This is key to IPREF. There is no shared configuration,
-          there are no negotiations of any kind, there are no control protocols. It's only
-          source and destination IPREF addresses and local configuration at each address
-          space traversed.
-        </t>
-        <t>IPREF addresses are assigned by local authorities, either statically by local
-          admins, or dynamically by local gateways. Here, host B6 is the destination, a
-          server of some kind. An admin from network B allocated an IPREF address for it
-          2001:db8::8 + 2466. Host A1. Host A1 is a client, it does not have any IPREF
-          addresses assigned, so the gateways assigns one for it on the fly. We can see
-          how the source and destination addresses are interpreted differently at
-          different address spaces. Network A is an IPv4 network so the IPREF addresses
-          are interpreted as IPv4 addresses. Host A1 simply uses its own address as
-          source with the gateway allocating an IPREF address to it dynamically. The
-          destination IPREF address is encoded into a local IPv4 address from some private
-          network 10.128.48.62. That encoded address will be decoded back to the original IPREF
-          address by the gateway. The gateway will also repackage the packet into
-          IPv6 because the next address space is IPv6. The Internet is next. It interprets
-          IPREF addresses trivially by simply ignoring the references and forwarding
-          based on the context portion of the IPREF addresses. Thus the rendered native
-          source and destination addresses are the Internet facing interface addresses
-          of respective gateways. Finally, network B is an IPv6 network, so it must
-          render IPv6 address out of the IPREF addresses. The source address is encoded
-          dynamically by gateway GWB into some local private IPv6 address fdee:eeee::5951.
-          The destination address represent local address of host B6, so that address
-          is used as destination. The packet is then send to host B6.
-        </t>
-        <t>
-        </t>
-
-      </section>  <!-- ^^Traversing Address Spaces^^ -->
-
-      <section><name>Traversing Address Spaces in the Same Protocol Domain</name>
-
-        <t><xref target="private-networks-same-protocol"/> depicts how two local networks communicate
-          with one another. Local network A has two standard hosts A5, A7, and a gateway GWA. The
-          gateway connects to the <em>third</em> network, the Internet. Local network B has hosts
-          B4, B6, and a gateway GWB. The gateway connects to the same <em>third</em> network as
-          gateway GWA. Only the gateways are aware of, and implement, IPREF processing. The hosts
-          on both local networks, as well as any hosts or routers on the <em>third</em> network are
-          standard network devices, unaware of IPREF. For simplicity, the examples shows the case
-          of IPv4 running on all three networks. The IP addresses on local networks may overlap but
-          for simplicity are shown as distinct. Further, for ease of following the example, addresses
-          related to local network A are odd while addresses related to local network B are even.
-        </t>
-        <t>Hosts on local network A communicate with hosts on other local networks, such as local
-          network B, without knowing IP addresses on the peer networks or even without knowing
-          network protocols employed by the peer networks. An <em>encoding</em> network is used in
-          lieu of the peer addresses which are in form of IPREF addresses. The peer hosts appear
-          as if they were hosted on the <em>encoding</em> network. This is a compatibility feature.
-          It is possible to avoid such mapping at the cost of making local hosts IPREF aware. That
-          case is not described here as it is dramatically simpler to use <em>encoding</em>
-          networks and leave existing hosts as-is, without any modifications.
-        </t>
-
-        <figure anchor="private-networks-same-protocol"><name>private networks in the same protocol domain</name>
-          <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
-            <artwork type="ascii-art" name="private networks same protocol diagram">
-              <![CDATA[
-             ╲                   ╲  Encoding Network B: 10.192.0.0/10
-                                       Local Network B: 172.18.2.0/24
-               ╲                   ╲
-                                                             ┌──────┐
-                 ╲                   ╲                  ┃ .66│      │
-                                    ┏━━━━━━━┓           ┠────┤ host │
-                   ╲  198.51.100.22 ┃ IPREF ┃.2         ┃    │  B6  │
-                                  ╭─┨ g-way ┠───────────┨    └──────┘
-┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
-│      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
-│ host ├────┨          ╲                   ╲            ┃    ┌──────┐
-│  A5  │    ┃               Third Network               ┃ .64│      │
-└──────┘    ┃            ╲                   ╲          ┠────┤ host │
-            ┃           ┏━━━━━━━┓ ╎                     ┃    │  B4  │
-            ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
-┌──────┐    ┠───────────┨ g-way ┠─╯
-│      │.77 ┃           ┃  GWA  ┃ 198.51.100.11  ╲
-│ host ├────┨           ┗━━━━━━━┛
-│  A7  │    ┃                  ╲                   ╲
-└──────┘
-                                 ╲                   ╲
-Local Network A: 172.17.1.0/24
-Encoding Network A: 10.128.0.0/10  ╲                   ╲
-              ]]>
-            </artwork>
-          </artset>
-        </figure>
-
-        <t>Let's assume host A5 wants to send a packet to host B4 and receive a response. Prior to the packet
-          exchange, an administrator from local network B informs an administrator of local network A that host
-          B can be reached at an IPREF address 198.151.100.22+400. Local administrator enters that information
-          on gateway GWA which in turn allocates an <em>encoded</em> address of 10.128.0.40 to represent host B.
-          This information is further passed to host A5 so that it can send packets to host B by using 10.128.0.40
-          as the destination.
-        </t>
-        <t>In step (1) host A5 places its own address as source, 172.17.1.75 and the provided address of host B 10.128.0.40
-          as destination. As the packet traverses the network, both source and destination addresses will be rewritten.
-          It is illustrated in <xref target="address-rewriting"/>. In step (2), the packet arrives at gateway GWA. The gateway
-          realizes the destination is an <em>encoded</em> address. It finds that the address corresponds to an IPREF address
-          198.51.100.22+400. It places this IPREF address in the packet as the new destination address. It also finds that
-          the source address 172.17.1.75 does not correspond to any IPREF address so it allocates one through some algorithm,
-          perhaps randomly, as 198.51.100.11+500. It places this IPREF address in the packet as the new source address. It then
-          sends the packet into the <em>third</em> network. This is the common network, the Internet, that both local networks
-          A and B connect to. In step (3) the packet arrives at gateway GWB. The gateway recognizes the destination IPREF address
-          as representation of the internal host's B address 172.18.2.64. It places this address in the packet as new destination
-          address. The gateway does not recognize the source IPREF address so it allocates an <em>encoded</em> address for it
-          10.192.0.70. It places this address in the packet as the new source address. It, then, sends the packet to the local
-          host B4. In step (4), local host B4 receives the packet and recognizes the destination address as its own. It consumes
-          the packet and processes it according to the payload.
-        </t>
-
-        <figure anchor="address-rewriting"><name>address rewriting</name>
-          <artset> <artwork type="ascii-art" name="address rewriting diagram"> <![CDATA[
-  Host B4 has IPREF address: 198.51.100.22+400
-          encoded at GWA as: 10.128.0.40
-
-  Host A5 is allocated IPREF address: 198.51.100.11+500
-                   encoded at GWB as: 10.192.0.70
-
-  Sending a packet from A5 to B4 and receiving a response back at A5:
-
-       ┌───────────────────┬───────────────────┬─────────┐
-1 A5:  │    172.17.1.75    │    10.128.0.40    │ payload │
-       └───────────────────┴───────────────────┴─────────┘
-       ┌───────────────────┬───────────────────┬─────────┐
-2 GWA: │ 198.51.100.11+500 │ 198.51.100.22+400 │ payload │
-       └───────────────────┴───────────────────┴─────────┘
-                  ┌───────────────────┬───────────────────┬─────────┐
-3            GWB: │    10.192.0.70    │    172.18.2.64    │ payload │
-                  └───────────────────┴───────────────────┴─────────┘
-                  ┌───────────────────┬───────────────────┬─────────┐
-4            B4:  │    10.192.0.70    │    172.18.2.64    │ payload │
-                  └───────────────────┴───────────────────┴─────────┘
-
-                  ┌───────────────────┬───────────────────┬─────────┐
-5            B4:  │    172.18.2.64    │    10.192.0.70    │ payload │
-                  └───────────────────┴───────────────────┴─────────┘
-                  ┌───────────────────┬───────────────────┬─────────┐
-6            GWB: │ 198.51.100.22+400 │ 198.51.100.11+500 │ payload │
-                  └───────────────────┴───────────────────┴─────────┘
-       ┌───────────────────┬───────────────────┬─────────┐
-7 GWA: │    10.128.0.40    │    172.17.1.75    │ payload │
-       └───────────────────┴───────────────────┴─────────┘
-       ┌───────────────────┬───────────────────┬─────────┐
-8 A5:  │    10.128.0.40    │    172.17.1.75    │ payload │
-       └───────────────────┴───────────────────┴─────────┘
-              ]]> </artwork> </artset>
-        </figure>
-
-        <t>In step (5), host B4 sends a response back to host A5. It reverses source and destination addresses and sends a
-          packet to gateway GWB. In step (6), the packet arrives at gateway GWB. The gateway recognizes the destination address
-          as an <em>encoded</em> address previously created to represent IPREF address 198.51.100.11+500. It places this IPREF
-          address in the packet as the new destination address. The gateway also recognizes the source address as corresponding
-          to a preset IPREF address 198.51.100.22+400. It places this IPREF address as the new source address. It then sends
-          the packet to the <em>third</em> network. In step (7), the packet arrives at gateway GWA. The gateway recognizes the
-          destination IPREF address as corresponding to the local host A5 172.17.1.75. It places this address in the packet
-          as the new destination address. It also recognizes the source IPREF address as one represented by an <em>encoded</em>
-          address 10.128.0.40. It places that address in the packet as the new source address. It then sends the packet to the
-          local host A5. in step (8), local host A5 recognizes the destination address 172.17.1.75 as its own and consumes
-          the packet for processing. This concludes packet exchange.
-        </t>
-        <t>In subsequent packet exchanges, all necessary mappings have been established. The gateways perform simple lookups
-          without the need to make any additional allocations.
-        </t>
-        <t>In general case, networks may have overlapping addresses, they may have several local subnets, they may have more
-          than one gateway to the <em>third</em> network. They may also run different network protocols. For example
-          one private network may run IPv4 while its peer may run IPv6. The communicating networks do not need to know their
-          peers' actual IP addresses or network protocols. The references are the stand ins representing those addresses in
-          their native network protocol domains. The references are interpreted independently by both communicating networks.
-          In the example above, network B allocates reference '400' to represent host B4. At network B, that reference is
-          interpreted as 172.18.2.64 whereas that same reference is interpreted as 10.128.0.4 at network A. Neither network
-          knows, or is concerned with, how the references are interpreted outside of their own administrative domains. In cases
-          where interpretation involves changing network protocols, the local gateway must run dual stacks and perform proper
-          repackaging of the payload.
-        </t>
-
-      </section>  <!-- ^^ Traversing Address Spaces in the Same Protocol Domain ^^ -->
-
-      <section><name>Traversing Address Spaces Across Protocol Domains</name>
-
-        <t>If address spaces reside in different protocol domains, then the gateways have an
-          additional responsibility to repackage packets into proper protocol frames. Other
-          than that, addresses are rewritten in the same manner.
-        </t>
-        <t><xref target="private-networks-different-protocols"/> depicts two local networks, one
-          is an IPv4 network and the other is an IPv6 network. The <em>third</em> network runs
-          IPv6. The IPv6 local network might employ globally routable addresses which may or may
-          not be globally reachable, depending on filtering. From the IPREF perspective it makes
-          no difference. Processing works the same way.
-        </t>
-
-        <figure anchor="private-networks-different-protocols"><name>private networks in different protocol domains</name>
-          <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
-            <artwork type="ascii-art" name="private networks different protocols diagram">
-              <![CDATA[
-         ╲  DNS:  B2  AA  2001:db8:bb::2 + 4286
-
-           ╲                   ╲  Encoding Network B: fdee:eeee::/64
-                                  Local Network B: 2001:db8:bb:2::/64
-             ╲                   ╲
-                                  
-               ╲                   ╲
-                                                             ┌──────┐
-                 ╲                   ╲                  ┃ :46│      │
-                                    ┏━━━━━━━┓           ┠────┤ host │
-                   ╲ 2001:db8:bb::2 ┃ IPREF ┃:2         ┃    │  B8  │
-                                  ╭─┨ g-way ┠───────────┨    └──────┘
-┌──────┐             ╲            ╎ ┃  GWB  ┃           ┃
-│      │.75 ┃                     ╎ ┗━━━━━━━┛           ┃
-│ host ├────┨          ╲                   ╲            ┃    ┌──────┐
-│  A5  │    ┃               Third Network               ┃ :28│      │
-└──────┘    ┃            ╲                   ╲          ┠────┤ host │
-            ┃           ┏━━━━━━━┓ ╎                     ┃    │  B2  │
-            ┃        .1 ┃ IPREF ┃ ╎            ╲             └──────┘
-┌──────┐    ┠───────────┨ g-way ┠─╯
-│      │.77 ┃           ┃  GWA  ┃ 2001:db8:aa::1 ╲
-│ host ├────┨           ┗━━━━━━━┛
-│  A7  │    ┃                  ╲                   ╲
-└──────┘
-                                 ╲                   ╲
-Local Network A: 172.17.1.0/24
-Encoding Network A: 10.128.0.0/10  ╲                   ╲
-              ]]>
-            </artwork>
-          </artset>
-        </figure>
-
-        <t>Let's assume host A7 wants to communicate with host B2. The IPREF address of B2 can be
-          obtain from DNS as 2001:db8:bb::2 + 4286. Local resolver realizes it's an IPREF address
-          and asks local mapper to allocate an encoded address for it. Let's assume, the encoded
-          address is 10.128.0.214. The addresses are rewritten as below. The first address is
-          the source and the second address is the destination:
-        </t>
-        <ol>
-          <li>at A7:  |  172.17.1.77  |  10.254.0.214  |  payload  |</li>
-          <li>at GWA: |  2001:db8:aa::1 + 7935  |  2001:db8:bb::2 + 4286  |  payload  |</li>
-          <li>at GWB: |  fdee:eeee::3b9e  |  2001:db8:bb:2::28  |  payload  |</li>
-          <li>at B2:  |  fdee:eeee::3b9e  |  2001:db8:bb:2::28  |  payload  |</li>
-        </ol>
-        <t>Explanation. In step 1, A7 places its own address as the source. The destination is
-          obtained via DNS with local resolver returning the encoded address of B2 as 10.254.0.214
-          in lieu of the IPREF address 2001:db8:bb::2 + 4286. In step 2, GWA first recognizes
-          that it has to convert the IPv4 packet to an IPv6 packet. It then deals with addresses
-          in their respective protocol domains. It does not recognize the source IPv4 address
-          so it allocates an IPREF address for it with an IPv6 native portion as 2001:db8:aa::1 + 7935.
-          It finds the destination address 10.254.0.14 as corresponding to an IPREF address of
-          2001:db8:bb::2 + 4286 that already has an IPv6 native portion so it can place it
-          as destination without further conversions. In step 3, GWB does not recognize the
-          source IPREF address, so  it allocates an encoded address for it fdee:eeee::3b9e.
-          It recognizes the destination address as corresponding to the address of the local
-          host b2 and places its local IP address of 2001:db8:bb:2::28. In step 4, local host
-          recognizes the destination address as its own and consumes the packet.
-        </t>
-
-      </section>  <!-- ^^ Traversing Address Spaces Across Protocol Domains ^^ -->
-
       <section><name>Name Resolution Support</name>
 
         <t>IPREF gateways provide mapping support for name resolution services such as DNS. When
@@ -668,7 +561,7 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
 
       </section>  <!-- ^^ Name Resolution Support ^^ -->
 
-    </section>  <!-- ^^ IPREF Operations Framework ^^ -->
+    </section>  <!-- ^^ IPREF Overview ^^ -->
 
     <section><name>DNS with IPREF</name>
 
@@ -676,8 +569,32 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
         entered and distributed manually. For example, an /etc/hosts file could be used for the
         purpose. Such use makes sense in certain cases. Especially on private networks, the
         practice of using literal addresses is common even if local DNS names are allocated to
-        the hosts.
+        hosts.
       </t>
+
+      <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
+        <artwork type="ascii-art"><![CDATA[
+             Network A    │
+                                ╔═══════╗
+ ┌──────┐                 │     ║ publc ║
+ │ host │.75┃      ┌────────────╢  DNS  ║    A3  AA  2001:db8::9 + 1733
+ │  A1  ├───┨  ┏━━━┷━━━┓  │     ║ servr ║          ────────▶
+ └──────┘   ┃  ┃ IPREF ┃:9      ╚═══════╝
+            ┠──┨ g-way ┠─────  
+ ┌──────┐   ┃  ┃  GWA  ┃  
+ │ host ├───┨  ┗━━━┯━━━┛  │    Internet
+ │  A3  │   ┃      │                                     ╔═══════╗
+ └──────┘          │      │                              ║ other ║
+                   │                                     ║ ╔═══════╗
+     ▲         ╔═══╧═══╗  │                              ║ ║ other ║
+     │         ║ local ║         ◀╶───────               ╚═║ ╔═══════╗
+     ╰────     ║  DNS  ║     B6  AA  2001:db8::8 + 2466    ║ ║ other ║
+               ║ rslvr ║                                   ╚═║  DNS  ║
+               ╚═══════╝  │                                  ║ servr ║
+                                                             ╚═══════╝
+        ]]></artwork>
+      </figure>
+
       <t>IPREF can also take full advantage of DNS <xref target="RFC1035"/>.  IPREF addresses are
         publishable. When resolving names that render IPREF addresses, local resolvers must obtain
         translation into <em>encoded</em> addresses for standard hosts on local networks. Mapping
@@ -686,72 +603,30 @@ Encoding Network A: 10.128.0.0/10  ╲                   ╲
         of all local hosts whose IPREF addresses are published through DNS. This is illustrated
         in <xref target="dns-with-ipref"/>.
       </t>
-
-      <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
-        <artset>  <!-- https://authors.ietf.org/en/rfcxml-vocabulary#artset -->
-          <artwork type="ascii-art" name="DNS with IPREF diagram">
-            <![CDATA[
-                    ╲
-                             ┏━━━━━━━━┓
-                      ╲      ┃ public ┃
-                             ┃  DNS   ┃ <╌╌ public DNS queries
-  ┌──────┐              ╲    ┃ server ┃
-  │      │.75 ┃              ┗━━┯━━━━━┛
-  │ host ├────┨           ╲     ╎
-  │  A5  │    ┃                 ╎
-  └──────┘    ┃             ╲   ╎
-              ┃            ┏━━━━┷━━┓
-              ┃         .1 ┃ IPREF ┃
-  ┌──────┐    ┠────────────┨ g-way ┠─
-  │      │.77 ┃            ┃  GWA  ┃
-  │ host ├────┨            ┗━━┯━━━━┛
-  │  A7  │    ┃               ╎   ╲
-  └──────┘                    ╎
-                              ╎     ╲
-                       ┏━━━━━━┷━━━┓
-                       ┃  local   ┃   ╲
-local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
-                       ┃ resolver ┃     ╲
-   Local Network A     ┗━━━━━━━━━━┛
-                                          ╲
-            ]]>
-          </artwork>
-        </artset>
-      </figure>
-
-      <t>Local hosts A5 and A7 resolve DNS names via local resolvers. The resolvers query DNS
-        servers on their behalf. Queries may return native IPv4 or IPv6 addresses, or it may return
-        IPREF addresses. If the native addresses match local network protocol, the resolvers simply
-        return them unchanged, dropping otherwise. In case of IPREF addresses, the resolvers obtain
-        a mapping to a native address on an <em>encoded</em> network from related IPREF gateways.
-        The gateways may allocate mappings on the fly if missing. The resulting <em>encoded</em> IP
-        addresses are then returned to the querying hosts.
+      <t>Local hosts A1 and A3 resolve DNS names via local resolvers. The resolvers query DNS
+        servers on their behalf. Queries may return native IPv4 or IPv6 addresses, or they may
+        return IPREF addresses. If the native addresses match local network protocol, the
+        resolvers simply return them unchanged, dropping otherwise. In case of IPREF addresses,
+        the resolvers obtain a mapping to a native address on an <em>encoded</em> network from
+        related IPREF gateways. The gateways may allocate mappings on the fly if missing. The
+        resulting <em>encoded</em> IP addresses are then returned to the querying hosts.
       </t>
       <t>If any hosts on local networks advertise services via DNS using IPREF addresses, the
         related IPREF gateways must be made aware of it. The gateways must know which hosts have
         been made available externally and what IPREF addresses have been assigned to them. This
-        is typically a semi-static configuration which remains stable for long periods of time. The
-        gateways may query those DNS servers for information periodically or some other mechanism
-        may be employed to convey that information.
-      </t>
-      <t>To illustrate, in the example shown in <xref target="address-rewriting"/>, the IPREF
-        address of host B4 may be published via a public DNS server maintained by administrators
-        of local network B. Host A5 may obtain the address of host B4 by querying DNS via a local
-        resolver. The resolver would query the DNS servers, recognize the response as an IPREF
-        address and consult related IPREF gateway for proper mapping to an <em>encoded</em> IP
-        address. That IP address would then be returned to host A5 which in turn would use it as
-        the destination IP address.
+        is typically a semi-static configuration which remains stable for long periods of time.
+        The gateways may query those DNS servers for information periodically or some other
+        mechanism may be employed to convey that information.
       </t>
 
       <section><name>DNS Records</name>
 
         <t>IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses
           consist of two components which must be considered as a single address entity. It is not
-          possibly to separate references from their related <em>third</em> network IP addresses.
-          For that reason, there is a need for a new resource record type. The new record type is
-          tentatively called AA. This record type has not been registered yet. Until such time, a
-          TXT record may be used instead. The TXT record simply holds a textual representation of
-          an AA record.
+          possibly to separate references from their companion context addresses. For that reason,
+          there is a need for a new resource record type. The new record type is tentatively called
+          AA. This record type has not been registered yet. Until such time, a TXT record may be
+          used instead. The TXT record simply holds a textual representation of an AA record.
         </t>
         <t> Here are some examples of what the records might look like:
         </t>
@@ -773,17 +648,17 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
       </section>
 
       <section><name>Local Network Resolver</name>
-        <t>Local network resolver must provide capability to replace IPREF addresses with IP addresses from
-         <em>encoded</em> network in consultation with IPREF mappers. It's not clear if the details may be left
-         to implementations or whether some sort of an exchange protocol needs to be defined. If so, a
-         separate document would describe it.
+        <t>Local network resolver must provide capability to replace IPREF addresses with IP
+          addresses from <em>encoded</em> network in consultation with IPREF mappers. It's not
+          clear if the details may be left to implementations or whether some sort of an
+          exchange protocol should be defined. If so, a separate document would describe it.
         </t>
       </section>
 
       <section><name>DNS Agent</name>
-        <t>A DNS Agent is a component of IPREF mappers that detects if any local hosts are advertised
-          as reachable via IPREF addresses. There is a number of existing mechanisms to accomplish
-          this. There is probably no need to define another one.
+        <t>A DNS Agent is a component of IPREF mappers that detects if any local hosts are
+          advertised as reachable via IPREF addresses. There is a number of existing mechanisms
+          to accomplish this. There is probably no need to define another one.
         </t>
       </section>
 
@@ -950,13 +825,13 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
              capabilities in the area of address rewriting. It relies on IPv6 in all other
              functions of a network protocol.
           </li>
-          <li>NAT - IPREF is an address rewriting technology but operates differently than NAT. It
-             operates exclusively at the network layer. It does not reach to upper layer protocols
-             or lower layer protocols. For example, there is no manipulation of TCP/UDP ports. All
-             layer 4 ports are carried transparently as-is. IPREF does not conflict with NAT. In a
-             common configuration, a NAT gateway connects to the <em>third</em> network without
-             any changes. IPREF may operate in parallel to NAT on the same gateway, or it may operate
-             on another gateway within the local network 'behind NAT'.
+          <li>NAT - IPREF is an address rewriting technology but operates differently than NAT.
+            It operates exclusively at the network layer. It does not reach to upper layer
+            protocols or lower layer protocols. For example, there is no manipulation of TCP/UDP
+            ports. All layer 4 ports are carried transparently as-is. IPREF does not conflict
+            with NAT. In a common configuration, a NAT gateway connects to the Internet without
+            any changes. IPREF may operate in parallel to NAT on the same gateway, or it may
+            operate on another gateway within the local network 'behind NAT'.
           </li>
           <li>VPN - IPREF deals mostly with addressing. It does not perform typical functions of
              a VPN and it does not replace it. It behaves differently. A typical VPN makes hosts
@@ -969,11 +844,11 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
              for a VPN. IPREF does not conflict with VPNs. A VPN might use IPREF to establish
              a VPN connection.
           </li>
-          <li>Firewall - IPREF is not a firewall. While allocation or lack of allocation of references
-             to local hosts has the effect of blocking or allowing access to them, blocking policy is
-             best vested with a firewall. IPREF mappers deal with address rewriting, they are not packet
-             filters. There is no conflict between firewalls and IPREF. Firewalls might need to be made
-             aware of IPREF to be effective in their mission.
+          <li>Firewall - IPREF is not a firewall. While allocation or lack of allocation of
+            references has the effect of blocking or allowing access, blocking policy is best
+            vested with firewalls. IPREF mappers deal with address rewriting, they are not packet
+            filters. There is no conflict between firewalls and IPREF. Firewalls might benefit
+            from IPREF specific management features to simplify management and configuration.
           </li>
         </ul>
 
@@ -1054,4 +929,4 @@ local DNS queries  <╌╌ ┃   DNS    ┃ <╌╌ DNS query responses
  </back>
 </rfc>
 <!-- vim: tabstop=2 softtabstop=2 shiftwidth=2 expandtab
--->
+->
