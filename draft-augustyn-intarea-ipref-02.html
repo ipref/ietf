@@ -7,17 +7,20 @@
 <title>IP Addressing with References (IPREF)</title>
 <meta content="Waldemar Augustyn" name="author">
 <meta content="
-       This document describes IP addressing with references (referred to as IPREF) and how it
-        can be used with IPv4 and IPv6. It uses special addresses called IPREF addresses which
-        use references to IP addresses instead of actual addresses. IPREF provides highly scalable
-        means of traversing private address spaces end-to-end. It can traverse private address
-        spaces both within the same protocol domain and across protocol domains. For example, it
-        allows NAT traversal for IPv4, or for IPv6 with NAT6 or filters. It also allows direct
-        communication between IPv4 and IPv6 networks, including over NAT, NAT6, or filters.
+       IP addressing with references, or IPREF for short, is a method for end-to-end
+        communication across different address spaces normally not reachable through native
+        means. IPREF uses references to addresses instead of real addresses. It allows to
+        reach across NAT/NAT6 and across protocols IPv4/IPv6. It is a pure layer 3 addressing
+        feature that works with existing network protocols.
        
-       IPREF addresses are publishable via Domain Name System (DNS). Any host on any private
-        network may publish its services via DNS. These services are reachable from any network,
-        whether IPv4 or IPv6, provided IPREF is supported on both ends.
+       IPREF forms addresses made of context addresses and references. These addresses are
+        publishable in Domain Name System (DNS). Any host in any address space, including
+        behind NAT/NAT6 or employing different protocol IPv4/IPv6, may publish its services
+        in DNS. These services will be reachable from any address space, including those
+        running different protocol IPv4/IPv6 or behind NAT/NAT6, provided both ends support
+        IPREF.
+       
+       IPREF is especially useful for transitioning to IPv6.
        
     " name="description">
 <meta content="xml2rfc 3.18.0" name="generator">
@@ -40,7 +43,7 @@
     wcwidth 0.2.6
     weasyprint 59.0
 -->
-<link href="/usr/src/app/tmp/1cac0a03-6fd3-43dc-91fe-2415642e03d0/draft-augustyn-intarea-ipref-02.xml" rel="alternate" type="application/rfc+xml">
+<link href="/usr/src/app/tmp/614fc226-294e-405d-beeb-5d11d17c78f0/draft-augustyn-intarea-ipref-02.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">/*
 
@@ -1218,7 +1221,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Augustyn</td>
-<td class="center">Expires 22 March 2024</td>
+<td class="center">Expires 28 March 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1231,12 +1234,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-augustyn-intarea-ipref-02</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-19" class="published">19 September 2023</time>
+<time datetime="2023-09-25" class="published">25 September 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-22">22 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-03-28">28 March 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1249,16 +1252,18 @@ li > p:last-of-type:only-child {
 <h1 id="title">IP Addressing with References (IPREF)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes IP addressing with references (referred to as IPREF) and how it
-        can be used with IPv4 and IPv6. It uses special addresses called IPREF addresses which
-        use references to IP addresses instead of actual addresses. IPREF provides highly scalable
-        means of traversing private address spaces end-to-end. It can traverse private address
-        spaces both within the same protocol domain and across protocol domains. For example, it
-        allows NAT traversal for IPv4, or for IPv6 with NAT6 or filters. It also allows direct
-        communication between IPv4 and IPv6 networks, including over NAT, NAT6, or filters.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">IPREF addresses are publishable via Domain Name System (DNS). Any host on any private
-        network may publish its services via DNS. These services are reachable from any network,
-        whether IPv4 or IPv6, provided IPREF is supported on both ends.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">IP addressing with references, or IPREF for short, is a method for end-to-end
+        communication across different address spaces normally not reachable through native
+        means. IPREF uses references to addresses instead of real addresses. It allows to
+        reach across NAT/NAT6 and across protocols IPv4/IPv6. It is a pure layer 3 addressing
+        feature that works with existing network protocols.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">IPREF forms addresses made of context addresses and references. These addresses are
+        publishable in Domain Name System (DNS). Any host in any address space, including
+        behind NAT/NAT6 or employing different protocol IPv4/IPv6, may publish its services
+        in DNS. These services will be reachable from any address space, including those
+        running different protocol IPv4/IPv6 or behind NAT/NAT6, provided both ends support
+        IPREF.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">IPREF is especially useful for transitioning to IPv6.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1279,7 +1284,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1363,15 +1368,26 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-dns-records" class="internal xref">DNS Records</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-local-network-resolver" class="internal xref">Local Network Resolver</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-local-network-resolvers" class="internal xref">Local Network Resolvers</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-dns-agent" class="internal xref">DNS Agent</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-detecting-published-ipref-a" class="internal xref">Detecting Published IPREF Addresses</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-dnssec-compatibility" class="internal xref">DNSSEC compatibility</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-ipref-address-literals" class="internal xref">IPREF Address Literals</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-using-ipref-for-transitioni" class="internal xref">Using IPREF for Transitioning to IPv6</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-transitioning-process" class="internal xref">Transitioning Process</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-related-technologies" class="internal xref">Related Technologies</a></p>
@@ -1404,82 +1420,69 @@ li > p:last-of-type:only-child {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Most hosts on the Internet are actually not directly attached to the Internet. Instead
-        they reside on local networks that are attached to the Internet through some sort of
-        a firewall that limits external access to them. In the IPv4 case, the firewall commonly
-        runs Network Address Translation (NAT). In the case of IPv6, it may be filters but it
-        also may be NAT6 behaving similarly to NAT. Whichever the case, peer-to-peer connectivity
-        is greatly limited. This creates a problem commonly referred to as NAT traversal.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">For common services, especially those advertised through Domain Name System (DNS), the
-        problem is solved by exposing local servers to the Internet as if they were residing
-        directly on the Internet. The solution works because it relies on the client server
-        nature of these services. In this model, the servers wait until some host initiates
-        a connection. Firewalls and NAT make sure the return path for the packets is open. The
-        servers don't initiate connection on their own (unless to other servers that are
-        already exposed to the Internet).<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">For peer-to-peer applications, there is no general solution. Instead, there is a hodgepodge
-        of half solutions suitable for selected cases, none of them scalable. They mostly attempt
-        to temporarily expose internal hosts at the edge router's address and some specific port,
-        or deduce if such an exposure exists which then may be passed to applications that can
-        make use of such information.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">There is a similar problem when attempting to traverse different protocol domains, such
-        as IPv4/IPv6. It is a somewhat harder problem to solve given different protocols in play.
-        One attempt to do that, known as NAT64/SIIT, illustrates the difficulties. The result
-        cannot be even called a solution as it is severely constrained. It is more of a study. It
-        requires external translation devices through which all traffic must go, and which
-        require configuration that needs to be externally maintained. It does not scale beyond
-        very small setups. It also requires allocating global IPv4 addresses for IPv6 peers.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">All of these attempted solutions suffer great difficulties because they try to render
-        necessary address transformations too early. IPREF takes a different approach. It is
-        based on the observation that the originating hosts actually do not have to know what the
-        destination addresses are, or what protocol they belong to, so long as they can be referred
-        to in a manner understood by both ends. Thus, IPREF uses references to addresses rather
-        than real addresses. This allows to delay the rendering of necessary transformations until
-        a proper context is available. This approach works not only for NAT traversal but also for
-        protocol traversal since both problems are actually about the same problem: traversing
-        different address spaces potentially in different protocol domains. The protocol domain
-        matters only to the extent that a sufficient compatibility exists between the protocols
-        that packet payloads may be repackaged from one to the other while keeping functionality
-        of higher level protocols, such as TCP/UDP, intact. Such a compatibility exists between
-        IPv4 and IPv6.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">With this approach, IPREF does not need to negotiate anything. It does not need any
-        external devices, any external configurations. It does not require allocating any
-        global IP addresses from involved protocols. The result is a highly scalable solution
-        that works over NAT, NAT6, filters, and across IPv4/IPv6.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">In practical implementations, all IPREF processing is vested with gateways designated for
-        the purpose. The gateways may be the same as network edge routers but they may also reside
-        inside the networks, behind the edge routers and firewalls ("behind NAT"). The gateways
-        deal with processing of references and with any address mapping. If protocol conversion is
-        necessary, they run dual stacks and perform payload repackaging between the protocols. The
-        references, along with context addresses passed with them, are called 'IPREF addresses' to
-        distinguish them from native addresses. The gateways translate both source and destination
-        IPREF addresses to native addresses of the local network protocol before injecting packets
-        to local networks.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">The rest of the hosts on the network are standard hosts running whichever local network
-        protocol is employed, IPv4 or IPv6. They never see IPREF addresses or references. They
-        are completely oblivious to any IPREF processing taking place at the gateways. They do not
-        need to run dual stacks, nor is there any advantage doing so. They may run just a single
-        stack which could lead to lowering the cost of building and maintaining networks.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9">IPREF addresses are publishable via DNS. Such publishing does not consume any global
-        addresses of any network protocols. Any host on a private network may publish services
-        at any port they wish. For example there maybe five different hosts publishing web
-        services at port 443 and all five will be reachable at that port and all five may
-        advertise their services via DNS.<a href="#section-1-9" class="pilcrow">¶</a></p>
-<p id="section-1-10">Publishing without consuming global IP addresses is very attractive for IPv4 but there
-        are more reasons to publish as IPREF which apply equally to IPv4 and IPv6. Chiefly among
-        them is cross protocol reach. Such services may be accessed from IPv4 and IPv6 clients
-        which is very useful in any transition strategy. Further, IPREF references are very light.
-        They may be allocated and discarded easily, at will, or at time intervals. They may expire,
-        may be shadowed by different references pointing to the same services. They may be
-        preferable over exposing internal IP addresses for security reasons. They could be used
-        to help fighting Denial of Service (DoS) attacks. They could be used for A/B marketing
-        testing, or they could be used with authenticated DNS servers to identify different classes
-        of users for marketing purpose, forensic purpose, or service level purpose, etc.<a href="#section-1-10" class="pilcrow">¶</a></p>
-<p id="section-1-11">IPREF allows development of new, specialized protocols by providing interoperation with
-        existing IP networks. Because IPREF does not require negotiations of any sort and it does
-        not depend on any time domain, it is suitable for developing a range of specialized
-        network protocols for special requirements networks such as space networks, IoT networks,
-        high security financial or military networks, etc.<a href="#section-1-11" class="pilcrow">¶</a></p>
+<p id="section-1-1">Some 25 years ago, it became clear that the 32 bit address space of the IP protocol
+        was too small for the growing Internet. An effort to avert the impending 'shortage
+        of IP addressees', as the problem was referred to at the time, led to development of
+        a new IP protocol named version 6. That protocol, referred to as IPv6, had a larger
+        address space thus instantaneously solving the problem. Unfortunately, it created
+        another problem. It operated in a different, incompatible address space than the
+        existing IP protocol, referred to since as IPv4. In this way, two different address
+        spaces, inaccessible to each other, have been created.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Meanwhile, a grass roots effort led to development of another solution to the 'shortage
+        of IP addresses' problem that was compatible with existing IPv4 protocol. IPv4 address
+        space was extended by rewriting network addresses. That technique, since widely known as
+        NAT, effectively created an address space hierarchy. At the top of the hierarchy, there
+        was the original 32 bit address space. These addresses, at the edge of hierarchy, were
+        translated into and from another set of addresses belonging to so called 'private ranges'.
+        These addresses formed new address spaces. They were 32 bit wide but only 24 bit subsets
+        were used in practice. Together with the top hierarchy, they produced a 56 bit address
+        space for IPv4. Another variant, known as 'carrier grade NAT', added another level of
+        hierarchy which extend total address space to 72 bits. This approach averted the shortage
+        of IP addresses, but it achieved it at a cost of creating another problem. Namely, it
+        created millions of address spaces inaccessible to one another. These new address spaces
+        were not equal value, they were mostly useful for clients accessing servers within their
+        own address spaces or within the space at the top of the hierarchy, commonly referred to
+        as 'global IP addresses'.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">As a result, the Internet evolved into a collection of a large number of generally
+        inaccessible address spaces with two incompatible network protocols.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">There were attempts at improving the situation which went in two directions. There
+        were attempts aiming to solve access across address spaces within the same protocol,
+        typically referred to as 'NAT traversal solutions', and there were attempts aiming to
+        bridge IPv4/IPv6 divide. All of these attempts resulted in partial solutions with
+        substantial limitations. We could call them nicely 'focused'. The ones dealing with
+        IPv4/IPv6, like NAT64/SIIT, were asymmetrical, worked differently in one direction
+        than the other, didn't scale well, required global IPv4 addresses, couldn't traverse
+        NAT. The ones dealing with NAT traversal, like STUN or NAT-T collection, didn't work
+        across protocols IPv4/IPv6, were very limited, dealing mostly with port manipulation,
+        never truly solving NAT traversal.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The result of these attempts was a hodgepodge of limited, mostly lacking, poorly
+        scaling, half measures which left these millions of different address spaces still
+        generally inaccessible to one another.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">A closer analysis of these different solutions reveals they suffer great difficulties
+        primarily because they try to render necessary address transformations too early. IPREF
+        takes a different approach. It is based on the observation that the originating hosts
+        do not have to know what the destination addresses are, or what protocol they belong
+        to. Thus, IPREF uses references to addresses rather than real addresses. This approach
+        works for both NAT traversal as well as for protocol traversal since both problems are
+        substantially the same. The one difference being having to repackage packets on the
+        IPv4/IPv6 boundary. Such repackaging requires sufficient compatibility between the
+        protocols which fortunately exists.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">With this approach, IPREF does not need to negotiate anything. It does not need any
+        external devices, any shared configurations. It does not require allocating of any
+        global IP addresses. The result is a highly scalable solution that works over NAT,
+        NAT6, filters, and across IPv4/IPv6. All of the millions of different address spaces,
+        whether behind NAT/NAT6, or across IPv4/IPv6 may now communicate with one another
+        using IPREF.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">In the background to all the above, there is an ongoing effort to covert every IPv4
+        network out there to IPv6. The idea is to run only one protocol everywhere which
+        would simplify many issues including address space accessibility. This is a long term
+        effort, decades away. IPREF does not conflict with it. Rather, it provides an
+        excellent tool in achieving the objective. It does this in a least expensive, least
+        risky manner which also shortens the conversion time substantially. Compared to
+        traditional strategies, which use dual stacks and translator devices all requiring
+        allocation of IPv4 addresses, IPREF allows very clean strategies without IPv4 pollution.
+        It relies only on pure IPv6 Internet, allows to drop IPv4 Internet early, and transitions
+        to pure IPv6 networks in a single step.<a href="#section-1-8" class="pilcrow">¶</a></p>
 <div id="requirements">
 <section id="section-1.1">
         <h3 id="name-requirements-language">
@@ -1498,8 +1501,12 @@ li > p:last-of-type:only-child {
         <h3 id="name-ipref-terminology">
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-ipref-terminology" class="section-name selfRef">IPREF Terminology</a>
         </h3>
-<p id="section-1.2-1">IPREF - short name referring to the technology described in this document, pronounced I-P-REF<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2"><em>encoding</em> network - network representing hosts on peer private networks<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-1">IPREF - short name referring to technology described in this document, pronounced I-P-REF<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">context address - a native address component of an IPREF address<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">reference - an unsigned integer component of an IPREF address<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">IPREF address - addressing unit used with IPREF, a combination of a context address and a reference<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">encoding network - network representing IPREF addresses in native form<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">IPREF gateway - a device, or software component, that performs IPREF address rewriting<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1507,10 +1514,10 @@ li > p:last-of-type:only-child {
       <h2 id="name-ipref-overview">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-ipref-overview" class="section-name selfRef">IPREF Overview</a>
       </h2>
-<p id="section-2-1">IPREF is a method for communication across different address spaces, i.e.: address
-        spaces that are not reachable by native network protocols. Examples are private networks
-        behind NAT, NAT6, or filters, as well as networks employing different network protocols
-        IPv4/IPv6.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">IPREF is a method for communication across different address spaces, that is those
+        that cannot be reached through native means of a network protocol. Examples of such
+        address spaces are networks behind NAT, NAT6, or filters, as well as networks employing
+        different network protocols such as IPv4/IPv6.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">Key characteristics of IPREF:<a href="#section-2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2-3.1">massively scalable<a href="#section-2-3.1" class="pilcrow">¶</a>
@@ -1523,7 +1530,7 @@ li > p:last-of-type:only-child {
 </li>
         <li class="normal" id="section-2-3.5">no need for external translators or shared configurations<a href="#section-2-3.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-2-3.6">no need for any global addresses IPv4 or IPv6<a href="#section-2-3.6" class="pilcrow">¶</a>
+        <li class="normal" id="section-2-3.6">no need for global IPv4 addresses<a href="#section-2-3.6" class="pilcrow">¶</a>
 </li>
       </ul>
 <section id="section-2.1">
@@ -1534,29 +1541,33 @@ li > p:last-of-type:only-child {
           addressing. Communicating peers cannot interpret each other's addresses therefore some
           other method of directing packets to proper destinations must be devised.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2">IPREF solves this problem by using references to addresses rather than actual
-          addresses. The references are then evaluated by each address space to render proper
-          native addresses suitable for forwarding. Each address space performs the evaluation
-          independently. As a result the same references render different addresses at different
-          address spaces.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+          addresses. The references are then evaluated within each address space to render proper
+          native addresses suitable for forwarding. The evaluation is performed at each address
+          space independently. As a result the same references render different addresses at
+          different address spaces.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1-3">References are unsigned integers meaningful only in the context of the address space
-          where they were defined. Local administrators may divide their values into fields for
-          any purpose believed useful. For example, the fields may reflect different sources of
-          allocations, or provide extra security bits, or provide load balancing options, or
-          provide A/B address ranges etc. Peers are unaware of these fields and treat the
-          references as opaque values.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+          they pertain to. Local administrators allocate values to references and assign their
+          meaning. They may divide a reference into fields for any purpose believed useful. For
+          example, the fields may reflect different sources of allocations, or provide extra
+          security bits, or provide load balancing hints, etc. Peers are unaware of these fields
+          and treat references as opaque values.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.2">
         <h3 id="name-ipref-addresses">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-ipref-addresses" class="section-name selfRef">IPREF Addresses</a>
         </h3>
+<p id="section-2.2-1">IPREF uses references to addresses in lieu of actual addresses. Such references need
+          context to be meaningful, therefore IPREF uses addressing units that combine a context
+          address, which MUST be a native address, and a reference. These addressing units are
+          called IPREF addresses.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <span id="name-ipref-address"></span><div id="ipref-address">
 <figure id="figure-1">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-1.1">
+          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-2.1">
 <pre>
          ┌───────────────────┬───────────────────┐
          │  context address  │     reference     │
          └───────────────────┴───────────────────┘
-            198.51.100.11 + 700
+               198.51.100.11 + 700
             2001:db8::abc:11 + 700
 </pre>
 </div>
@@ -1564,23 +1575,19 @@ li > p:last-of-type:only-child {
 <a href="#name-ipref-address" class="selfRef">IPREF address</a>
           </figcaption></figure>
 </div>
-<p id="section-2.2-2">IPREF uses references to addresses in lieu of actual addresses. Such references need
-          context to be meaningful, therefore IPREF uses addressing units that combine a context
-          address, which MUST be a native address, and a reference. These addressing units are
-          called IPREF addresses.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">The context address portion of an IPREF address is an address within adjacent address
           space. Typically, this is the Internet, so this is usually an Internet address of an
-          edge router of the source or destination network. This is a convenience, not a
-          requirement, other addresses known to the network may also be used.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+          edge router of the source or destination network. Other addresses known to the network
+          may also be used.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4">References are allocated by administrators of respective address spaces. The references
-          may only refer to hosts from those address space. Thus, the destination references are
+          may only refer to hosts from these address spaces. Thus, the destination references are
           allocated by the administrators of the destination networks while the source references
           are allocated by the administrators of the source networks. There are no conflicts and
           there is no need for negotiations. Each peer defines their own references and accepts
           peer references as opaque values.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <p id="section-2.2-5"><a href="#ipref-address" class="auto internal xref">Figure 1</a> shows two examples of IPREF addresses. In the notation,
           a plus sign '+' separates context address from the reference. A packet carries two
-          addresses: source IPREF address and a destination IPREF address.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+          IPREF addresses: a source IPREF address and a destination IPREF address.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <p id="section-2.2-6">IPREF addresses are publishable in DNS.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.3">
@@ -1594,11 +1601,11 @@ li > p:last-of-type:only-child {
           networks. They also encode IPREF addresses for internal use as local network protocols
           only understand native addresses. The encoding networks are local private networks to
           which the gateways map IPREF addresses. For example, IPv4 networks could use a 10/8
-          network while IPv6 networks could use an fd::/64 network. For local hosts, these
-          encoded addresses represent peers they communicate with. The peers appear as if on
-          the local network. This is a common consequence of cross protocol communication. The
-          gateways replace these encoded addresses with IPREF addresses when sending packets
-          outside local networks.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+          network while IPv6 networks could use an fd::/64 network for the purpose. For local
+          hosts, these encoded addresses represent peers they communicate with. The peers appear
+          as if on the local network. This is common with cross protocol communication or more
+          generally with cross address space communication. The gateways replace these encoded
+          addresses with IPREF addresses when sending packets outside local networks.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.4">
         <h3 id="name-traversing-address-spaces">
@@ -1606,7 +1613,7 @@ li > p:last-of-type:only-child {
         </h3>
 <p id="section-2.4-1">Conceptually, packets travel through address spaces based on source and destination
           IPREF addresses. This is analogous to IP protocols. The IPREF addresses are interpreted
-          at each address space to render native addresses suitable for forwarding.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+          at each address space to render native addresses for forwarding.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
 <span id="name-traversing-address-spaces-2"></span><div id="traversing-address-spaces">
 <figure id="figure-2">
           <div class="alignLeft art-ascii-art art-text artwork" id="section-2.4-2.1">
@@ -1649,9 +1656,9 @@ dst:  10.128.48.62         2001:db8::8          2001:db8:b::28
 <ul class="normal">
 <li class="normal" id="section-2.4-6.1">At network A, the IPREF source address is interpreted as a native address of host
             A1. The destination IPREF address is interpreted as some local private address on
-            the encoding network. This allows host A1 to place native addresses in the packet.
-            The IPREF gateway will replace both source and destination addresses with their
-            IPREF equivalents. It will also repackage IPv4 packets into IPv6 since the next
+            the encoding network. The encoding allows host A1 to place native addresses in the
+            packet. The IPREF gateway will replace both source and destination addresses with
+            their IPREF equivalents. It will also repackage IPv4 packets into IPv6 since the next
             address space is IPv6.<a href="#section-2.4-6.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.4-6.2">In the transient address space, the Internet, IPREF addresses are interpreted
@@ -1824,13 +1831,13 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         <h3 id="name-embedding-references-in-ip-">
 <a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-embedding-references-in-ip-" class="section-name selfRef">Embedding References in IP Packets</a>
         </h3>
-<p id="section-2.6-1">References are network layer entities and the most natural place for embedding them
-          would be a network layer headers, such as IPv4 options or IPv6 extension headers.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-1">References are network layer entities therefore the most natural place for embedding
+          them would be network layer headers, such as IPv4 options or IPv6 extension headers.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.6-2">Unfortunately, many Internet Service Providers drop options and extension headers for
-           various reasons. Even if they don't, routers tend to put them on a slow processing
-           path resulting in poor performance. For that reason, the most reliable way to embed
-           references is to place them in the payload. One common technique to accomplish this is
-           tunneling where references could be placed in the payload of the packet being tunneled.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+          various reasons. Even if they don't, routers tend to put them on a slow processing
+          path resulting in poor performance. For that reason, the most reliable way to embed
+          references is to place them in the payload. One common technique of accomplishing this
+          is tunneling where references could be made a part of the payload.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
 <section id="section-2.6.1">
           <h4 id="name-ipv4-option">
 <a href="#section-2.6.1" class="section-number selfRef">2.6.1. </a><a href="#name-ipv4-option" class="section-name selfRef">IPv4 Option</a>
@@ -1840,7 +1847,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              number, an octet with length, and two octets reserved for possible future use while
              padding to four octet boundary. The source and destination references would then follow.<a href="#section-2.6.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.6.1-2">A new option number would be registered with IANA. Until then, experimental option, 30,
-             could be used. A separate document should describe it in detail.<a href="#section-2.6.1-2" class="pilcrow">¶</a></p>
+             could be used.<a href="#section-2.6.1-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.6.2">
           <h4 id="name-ipv6-extension-header">
@@ -1852,7 +1859,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              followed by four octets of padding to 8 octet boundary. Padding octets would not be
              intended for any future use. The source and destination references would then follow.<a href="#section-2.6.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.6.2-2">A new protocol type would be registered with IANA. Until then, experimental protocol,
-             254, could be used. A separate document should describe it in detail.<a href="#section-2.6.2-2" class="pilcrow">¶</a></p>
+             254, could be used.<a href="#section-2.6.2-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.6.3">
           <h4 id="name-udp-tunnel">
@@ -1877,8 +1884,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              header. The third octet would report number of hops detected for incoming packets. The
              fourth octet would be reserved for possible future use while padding to 4 octet boundary.
              The IPREF option would follow in the format matching respective IP protocol, IPv4 or IPv6.<a href="#section-2.6.3-3" class="pilcrow">¶</a></p>
-<p id="section-2.6.3-4">The tunnel would operate at port 1045. This value would be registered with IANA. A
-             separate document should describe the tunnel in detail.<a href="#section-2.6.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.6.3-4">The tunnel would operate at port 1045. This value would be registered with IANA.<a href="#section-2.6.3-4" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-2.7">
@@ -1887,22 +1893,19 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         </h3>
 <p id="section-2.7-1">IPREF gateways provide mapping support for name resolution services such as DNS. When
           resolving queries on behalf of local hosts, all returned IPREF addresses must be mapped
-          to native addresses of the local network protocol. These are the addresses on the
-          <em>encoding</em> network. How is this accomplished may be viewed as a matter of local
-          implementation but there may be a need to settle on a standard way of communicating
-          with the IPREF gateways to allow compatibility with different resolvers. In that case,
-          a separate document should describe such mechanism.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
+          to native addresses of the local network protocol. Typically, a subnet on a private
+          network is dedicated for the purpose. That subnet is used just for encoding, there are
+          no real hosts with these addresses. There may be a need to standardize on how resolvers
+          communicate with gateways to obtain such mappings.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-3">
       <h2 id="name-dns-with-ipref">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-dns-with-ipref" class="section-name selfRef">DNS with IPREF</a>
       </h2>
-<p id="section-3-1">Similarly to standard IP, IPREF can operate with or without DNS. IPREF addresses may be
-        entered and distributed manually. For example, an /etc/hosts file could be used for the
-        purpose. Such use makes sense in certain cases. Especially on private networks, the
-        practice of using literal addresses is common even if local DNS names are allocated to
-        hosts.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">IPREF takes full advantage of DNS <span>[<a href="#RFC1035" class="cite xref">RFC1035</a>]</span>. Local networks may
+        publish IPREF addresses of any services hosted on local networks. Standard
+        DNS servers may be used for the purpose.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <span id="name-dns-with-ipref-2"></span><div id="dns-with-ipref">
 <figure id="figure-4">
         <div class="alignLeft art-ascii-art art-text artwork" id="section-3-2.1">
@@ -1911,7 +1914,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
                                 ╔═══════╗
  ┌──────┐                 │     ║ publc ║
  │ host │.75┃      ┌────────────╢  DNS  ║    A3  AA  2001:db8::9 + 1733
- │  A1  ├───┨  ┏━━━┷━━━┓  │     ║ servr ║          ────────▶
+ │  A1  ├───┨  ┏━━━┷━━━┓  │     ║ servr ║          ────────&gt;
  └──────┘   ┃  ┃ IPREF ┃:9      ╚═══════╝
             ┠──┨ g-way ┠─────
  ┌──────┐   ┃  ┃  GWA  ┃
@@ -1920,7 +1923,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
  └──────┘          │      │                              ║ other ║
                    │                                     ║ ╔═══════╗
      ▲         ╔═══╧═══╗  │                              ║ ║ other ║
-     │         ║ local ║         ◀╶───────               ╚═║ ╔═══════╗
+     │         ║ local ║          &lt;───────               ╚═║ ╔═══════╗
      ╰────     ║  DNS  ║     B6  AA  2001:db8::8 + 2466    ║ ║ other ║
                ║ rslvr ║                                   ╚═║  DNS  ║
                ╚═══════╝  │                                  ║ servr ║
@@ -1931,33 +1934,16 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 <a href="#name-dns-with-ipref-2" class="selfRef">DNS with IPREF</a>
         </figcaption></figure>
 </div>
-<p id="section-3-3">IPREF can also take full advantage of DNS <span>[<a href="#RFC1035" class="cite xref">RFC1035</a>]</span>.  IPREF addresses are
-        publishable. When resolving names that render IPREF addresses, local resolvers must obtain
-        translation into <em>encoded</em> addresses for standard hosts on local networks. Mapping
-        to <em>encoded</em> addresses is typically made by IPREF gateways and presented back to
-        resolvers which pass them to the querying hosts. In addition, IPREF gateways must be aware
-        of all local hosts whose IPREF addresses are published through DNS. This is illustrated
-        in <a href="#dns-with-ipref" class="auto internal xref">Figure 4</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">Local hosts A1 and A3 resolve DNS names via local resolvers. The resolvers query DNS
-        servers on their behalf. Queries may return native IPv4 or IPv6 addresses, or they may
-        return IPREF addresses. If the native addresses match local network protocol, the
-        resolvers simply return them unchanged, dropping otherwise. In case of IPREF addresses,
-        the resolvers obtain a mapping to a native address on an <em>encoded</em> network from
-        related IPREF gateways. The gateways may allocate mappings on the fly if missing. The
-        resulting <em>encoded</em> IP addresses are then returned to the querying hosts.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">If any hosts on local networks advertise services via DNS using IPREF addresses, the
-        related IPREF gateways must be made aware of it. The gateways must know which hosts have
-        been made available externally and what IPREF addresses have been assigned to them. This
-        is typically a semi-static configuration which remains stable for long periods of time.
-        The gateways may query those DNS servers for information periodically or some other
-        mechanism may be employed to convey that information.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-3">For resolution of DNS names, a modified recursive resolver is required because IPREF
+        addresses are different from IPv4 and IPv6 addresses. The resolver must recognize them
+        in addition to native IP addresses.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <section id="section-3.1">
         <h3 id="name-dns-records">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-dns-records" class="section-name selfRef">DNS Records</a>
         </h3>
 <p id="section-3.1-1">IPREF addresses are unlike well known IPv4 addresses or IPv6 addresses. These addresses
           consist of two components which must be considered as a single address entity. It is not
-          possibly to separate references from their companion context addresses. For that reason,
+          possible to separate references from their companion context addresses. For that reason,
           there is a need for a new resource record type. The new record type is tentatively called
           AA. This record type has not been registered yet. Until such time, a TXT record may be
           used instead. The TXT record simply holds a textual representation of an AA record.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
@@ -1970,28 +1956,54 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
     Host-A5     TXT     "AA net-A + 500"
 </pre><a href="#section-3.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1-4">The IP portion may be provided numerically or as a domain name. The format for the reference
-          would allow unsigned decimal integers as well as unsigned hex integers. Other formats may be
-          defined as well.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">The definition of the new resource record, its use, notation, and registration with IANA should
-          be described in a separate document.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">The IP portion may be provided numerically or as a domain name. The format for the
+          reference would allow unsigned decimal integers as well as unsigned hex integers. 
+          Other formats may be defined as well.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 </section>
 <section id="section-3.2">
-        <h3 id="name-local-network-resolver">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-local-network-resolver" class="section-name selfRef">Local Network Resolver</a>
+        <h3 id="name-local-network-resolvers">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-local-network-resolvers" class="section-name selfRef">Local Network Resolvers</a>
         </h3>
-<p id="section-3.2-1">Local network resolver must provide capability to replace IPREF addresses with IP
-          addresses from <em>encoded</em> network in consultation with IPREF mappers. It's not
-          clear if the details may be left to implementations or whether some sort of an
-          exchange protocol should be defined. If so, a separate document would describe it.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">Local network resolvers must recognize IPREF addresses returned by DNS queries. They
+          must also be capable of encoding them into native IP addresses in consultation with
+          IPREF gateways. This is shown in <a href="#dns-with-ipref" class="auto internal xref">Figure 4</a> as a line connecting
+          local DNS resolver with IPREF gateway GWA. Encoding is needed because local hosts do
+          not understand IPREF addresses. Instead, local hosts use encoded equivalents which
+          are then replaced with the actual IPREF addresses by the gateways. There may be a need
+          to standardize on how resolvers communicate with gateways.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-3.3">
-        <h3 id="name-dns-agent">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-dns-agent" class="section-name selfRef">DNS Agent</a>
+        <h3 id="name-detecting-published-ipref-a">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-detecting-published-ipref-a" class="section-name selfRef">Detecting Published IPREF Addresses</a>
         </h3>
-<p id="section-3.3-1">A DNS Agent is a component of IPREF mappers that detects if any local hosts are
-          advertised as reachable via IPREF addresses. There is a number of existing mechanisms
-          to accomplish this. There is probably no need to define another one.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">All published IPREF addresses must be communicated to local IPREF gateways so that
+          they can properly map destination addresses of incoming packets. This is reflected
+          in <a href="#dns-with-ipref" class="auto internal xref">Figure 4</a> by a line connecting public DNS server with IPREF
+          gateway GWA. There is a number of ways to accomplish this. There may be a need to
+          standardize on how this should be done to allow interoperability between different
+          gateways and different DNS servers.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+</section>
+<section id="section-3.4">
+        <h3 id="name-dnssec-compatibility">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-dnssec-compatibility" class="section-name selfRef">DNSSEC compatibility</a>
+        </h3>
+<p id="section-3.4-1">IPREF address records may be protected by DNSSEC. Packets leaving local networks
+          contain the exact addresses returned from DNS. Internally, local hosts use encoded
+          versions of these addresses which complicates things a little but the gateways replace
+          them with the original IPREF addresses listed in DNS before sending packets out of the
+          local network.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+</section>
+<section id="section-3.5">
+        <h3 id="name-ipref-address-literals">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-ipref-address-literals" class="section-name selfRef">IPREF Address Literals</a>
+        </h3>
+<p id="section-3.5-1">DNS is immensely useful and it is considered a necessary component of IP networking.
+          But IP networking does not relay on DNS. It works just fine with IP address literals
+          entered and distributed manually. Similarly, IPREF does not rely on DNS. It is possible
+          to use IPREF address literals in a manner similar to IP. The addresses would still
+          need to be encoded by the gateways. They would be entered manually at gateways first,
+          then their encoded equivalents would be distributed to hosts, possibly as entries in
+          /etc/hosts files.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-4">
@@ -1999,11 +2011,76 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-using-ipref-for-transitioni" class="section-name selfRef">Using IPREF for Transitioning to IPv6</a>
       </h2>
 <p id="section-4-1">Transitioning to IPv6 with IPREF offers significant benefits to both the transitioning
-      organizations as well as to the Internet providers, carriers, and operators.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-4-2">
-        <li id="section-4-2.1">
-          <p id="section-4-2.1.1">Starting point<a href="#section-4-2.1.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.1.2">
+        organizations as well as to the Internet service providers, carriers, and operators.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4-2.1">needs only pure IPv6 Internet (no need for IPv4 services or translators)<a href="#section-4-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.2">transitions directly to pure IPv6 (no dual stacks, no two-step transition)<a href="#section-4-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.3">no need for global IPv4 addresses<a href="#section-4-2.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.4">eliminates NAT/NAT6 (all hosts reachable, all ports available)<a href="#section-4-2.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.5">plays nicely with DNSSEC<a href="#section-4-2.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.6">allows to drop IPv4 Internet early<a href="#section-4-2.6" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.7">allows to transition at own pace<a href="#section-4-2.7" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.8">massively scalable<a href="#section-4-2.8" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.9">dramatically speeds up adoption of IPv6 Internet<a href="#section-4-2.9" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-4-2.10">huge cost savings<a href="#section-4-2.10" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-4-3">The ability to drop IPv4 Internet early is the key to speeding up adoption of IPv6
+        Internet.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">Relying on only pure IPv6 Internet and transitioning to pure IPv6 greatly simplifies
+        network designs and operations. Transition based on IPREF produces cleaner, simpler
+        networks and a cleaner, simpler Internet.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">The ability to transition at own pace, service by service, subnet by subnet results in
+        huge reduction in costs and risks.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">Traditional transition strategies have a structural deficiency. They perpetuate IPv4
+        addressing. Thus they extend the life of IPv4 Internet endlessly, to the point it may
+        not be possible to take it down. This is caused by the use of dual stacks and a collection
+        of translation devices such as NAT64/SIIT/464XLAT which all require allocation of IPv4
+        addresses. They are set up first, before transition takes place, and cannot be taken down
+        until AFTER all networks out there transition to IPv6. This may take decades to happen
+        if ever.<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7">IPREF does not have such deficiencies. It does not use dual stacks and it does not use
+        any translator devices that rely on IPv4 addresses. IPREF gateways are set up first which
+        makes it possible to drop IPv4 Internet very early. The actual transition of the local
+        networks takes place after the Internet has been switched to IPv6. In this way, the life
+        of the IPv4 Internet is never extended by the transitioning effort.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<section id="section-4.1">
+        <h3 id="name-transitioning-process">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-transitioning-process" class="section-name selfRef">Transitioning Process</a>
+        </h3>
+<p id="section-4.1-1">Transitioning process with IPREF takes advantage of IPREF's flexibility to operate
+          in all combinations of address spaces:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.1-2">
+<pre>
+        network A   Internet   Network B
+
+    1       IPv4      IPv4      IPv4        -- starting point
+    2       IPv4      IPv4      IPv6           (possible but rare)
+    3       IPv4      IPv6      IPv4        -- after dropping IPv4 Internet
+    4       IPv4      IPv6      IPv6        -- common during transition
+    5       IPv6      IPv4      IPv4           (same as 2)
+    6       IPv6      IPv4      IPv6           (possible but rare)
+    7       IPv6      IPv6      IPv4           (same as 4)
+    8       IPv6      IPv6      IPv6        -- completed transition
+</pre><a href="#section-4.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.1-3">Because different address spaces - network A, Internet, and network B - are processed
+          independently by IPREF, it decouples transitioning process at local networks from
+          transitioning efforts at peer networks. It also decouples the process from the Internet
+          protocol thus allowing dropping of IPv4 Internet early.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-4">
+          <li id="section-4.1-4.1">
+            <p id="section-4.1-4.1.1">Starting point<a href="#section-4.1-4.1.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.1.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2014,13 +2091,13 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
           ║  ┗━━━━━━━┛  ║ │                │ ║  ┗━━━━━━━┛  ║
           ╚═════════════╝                    ╚═════════════╝
                           │                │
-</pre><a href="#section-4-2.1.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.1.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.1.3">IPREF gateways are installed but not used. All connectivity is pure IPv4.<a href="#section-4-2.1.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.1.3">IPREF gateways are installed but not used. All connectivity is pure IPv4.<a href="#section-4.1-4.1.3" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.2">
-          <p id="section-4-2.2.1">Switching traffic to IPREF<a href="#section-4-2.2.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.2.2">
+          <li id="section-4.1-4.2">
+            <p id="section-4.1-4.2.1">Switching traffic to IPREF<a href="#section-4.1-4.2.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.2.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2031,19 +2108,19 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.2.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.2.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.2.3">IPREF gateways are configured. References are assigned. Traffic goes through the
-            gateways. All services subject to transition are now accessed via IPREF. Some local
-            IPv6 subnets may be setup but they're not used yet.<a href="#section-4-2.2.3" class="pilcrow">¶</a></p>
-<p id="section-4-2.2.4">Transition process at local networks is decoupled from any transition effort taking
-            place at peer networks. It is also decoupled from the type of Internet connection.
-            Traffic between gateways remains over IPv4 Internet until both ends connect to IPv6
-            Internet. This does not affect transitioning of internal networks to IPv6.<a href="#section-4-2.2.4" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.2.3">IPREF gateways are configured. References are assigned. Traffic goes through the
+              gateways. All services subject to transition are now accessed via IPREF. Some local
+              IPv6 networks may be set up but not used yet.<a href="#section-4.1-4.2.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.2.4">Transition process at local networks is decoupled from any transition effort taking
+              place at peer networks. It is also decoupled from the type of Internet connection.
+              Traffic between gateways remains over IPv4 Internet until both ends connect to IPv6
+              Internet. This does not affect transitioning of local networks to IPv6.<a href="#section-4.1-4.2.4" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.3">
-          <p id="section-4-2.3.1">Connecting to IPv6 Internet<a href="#section-4-2.3.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.3.2">
+          <li id="section-4.1-4.3">
+            <p id="section-4.1-4.3.1">Connecting to IPv6 Internet<a href="#section-4.1-4.3.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.3.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2054,15 +2131,20 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.3.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.3.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.3.3">Each side connects to IPv6 Internet at their own pace. Local IPv6 subnets may start
-            to appear. These are pure IPv6 subnets, no dual stacks. Connectivity between internal
-            IPv4/IPv6 subnets is provided by the same IPREF gateway.<a href="#section-4-2.3.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.3.3">Each side connects to IPv6 Internet at their own pace. Local IPv6 networks may
+              start to appear. These are pure IPv6 networks, no dual stacks. Connectivity
+              between local IPv4/IPv6 networks is provided by the same IPREF gateway that
+              connects to remote peers.<a href="#section-4.1-4.3.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.3.4">Clients located on local IPv6 networks can reach servers located on local IPv4
+              networks or remote networks (IPv4 or IPv6). Similarly, servers on local IPv6
+              network can be reached from clients located on local IPv4 networks as well as
+              from remote networks (IPv4 or IPv6).<a href="#section-4.1-4.3.4" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.4">
-          <p id="section-4-2.4.1">Switching gateway traffic to IPv6<a href="#section-4-2.4.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.4.2">
+          <li id="section-4.1-4.4">
+            <p id="section-4.1-4.4.1">Switching gateway traffic to IPv6<a href="#section-4.1-4.4.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.4.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2073,15 +2155,15 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.4.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.4.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.4.3">After both ends connect to IPv6 Internet, IPREF gateways may switch to passing
-            traffic to the IPv6 Internet. Transition process at local networks is not affected
-            by this change.<a href="#section-4-2.4.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.4.3">After both ends connect to IPv6 Internet, IPREF addresses may be changed to switch
+              traffic to go over the IPv6 Internet. Transition process at local networks is not
+              affected by this change.<a href="#section-4.1-4.4.3" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.5">
-          <p id="section-4-2.5.1">Dropping IPv4 Internet<a href="#section-4-2.5.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.5.2">
+          <li id="section-4.1-4.5">
+            <p id="section-4.1-4.5.1">Dropping IPv4 Internet<a href="#section-4.1-4.5.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.5.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2092,21 +2174,20 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.5.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.5.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.5.3">IPv4 Internet may now be dropped. It takes place early in the process. From the
-            Internet's point of view, transition to IPv6 has completed. The Internet does not
-            have to wait until every local networks transitions to IPv6. As sites keep dropping
-            their IPv4 Internet connections, the entire IPv4 Internet may be taken down well
-            before every network out there in the world completes its transition. This is
-            possible thanks to decoupling transitioning of local networks from transitioning
-            of the Internet itself.<a href="#section-4-2.5.3" class="pilcrow">¶</a></p>
-<p id="section-4-2.5.4">From local networks point of view, the disappearance of IPv4 Internet is invisible.
-            It does not affect local transitioning process.<a href="#section-4-2.5.4" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.5.3">IPv4 Internet may now be dropped. It takes place early in the process. From the
+              Internet's point of view, transition to IPv6 has completed. The Internet does not
+              have to wait until every local networks transitions to IPv6. As sites keep dropping
+              their IPv4 Internet connections, the entire IPv4 Internet may be taken down well
+              before every network out there completes its transition. This is possible thanks
+              to decoupling of the transitioning at local networks from the Internet protocol.<a href="#section-4.1-4.5.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.5.4">From local networks point of view, the disappearance of IPv4 Internet is invisible.
+              It does not affect local transitioning process.<a href="#section-4.1-4.5.4" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.6">
-          <p id="section-4-2.6.1">Switching to IPv6 independently<a href="#section-4-2.6.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.6.2">
+          <li id="section-4.1-4.6">
+            <p id="section-4.1-4.6.1">Switching to IPv6 independently<a href="#section-4.1-4.6.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.6.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2117,15 +2198,15 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.6.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.6.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.6.3">Each respective local network switches to IPv6 independently and may progress at
-            its own pace. It may elect to stay with a mix IPv4/IPv6 for as long as necessary
-            or convenient. This does not affect other networks.<a href="#section-4-2.6.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.6.3">Each respective local network switches to IPv6 independently and may progress at
+              its own pace. It may elect to stay with a mix IPv4/IPv6 for as long as necessary
+              or convenient. This does not affect other networks.<a href="#section-4.1-4.6.3" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.7">
-          <p id="section-4-2.7.1">Completing transition<a href="#section-4-2.7.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-4-2.7.2">
+          <li id="section-4.1-4.7">
+            <p id="section-4.1-4.7.1">Completing transition<a href="#section-4.1-4.7.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4.7.2">
 <pre>
              Network A    │    Internet    │    Network B
 
@@ -2136,14 +2217,15 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
              ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
 
                           │                │
-</pre><a href="#section-4-2.7.2" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4.7.2" class="pilcrow">¶</a>
 </div>
-<p id="section-4-2.7.3">Transition is completed when each side switches its internal network to IPv6. All
-            internal networks are pure IPv6. The Internet is also pure IPv6. IPREF gateways may
-            remain in place to allow communication with third party sites that have not
-            transitioned.<a href="#section-4-2.7.3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4.7.3">Transition is completed when each side switches its internal network to IPv6. All
+              internal networks are pure IPv6. The Internet is also pure IPv6. IPREF gateways may
+              be removed, or they may remain in place to allow communication with third party
+              sites that have not transitioned.<a href="#section-4.1-4.7.3" class="pilcrow">¶</a></p>
 </li>
-      </ol>
+        </ol>
+</section>
 </section>
 <section id="section-5">
       <h2 id="name-related-technologies">
@@ -2183,7 +2265,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
             references has the effect of blocking or allowing access, blocking policy is best
             vested with firewalls. IPREF mappers deal with address rewriting, they are not packet
             filters. There is no conflict between firewalls and IPREF. Firewalls might benefit
-            from IPREF specific management features to simplify management and configuration.<a href="#section-5-2.5" class="pilcrow">¶</a>
+            from IPREF specific features to simplify management and configuration.<a href="#section-5-2.5" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
