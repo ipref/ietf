@@ -22,7 +22,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-augustyn-intarea-ipref-02"
+  docName="draft-augustyn-intarea-ipref-03"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -43,7 +43,7 @@
     <title>IP Addressing with References (IPREF)</title> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#title-4 -->
     <!--  The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-02"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
+    <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-03"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
     <!-- Set value to the name of the draft  -->
 
     <author fullname="Waldemar Augustyn" initials="W" role="editor" surname="Augustyn"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#author -->
@@ -57,7 +57,7 @@
       </address>
     </author>
 
-    <date year="2023"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
+    <date year="2024"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
     <!--<date year="2023" month="2" day="5"/>--> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
     <!-- On draft submission:
          * If only the current year is specified, the current day and month will be used.
@@ -83,14 +83,15 @@
         reach across NAT/NAT6 and across protocols IPv4/IPv6. It is a pure layer 3 addressing
         feature that works with existing network protocols.
       </t>
-      <t>IPREF forms addresses made of context addresses and references. These addresses are
-        publishable in Domain Name System (DNS). Any host in any address space, including
-        behind NAT/NAT6 or employing different protocol IPv4/IPv6, may publish its services
-        in DNS. These services will be reachable from any address space, including those
-        running different protocol IPv4/IPv6 or behind NAT/NAT6, provided both ends support
-        IPREF.
+      <t>IPREF forms addresses (IPREF addresses) made of context addresses and references. These
+         IPREF addresses are publishable in Domain Name System (DNS). Any host in any address
+         space, including behind NAT/NAT6 or employing different protocol IPv4/IPv6, may publish
+         IPREF addresses of its services in DNS. These services will be reachable from any address
+         space, including those running different protocol IPv4/IPv6 or behind NAT/NAT6, provided
+         both ends support IPREF.
       </t>
-      <t>IPREF is especially useful for transitioning to IPv6.
+      <t>IPREF is especially useful for transitioning to IPv6 or for operating networks with a mix
+         of IPv4/IPv6.
       </t>
     </abstract>
 
@@ -118,9 +119,9 @@
         These addresses formed new address spaces. They were 32 bit wide but only 24 bit subsets
         were used in practice. Together with the top hierarchy, they produced a 56 bit address
         space for IPv4. Another variant, known as 'carrier grade NAT', added another level of
-        hierarchy which extend total address space to 72 bits. This approach averted the shortage
+        hierarchy which extended total address space to 72 bits. This approach averted the shortage
         of IP addresses, but it achieved it at a cost of creating another problem. Namely, it
-        created millions of address spaces inaccessible to one another. These new address spaces
+        created millions of address spaces inaccessible from one another. These new address spaces
         were not equal value, they were mostly useful for clients accessing servers within their
         own address spaces or within the space at the top of the hierarchy, commonly referred to
         as 'global IP addresses'.
@@ -149,18 +150,19 @@
         do not have to know what the destination addresses are, or what protocol they belong
         to. Thus, IPREF uses references to addresses rather than real addresses. This approach
         works for both NAT traversal as well as for protocol traversal since both problems are
-        substantially the same. The one difference being having to repackage packets on the
+        substantially the same. The one difference between them being having to repackage packets on the
         IPv4/IPv6 boundary. Such repackaging requires sufficient compatibility between the
         protocols which fortunately exists.
       </t>
       <t>With this approach, IPREF does not need to negotiate anything. It does not need any
         external devices, any shared configurations. It does not require allocating of any
-        global IP addresses. The result is a highly scalable solution that works over NAT,
+        global IP addresses. It does not create any new address spaces, it always refers to
+        existing ones. The result is a highly scalable solution that works over NAT,
         NAT6, filters, and across IPv4/IPv6. All of the millions of different address spaces,
         whether behind NAT/NAT6, or across IPv4/IPv6 may now communicate with one another
         using IPREF.
       </t>
-      <t>In the background to all the above, there is an ongoing effort to covert every IPv4
+      <t>In the background to all the above, there is an ongoing effort to convert every IPv4
         network out there to IPv6. The idea is to run only one protocol everywhere which
         would simplify many issues including address space accessibility. This is a long term
         effort, decades away. IPREF does not conflict with it. Rather, it provides an
@@ -294,9 +296,10 @@
 
       <section><name>Traversing Address Spaces</name>
 
-        <t>Conceptually, packets travel through address spaces based on source and destination
-          IPREF addresses. This is analogous to IP protocols. The IPREF addresses are interpreted
-          at each address space to render native addresses for forwarding.
+        <t>Similarly to standard IP protocols, IPREF packets travel through address spaces based
+           on source and destination IPREF addresses. After all, they utilize existing protocols
+           for transport thus they must obey the same rules. The IPREF addresses are interpreted
+           at each address space to render native addresses for forwarding.
         </t>
 
         <figure anchor="traversing-address-spaces"><name>traversing address spaces</name>
@@ -515,8 +518,9 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
         <section><name>UDP Tunnel</name>
           <t>Placing references in a UDP tunnel works for both IPv4 and IPv6. In both cases, the
-             references are embedded in the form of respective options or extension headers. In
-             addition, a tunnel encapsulation record is added. The order of items is as follows:
+             references would be embedded in the form of respective options or extension headers.
+             In addition, a tunnel encapsulation record would be added. The order of items would
+             be as follows:
           </t>
           <ul spacing="compact" empty="true">
             <li>UDP header</li>
@@ -555,7 +559,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
       <t>IPREF takes full advantage of DNS <xref target="RFC1035"/>. Local networks may
         publish IPREF addresses of any services hosted on local networks. Standard
-        DNS servers may be used for the purpose.
+        unmodified DNS servers may be used for the purpose.
       </t>
 
       <figure anchor="dns-with-ipref"><name>DNS with IPREF</name>
@@ -581,7 +585,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         ]]></artwork>
       </figure>
 
-      <t>For resolution of DNS names, a modified recursive resolver is required because IPREF
+      <t>For the resolution of DNS names, a modified recursive resolver is required because IPREF
         addresses are different from IPv4 and IPv6 addresses. The resolver must recognize them
         in addition to native IP addresses.
       </t>
@@ -682,7 +686,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         huge reduction in costs and risks.
       </t>
       <t>Traditional transition strategies have a structural deficiency. They perpetuate IPv4
-        addressing. Thus they extend the life of IPv4 Internet endlessly, to the point it may
+        addressing. Thus they extend the life of IPv4 Internet endlessly to the point it may
         not be possible to take it down. This is caused by the use of dual stacks and a collection
         of translation devices such as NAT64/SIIT/464XLAT which all require allocation of IPv4
         addresses. They are set up first, before transition takes place, and cannot be taken down
@@ -865,6 +869,24 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
       </section>  <!-- ^^ Transitioning Process ^^ -->
 
     </section>  <!-- ^^ Using IPREF for Transitioning to IPv6 ^^ -->
+
+    <section><name>General Purpose Technology</name>
+
+      <t>IPREF is a general purpose technology. While it can be used for transition purpose, it
+         is not a transition technology. It was created to bridge a divide between incompatible
+         protocols and between unreachable address spaces. This is a networking world that we
+         are facing now. We have two public Internets and millions of address spaces. It will
+         stay like this in the foreseeable future, likely for decades to come. IPREF addresses
+         this situation. New protocols are being developed as well, for example such as those
+         presented in various IRTF groups. Some are specialized, some are intended for wider
+         use. Each of them create their own address spaces with a need to exist within wider
+         networking system. IPREF can bridge these new technologies with existing IPv4 and
+         IPv6 Internets and allow them to strive. These are important projects which address
+         new issues not encountered before. IPREF dovetails with these efforts, thus enabling
+         and enhancing innovation in networking.
+      </t>
+
+    </section>  <!-- ^^ General Purpose Technology ^^ -->
 
     <section><name>Related Technologies</name>
 
