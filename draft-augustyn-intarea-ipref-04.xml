@@ -663,12 +663,32 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
     </section>  <!-- ^^ DNS with IPREF ^^ -->
 
-    <section><name>Using IPREF for Transitioning to IPv6 Internet</name>
+    <section><name>Evolving the Internet</name>
 
-      <t>Transitioning to IPv6 Internet using IPREF offers significant benefits to both the
-        transitioning organizations as well as to the Internet service providers, carriers,
-        and operators.
-      </t>
+      <section><name>General Purpose Technology</name>
+
+        <t>IPREF is a general purpose technology. While it can be used for transition purpose, it
+           is not a transition technology. It was created to bridge a divide between incompatible
+           protocols and between unreachable address spaces. This is a networking world that we
+           live in now. We have two public Internets and millions of address spaces. It will
+           stay like this in the foreseeable future, likely for decades to come. IPREF addresses
+           this situation. New protocols are being developed as well, for example such as those
+           presented in various IRTF groups. Some are specialized, some are intended for wider
+           use. Each of them create their own address spaces with a need to exist within wider
+           networking system. IPREF can bridge these new technologies with existing IPv4 and
+           IPv6 Internets and allow them to strive. These are important projects which address
+           new issues not encountered before. IPREF dovetails with these efforts, thus enabling
+           and enhancing innovation in networking.
+        </t>
+
+      </section>  <!-- ^^ General Purpose Technology ^^ -->
+
+      <section><name>Using IPREF for Transitioning to IPv6 Internet</name>
+
+        <t>Transitioning to IPv6 Internet using IPREF offers significant benefits to both the
+          transitioning organizations as well as to the Internet service providers, carriers,
+          and operators.
+        </t>
         <ul>
           <li>needs only pure IPv6 Internet (no need for IPv4 services or translators)</li>
           <li>transitions directly to pure IPv6 (no dual stacks, no two-step transition)</li>
@@ -680,24 +700,21 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
           <li>dramatically speeds up adoption of IPv6 Internet</li>
           <li>huge cost savings</li>
         </ul>
-      <t>The transition may involve only a switch to the IPv6 Internet in preparation for the take
-        down of the IPv4 Internet. Or, it may involve transitioning of some or all local networks
-        to IPv6. These two transition tasks are independent. It is possible to keep local network
-        unchanged and only switch to IPv6 Internet. In this case local IPv4 communication will
-        go over IPv6 Internet reaching remote IPv4 or IPv6 destinations. It is also possible to switch
-        local networks to IPv6 while keeping IPv4 Internet which may be useful if destinations
-        are expected to stay on the IPv4 Internet for longer. In either case, very little
-        to none coordination is needed with the peers. This alone is a huge advantage of the
-        IPREF technology.
-      </t>
-
-      <section><name>Transitioning Process</name>
-
-        <t>Transitioning process with IPREF takes advantage of IPREF's flexibility to operate
-          in all combinations of address spaces:
+        <t>The transition may involve only a switch to the IPv6 Internet in preparation for the take
+          down of the IPv4 Internet. Or, it may involve transitioning of some or all local networks
+          to IPv6. These two transition tasks are independent. It is possible to keep local network
+          unchanged and only switch to IPv6 Internet. In this case local IPv4 communication will
+          go over IPv6 Internet reaching remote IPv4 or IPv6 destinations. It is also possible to switch
+          local networks to IPv6 while keeping IPv4 Internet which may be useful if destinations
+          are expected to stay on the IPv4 Internet for longer. In either case, very little
+          to none coordination is needed with the peers. This alone is a huge advantage of the
+          IPREF technology.
+        </t>
+        <t>The transitioning process takes advantage of IPREF's flexibility to operate in all
+          combinations of address spaces:
         </t>
         <sourcecode type="dns-rr"> <![CDATA[
-        network A   Internet   Network B
+          network A   Internet   Network B
 
     1       IPv4      IPv4      IPv4        -- starting point
     2       IPv4      IPv4      IPv6           (possible but rare)
@@ -714,7 +731,6 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
           at either peer from the Internet thus allowing transitioning of the Internet to IPv6
           independently.
         </t>
-
         <ol>
           <li><t>Starting point</t>
             <artwork type="ascii-art"><![CDATA[
@@ -829,7 +845,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
                           │                │
             ]]></artwork>
-            <t>Each local network may switches to IPv6 independently at its own pace. This
+            <t>Each local network may switch to IPv6 independently at its own pace. This
               does not affect peer networks. There is no need for coordination. At the
               end of the transition, the change to the server addresses is reflected
               in reference mappings. The peers are unaware of any transitions taking place
@@ -837,7 +853,7 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
             </t>
           </li>
 
-          <li><t>Transitioning the Internet beyond IPv6</t>
+          <li><t>Transitioning of the Internet beyond IPv6</t>
             <artwork type="ascii-art"><![CDATA[
              Network A    │    Internet    │    Network B
 
@@ -861,27 +877,9 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
             </t>
           </li>
         </ol>
-      </section>  <!-- ^^ Transitioning Process ^^ -->
+      </section>  <!-- ^^ Using IPREF for Transitioning to IPv6 Internet ^^ -->
 
-    </section>  <!-- ^^ Using IPREF for Transitioning to IPv6 ^^ -->
-
-    <section><name>General Purpose Technology</name>
-
-      <t>IPREF is a general purpose technology. While it can be used for transition purpose, it
-         is not a transition technology. It was created to bridge a divide between incompatible
-         protocols and between unreachable address spaces. This is a networking world that we
-         live in now. We have two public Internets and millions of address spaces. It will
-         stay like this in the foreseeable future, likely for decades to come. IPREF addresses
-         this situation. New protocols are being developed as well, for example such as those
-         presented in various IRTF groups. Some are specialized, some are intended for wider
-         use. Each of them create their own address spaces with a need to exist within wider
-         networking system. IPREF can bridge these new technologies with existing IPv4 and
-         IPv6 Internets and allow them to strive. These are important projects which address
-         new issues not encountered before. IPREF dovetails with these efforts, thus enabling
-         and enhancing innovation in networking.
-      </t>
-
-    </section>  <!-- ^^ General Purpose Technology ^^ -->
+    </section>  <!-- ^^ Evolving the Internet ^^ -->
 
     <section><name>Related Technologies</name>
 
