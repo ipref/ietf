@@ -164,14 +164,19 @@
       </t>
       <t>In the background to all the above, there is an ongoing effort to convert every IPv4
         network out there to IPv6. The idea is to run only one protocol everywhere which
-        would simplify many issues including address space accessibility. This is a long term
-        effort, decades away. IPREF does not conflict with it. Rather, it provides an
-        excellent tool in achieving the objective. It does this in a least expensive, least
-        risky manner which also shortens the conversion time substantially. Compared to
-        traditional strategies, which use dual stacks and translator devices all requiring
-        allocation of IPv4 addresses, IPREF allows very clean strategies without IPv4 pollution.
-        It relies only on pure IPv6 Internet, allows to drop IPv4 Internet early, and transitions
-        to pure IPv6 networks in a single step.
+        would simplify many issues including address space accessibility while complicating
+        other issues perhaps of greater significance. For one, such a return to a single
+        address space, single protocol environment runs against a broad, long running trend
+        of diverging interest of the Internet versus the interests of Internet customers. The
+        appearance of such ideas like NAT6 should give the proponents of IPv6 a pause. Indeed,
+        the customers of the Internet fiercely defend their independence which is the primary
+        reason why the transition to IPv6 has been resisted for so long. In this context,
+        IPREF is in an interesting position. It sure can be used to squash the resistance
+        and force the deployment of IPv6 everywhere as the vision of 'one protocol to rule
+        them all' proposes. But it can also be used to evolve the Internet into a set of
+        different address spaces running different IP protocols easily reachable from any
+        thanks to compatibility provided by IPREF. It just may be, that the evolutionary
+        pressure will tilt the Internet toward the latter.
       </t>
 
       <section anchor="requirements">
