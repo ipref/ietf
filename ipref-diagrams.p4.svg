@@ -487,7 +487,7 @@
          <rect class="BoundingBox" stroke="none" fill="none" x="6992" y="2930" width="3558" height="637"/>
          <path fill="rgb(175,208,149)" stroke="none" d="M 8771,3540 L 7018,3540 7018,2956 10523,2956 10523,3540 8771,3540 Z"/>
          <path fill="none" stroke="rgb(128,128,128)" stroke-width="51" stroke-linejoin="round" d="M 8771,3540 L 7018,3540 7018,2956 10523,2956 10523,3540 8771,3540 Z"/>
-         <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="7489" y="3369"><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Context address</tspan></tspan></tspan></text>
+         <text class="SVGTextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="7481" y="3369"><tspan fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Context Address</tspan></tspan></tspan></text>
         </g>
        </g>
        <g class="com.sun.star.drawing.CustomShape">
