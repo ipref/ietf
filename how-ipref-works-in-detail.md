@@ -1,8 +1,8 @@
 ## How IPREF Works in Detail
 
-IPREF is a method for traversing address spaces - such as private networks behind NAT, NAT6, or filters including cross protocol IPv4/IPv6 - which are otherwise not reachable through native network protocols. The term IPREF is an abbreviation for "IP Addressing with References"
+IPREF is a method for traversing address spaces such as private networks behind NAT, NAT6, or cross protocol IPv4/IPv6 otherwise not possible through native means. The term IPREF is an abbreviation for IP Addressing with REFerences
 
-#### Key characteristics of IPREF:
+#### Key Characteristics of IPREF
 
 - massively scalable
 - cross protocol, cross address space
@@ -23,7 +23,7 @@ With wide deployment of IPREF, the Internet will evolve into a multiprotocol Int
 - true peer-to-peer (automatic NAT traversal and protocol traversal)
 - organic deployment (replaces nothing, conflicts with nothing)
 - greatly simplified single public Internet (pure IPv6 or pure IPvNEXT)
-- substantially lowers costs and risks
+- substantially lower costs and risks
 - new wave of innovation in networking
 
 ### Fundamental Concepts
