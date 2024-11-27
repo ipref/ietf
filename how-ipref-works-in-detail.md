@@ -12,34 +12,37 @@ IPREF is a method for traversing address spaces - such as private networks behin
 - no need for external translators or shared configurations
 - no need for any global addresses from any protocol domain, IPv4 or IPv6
 
-#### Perfect tool for transitioning to IPv6 Internet
+#### Multiprotocol Internet
 
-Using IPREF for transitioning to IPv6 Internet simplifies network design, making the entire process much cleaner.
+With wide deployment of IPREF, the Internet will evolve into a multiprotocol Internet. It is a natural next evolutionary step: from current single protocol, multiple address spaces Internet created by NAT to a multiprotocol, multiple address spaces Internet made possible by IPREF.
 
-- needs only pure IPv6 Internet (no need for IPv4 translators or services)
-- transitions to pure IPv6 local networks (no dual stacks)
-- does not need IPv4 global addresses
-- eliminates NAT/NAT6 (no  need for port manipulation)
-- plays nicely with DNSSEC
-- allows to drop IPv4 Internet very early, before a single network is touched
-- dramatically speeds up adoption of IPv6 Internet
-- substantially lowers cost of transition for enterprises
-
-
+- no need to "transition" to IPv6 or to anything (keep your network)
+- ubiquitous IPv4/IPv6 compatibility throughout the Internet
+- eliminates NAT/NAT6/CGNAT
+- eliminates dual stacks (pure IPv4 or pure IPv6)
+- true peer-to-peer (automatic NAT traversal and protocol traversal)
+- organic deployment (replaces nothing, conflicts with nothing)
+- greatly simplified single public Internet (pure IPv6 or pure IPvNEXT)
+- substantially lowers costs and risks
+- new wave of innovation in networking
 
 ### Fundamental Concepts
 
-IPREF is based on an observation that the originating host does not need to know the destination address so long as that address can be referred to in a manner understood by both ends. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. Thus IPREF uses references to IP addresses instead of real addresses. This approach produces highly scalable, cross protocol, cross address space communication system without a need for any kind of negotiations or shared configurations.
+IPREF is based on the observation that the originating host does not need to know the destination address so long as that address can be referred to in a manner understood by both ends. Similarly, the destination host does not need to know the source address, again, so long as it can be referred to. Thus IPREF uses references to IP addresses instead of real addresses. This approach produces highly scalable, cross protocol, cross address space communication system without a need for any negotiations or shared configurations.
 
 ### IPREF Address
 
 ![](./how-ipref-works-in-detail.img1.jpg)
-    
-IPREF does not use real addresses. Instead, it uses references which are opaque integers. Such references need context to be meaningful, therefore IPREF uses addressing units, called IPREF addresses, that are a combination of a native IP address and a reference. The native address is the context.
 
-Typically, the context address is an Internet address of an edge router of the source or destination network. It is a convenience, not a requirement, other addresses known to the network may also be used. Originating hosts send packets to the network with this address and have that network calculate the actual address of the destination based on the supplied reference.
+IPREF does not use real addresses. Instead, it uses references which are opaque integers. Such references need context to be meaningful, therefore IPREF uses addressing units, called IPREF addresses, comprised of a context address, which must be native, and a reference.
 
-References are allocated by admins of respective networks where hosts reside. There is no negotiations involved since these references are interpreted in the context of respective networks.
+A context address for respective source and destination networks is an Internet address accessible to these networks. It could be the outer address of the edge router but it could be an address of internal host. Originating hosts send packets to the network with this address and have that network calculate the actual address of the destination based on the supplied reference.
+
+References are allocated by admins of respective networks where they reside. Thus references to source addresses are allocated by source network admins while references to destination addresses are allocated by destination network admins.
+
+References do not change as packets travel, the addresses they refer to do. Thus the references at the source refer to different addresses than the same references at the destination. There is never a conflict because the references are interpreted in the context of respective networks.
+
+IPREF addresses are publishable in DNS. Client hosts may query, and obtain, addresses of servers through DNS. This is the most common way of distributing IPREF addresses although other methods may also be used.
 
 ### Packet Exchange
 
@@ -140,8 +143,8 @@ At this point any missing mappings have been allocated. Subsequent packet exchan
 
 IPREF addresses are publishable in DNS. These addresses will most likely require a new RR type. Until a new record type is allocated, TXT records may be used. In the diagram above, an AA record is used for illustration purpose.
 	
-Local networks may publish IPREF addresses of their servers using standard authoritative DNS servers. All such published IPREF addresses must be communicated to the local IPREF gateway so that it can properly map destination addresses of incoming packets to local hosts.
+Local networks may publish IPREF addresses of their servers using standard authoritative DNS servers. All such published IPREF addresses must be communicated to the local IPREF gateway so that it can properly map destination addresses of incoming packets to local hosts. This is indicated in the diagram by a line connecting the DNS server and the IPREF gateway.
 	
-For resolution of DNS names, a modified recursive resolver, that recognizes IPREF addresses, is required. The resolver must be able to encode returned IPREF addresses into local private addresses in cooperation with local IPREF gateway. This is needed because local hosts do not understand IPREF addresses. Instead, local hosts use encoded equivalents which are then replaced with the actual IPREF addresses by the gateway.
+For resolution of DNS names, a modified recursive resolver, that recognizes IPREF addresses, is required. The resolver must be able to encode returned IPREF addresses into local private addresses in cooperation with local IPREF gateway. This is indicated in the diagram by a line connecting the resolver and the IPREF gateway. This is needed because local hosts do not understand IPREF addresses. Instead, local hosts use encoded equivalents which are then replaced with the actual IPREF addresses by the gateway.
 	
 IPREF address records may be protected by DNSSEC. Packets leaving local networks contain the exact addresses returned from DNS. Internally, local hosts use encoded versions of these addresses which complicates things a little but the gateways replace them with the original IPREF addresses listed in DNS before sending packets out of the local network.
