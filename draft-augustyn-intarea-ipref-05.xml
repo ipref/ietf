@@ -664,60 +664,56 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
     </section>  <!-- ^^ DNS with IPREF ^^ -->
 
-    <section><name>Evolving the Internet</name>
+    <section><name>Multiprotocol Internet</name>
 
-      <section><name>General Purpose Technology</name>
+      <section><name>Bridging compatibility divide</name>
 
-        <t>IPREF is a general purpose technology. While it can be used for transition purpose, it
-           is not a transition technology. It was created to bridge a divide between incompatible
-           protocols and between unreachable address spaces. This is a networking world that we
-           live in now. We have two public Internets and millions of address spaces. It will
-           stay like this in the foreseeable future, likely for decades to come. IPREF addresses
-           this situation. New protocols are being developed as well, for example such as those
-           presented in various IRTF groups. Some are specialized, some are intended for wider
-           use. Each of them create their own address spaces with a need to exist within wider
-           networking system. IPREF can bridge these new technologies with existing IPv4 and
-           IPv6 Internets and allow them to strive. These are important projects which address
-           new issues not encountered before. IPREF dovetails with these efforts, thus enabling
-           and enhancing innovation in networking.
+        <t>IPREF is a general purpose technology that can bridge the divide between incompatible
+          protocols and between unreachable address spaces. This is the network world we
+          live in. There are two public Internets and millions of address spaces. It will
+          stay like this for decades to come. IPREF addresses this situation. In addition
+          to IPv4 and IPv6, new protocols are being developed, such as those presented in
+          various IRTF groups. Some are specialized, some are intended for wider use. Each
+          of them create their own address spaces with a need to exist within wider networking
+          system. IPREF can bridge these new technologies with existing IPv4 and IPv6 Internets
+          allowing them to strive.
         </t>
 
-      </section>  <!-- ^^ General Purpose Technology ^^ -->
+      </section>  <!-- ^^ Bridging compatibility divide ^^ -->
 
-      <section><name>Using IPREF for Transitioning to IPv6 Internet</name>
+      <section><name>Using IPREF for adoption of IPv6 Internet</name>
 
-        <t>Transitioning to IPv6 Internet using IPREF offers significant benefits to both the
-          transitioning organizations as well as to the Internet service providers, carriers,
-          and operators.
+        <t>Using IPREF for adoption of IPv6 Internet offers significant benefits to both the
+          enterprises and individual users as well as to the Internet service providers and
+          operators.
         </t>
         <ul>
-          <li>needs only pure IPv6 Internet (no need for IPv4 services or translators)</li>
-          <li>transitions directly to pure IPv6 (no dual stacks, no two-step transition)</li>
+          <li>only pure IPv6 Internet (no need for IPv4 services or translators)</li>
+          <li>only pure IPv4 or pure IPv6 local networks (no dual stacks)</li>
           <li>no need for global IPv4 addresses</li>
-          <li>eliminates NAT/NAT6 (all hosts reachable, all ports available)</li>
+          <li>elimination of NAT/NAT6/CGNAT (all hosts reachable, all ports available)</li>
           <li>plays nicely with DNSSEC</li>
-          <li>allows to transition at own pace</li>
+          <li>adoption at own pace</li>
           <li>massively scalable</li>
-          <li>dramatically speeds up adoption of IPv6 Internet</li>
+          <li>dramatic speed up of IPv6 Internet adoption</li>
           <li>huge cost savings</li>
+          <li>support for emerging new network technologies</li>
         </ul>
-        <t>The transition may involve only a switch to the IPv6 Internet in preparation for the take
-          down of the IPv4 Internet. Or, it may involve transitioning of some or all local networks
-          to IPv6. These two transition tasks are independent. It is possible to keep local network
-          unchanged and only switch to IPv6 Internet. In this case local IPv4 communication will
-          go over IPv6 Internet reaching remote IPv4 or IPv6 destinations. It is also possible to switch
-          local networks to IPv6 while keeping IPv4 Internet which may be useful if destinations
-          are expected to stay on the IPv4 Internet for longer. In either case, very little
-          to none coordination is needed with the peers. This alone is a huge advantage of the
-          IPREF technology.
+        <t>The adoption may involve merely a switch to the IPv6 Internet in preparation for the take
+          down of the IPv4 Internet. Or, it may involve deployment of IPv6 local networks. These two
+          tasks are independent. It is possible to keep local network unchanged and only switch to IPv6
+          Internet. In this case local IPv4 communication will go over IPv6 Internet reaching remote
+          IPv4 or IPv6 destinations. It is also possible to deploy local IP networks while keeping IPv4
+          Internet which may be useful in mixed environment. In either case, very little to no
+          coordination is needed with the peers. This alone is a huge advantage of the IPREF technology.
         </t>
-        <t>The transitioning process takes advantage of IPREF's flexibility to operate in all
+        <t>The adoption process takes advantage of IPREF's flexibility to operate in all possible
           combinations of address spaces:
         </t>
         <sourcecode type="dns-rr"> <![CDATA[
           network A   Internet   Network B
 
-    1       IPv4      IPv4      IPv4        -- starting point
+    1       IPv4      IPv4      IPv4        -- common starting point
     2       IPv4      IPv4      IPv6           (possible but rare)
     3       IPv6      IPv4      IPv4           (same as 2)
     4       IPv6      IPv4      IPv6           (possible but rare)
@@ -726,14 +722,13 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
     7       IPv6      IPv6      IPv4           (same as 6)
     8       IPv6      IPv6      IPv6        -- after dropping IPv4 Internet
         ]]> </sourcecode>
-        <t>Because different address spaces - network A, Internet, and network B - are processed
-          independently by IPREF, the transitioning process at local networks is decoupled from
-          transitioning efforts at peer networks. It also decouples the transitioning process
-          at either peer from the Internet thus allowing transitioning of the Internet to IPv6
-          independently.
+        <t>Because the three address spaces - network A, Internet, and network B - are processed
+          independently by IPREF, the adoption process at local networks is decoupled from
+          adoption efforts at peer networks. It is also decoupled from transitioning process
+          at the Internet itself.
         </t>
         <ol>
-          <li><t>Starting point</t>
+          <li><t>Common starting point</t>
             <artwork type="ascii-art"><![CDATA[
              Network A    │    Internet    │    Network B
 
@@ -762,13 +757,13 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
                           │                │
             ]]></artwork>
             <t>IPREF gateways are configured. References are assigned. Traffic goes through the
-              gateways. All services subject to transition are now accessed via IPREF. Traffic
-              between gateways remains over IPv4 Internet until both ends connect to IPv6
-              Internet. This does not affect transitioning of local networks to IPv6.
+              gateways. All services subject to adoption of the IPv6 Internet are now accessed
+              via IPREF. Traffic between gateways remains over IPv4 Internet until both ends
+              connect to IPv6 Internet. This does not affect deployment of local IPv6 networks.
             </t>
           </li>
 
-          <li><t>Transitioning local networks to IPv6</t>
+          <li><t>Deploying local IPv6 networks</t>
             <artwork type="ascii-art"><![CDATA[
              Network A    │    Internet    │    Network B
 
@@ -786,11 +781,11 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
               Clients located on local IPv6 networks can reach servers located on local IPv4
               networks or on remote IPv4 or IPv6 networks. Similarly, servers on local IPv6
               network can be reached from clients located on local IPv4 networks as well as
-              those located on remote IPv4 or IPv6 networks.
+              from remote IPv4 or IPv6 clients over the Internet.
             </t>
           </li>
 
-          <li><t>Switching to IPv6 Internet</t>
+          <li><t>Adopting IPv6 Internet</t>
             <artwork type="ascii-art"><![CDATA[
              Network A    │    Internet    │    Network B
 
@@ -803,12 +798,12 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
                           │                │
             ]]></artwork>
             <t>After both ends connect to IPv6 Internet, IPREF addresses may be changed to switch
-              traffic to go over the IPv6 Internet. Transition process at local networks is not
-              affected by this change. Peers communicate the same way as if nothing happened. IPv4
-              Internet remains available but is not used. Most organizations would hold on to it
-              until completely comfortable with the IPv6 Internet.
+              traffic to go over the IPv6 Internet. Local networks are not affected by this change.
+              Peers communicate the same way as if nothing happened. IPv4 Internet remains available
+              but is not used. Most organizations would hold on to it until completely comfortable
+              with the IPv6 Internet.
             </t>
-            <t>This concludes the switch to IPv6 Internet.
+            <t>This concludes adoption of the IPv6 Internet.
             </t>
           </li>
 
@@ -827,30 +822,13 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
             <t>IPv4 Internet may be dropped if all peers connect to IPv6. For a certain period
               of time, organizations would keep their IPv4 Internet in case some peers are
               not connected to IPv6 Internet. This process only requires that organizations install
-              IPREF gateways, their local network may remain unchanged.
+              IPREF gateways, their local networks remain unchanged.
             </t>
             <t>In the diagram, servers on Network B do not need any global IPv4 addresses, they
-              will be reached by both IPv4 clients and IPv6 clients via IPREF without them.
-            </t>
-          </li>
-
-          <li><t>Switching local networks to IPv6 independently</t>
-            <artwork type="ascii-art"><![CDATA[
-             Network A    │    Internet    │    Network B
-
-   IPv6      ┏━━━━━━━┓    │      IPv6      │    ┏━━━━━━━┓
-  ═══════════┫ IPREF ┣══════════════════════════┫ IPREF ┣
-             ┃ g-way ┃    │                │    ┃ g-way ┃      IPv4
-             ┫  GWA  ┣                          ┫  GWB  ┣═══════════
-             ┗━━━━━━━┛    │                │    ┗━━━━━━━┛
-
-                          │                │
-            ]]></artwork>
-            <t>Each local network may switch to IPv6 independently at its own pace. This
-              does not affect peer networks. There is no need for coordination. At the
-              end of the transition, the change to the server addresses is reflected
-              in reference mappings. The peers are unaware of any transitions taking place
-              at peer networks.
+              are reachable from both IPv4 clients and IPv6 clients via IPREF without them. There
+              may be thousands of IPv4 servers on network B and they will all be reachable. Indeed,
+              thanks to NAT traversal capabilities, IPREF extends IPv4 address space to billions
+              of new IPv4 servers, not just clients.
             </t>
           </li>
 
@@ -866,21 +844,19 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
 
                           │                │
             ]]></artwork>
-            <t>IPREF greatly simplifies evolving IPv6 Internet. In case a new protocol is
-              developed, let's call it IPvX, then it may be deployed with relatively little
-              disruption by asking the Internet users to upgrade their IPREF gateways. Such
-              an upgrade would be developed as part of the new protocol work. It would
-              typically be a routine software upgrade. With most every site already equipped
-              with IPREF gateways, such a massive global upgrade could be performed in a
-              relatively short time. Trials before the switch would be performed well in
-              advance with high level of confidence as they could be performed without
-              affecting existing network operations.
+            <t>IPREF greatly simplifies evolving the Internet past IPv6. In case a new
+              protocol is developed, let's call it IPvX, it may be deployed with relatively
+              little disruption by asking the Internet users to upgrade their edge routers
+              and IPREF gateways. Such an upgrade would typically come down to a routine
+              software download. With most sites already equipped with IPREF gateways,
+              such a massive global upgrade could be performed in a relatively short time
+              and without affecting existing network operations.
             </t>
           </li>
         </ol>
-      </section>  <!-- ^^ Using IPREF for Transitioning to IPv6 Internet ^^ -->
+      </section>  <!-- ^^ Using IPREF for adoption of IPv6 Internet ^^ -->
 
-    </section>  <!-- ^^ Evolving the Internet ^^ -->
+    </section>  <!-- ^^ Multiprotocol Internet ^^ -->
 
     <section><name>Related Technologies</name>
 
