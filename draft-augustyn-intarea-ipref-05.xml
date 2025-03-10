@@ -142,7 +142,7 @@
       </t>
       <t>The result of these attempts was a hodgepodge of limited, mostly lacking, poorly
         scaling, half measures which left these millions of different address spaces still
-        generally inaccessible to one another.
+        generally inaccessible.
       </t>
       <t>A closer analysis of these different solutions reveals they suffer great difficulties
         primarily because they try to render necessary address transformations too early. IPREF
@@ -159,8 +159,7 @@
         global IP addresses. It does not create any new address spaces, it always refers to
         existing ones. The result is a highly scalable solution that works over NAT,
         NAT6, filters, and across IPv4/IPv6. All of the millions of different address spaces,
-        whether behind NAT/NAT6, or across IPv4/IPv6 may now communicate with one another
-        using IPREF.
+        whether behind NAT/NAT6, or across IPv4/IPv6 may now communicate directly using IPREF.
       </t>
       <t>In the background to all the above, there is an ongoing effort to convert every IPv4
         network out there to IPv6. The idea is to run only one protocol everywhere which
@@ -170,14 +169,16 @@
         of diverging interest of the Internet versus the interests of Internet customers. The
         appearance of such ideas like NAT6 should give the proponents of IPv6 a pause. Indeed,
         the customers of the Internet fiercely defend their independence which is the primary
-        reason why the transition to IPv6 has been resisted for so long. In this context,
-        IPREF is in an interesting position. It sure can be used to squash the resistance
-        and force the deployment of IPv6 everywhere as the vision of 'one protocol to rule
-        them all' proposes. But it can also be used to evolve the Internet into a set of
-        different address spaces running different IP protocols easily reachable from any
-        thanks to compatibility provided by IPREF. It just may be, that the evolutionary
-        pressure will tilt the Internet toward the latter.
+        reason why the transition to IPv6 has been resisted for so long.
       </t>
+      <t>In this context, IPREF offers an interesting alternative. Its ability to make IPv4
+        and IPv6 compatible allows the ISPs to deploy IPv6 Internet without replacing
+        customer networks. In this way ISPs get what they want and the enterprises also get
+        what they want. Thus the Internet may evolve into a Multiprotocol Internet. It will
+        not only stop massive replacements, it will also provide a path for future upgrades
+        to IPv6, where a new protocol could be introduced gradually while allowing the customers
+        to keep their networks.
+     </t>
 
       <section anchor="requirements">
       <!-- anchor is an optional attribute -->
