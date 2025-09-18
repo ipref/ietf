@@ -714,18 +714,18 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
           network A   Internet   Network B
 
     1       IPv4      IPv4      IPv4        -- common starting point
-    2       IPv4      IPv4      IPv6           (possible but rare)
+    2       IPv4      IPv4      IPv6
     3       IPv6      IPv4      IPv4           (same as 2)
-    4       IPv6      IPv4      IPv6           (possible but rare)
-    5       IPv4      IPv6      IPv4        -- after dropping IPv4 Internet
-    6       IPv4      IPv6      IPv6        -- after dropping IPv4 Internet
+    4       IPv6      IPv4      IPv6
+    5       IPv4      IPv6      IPv4        -- common with IPv6 Internet
+    6       IPv4      IPv6      IPv6
     7       IPv6      IPv6      IPv4           (same as 6)
-    8       IPv6      IPv6      IPv6        -- after dropping IPv4 Internet
+    8       IPv6      IPv6      IPv6
         ]]> </sourcecode>
         <t>Because the three address spaces - network A, Internet, and network B - are processed
           independently by IPREF, the adoption process at local networks is decoupled from
-          adoption efforts at peer networks. It is also decoupled from transitioning process
-          at the Internet itself.
+          adoption efforts at peer networks. It is also decoupled from introducing any new
+          protocols at the Internet itself.
         </t>
         <ol>
           <li><t>Common starting point</t>
