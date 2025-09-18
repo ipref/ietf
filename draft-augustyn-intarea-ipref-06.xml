@@ -90,8 +90,7 @@
          space, including those running different protocol IPv4/IPv6 or behind NAT/NAT6, provided
          both ends support IPREF.
       </t>
-      <t>IPREF is especially useful for transitioning to IPv6 or for operating networks with a mix
-         of IPv4/IPv6.
+      <t>IPREF provides much needed IPv4/IPv6 compatibility for the de facto mixed protocol Internet.
       </t>
     </abstract>
 
