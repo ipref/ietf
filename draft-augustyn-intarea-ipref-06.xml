@@ -113,7 +113,7 @@
         of IP addresses' problem that was compatible with existing IPv4 protocol. IPv4 address
         space was extended by rewriting network addresses. That technique, since widely known as
         NAT, effectively created an address space hierarchy. At the top of the hierarchy, there
-        was the original 32 bit address space. These addresses, at the edge of hierarchy, were
+        was the original 32 bit address space. These addresses, at the edge of the hierarchy, were
         translated into and from another set of addresses belonging to so called 'private ranges'.
         These addresses formed new address spaces. They were 32 bit wide but only 24 bit subsets
         were used in practice. Together with the top hierarchy, they produced a 56 bit address
@@ -149,8 +149,8 @@
         do not have to know what the destination addresses are, or what protocol they belong
         to. Thus, IPREF uses references to addresses rather than real addresses. This approach
         works for both NAT traversal as well as for protocol traversal since both problems are
-        substantially the same. The one difference between them being having to repackage packets on the
-        IPv4/IPv6 boundary. Such repackaging requires sufficient compatibility between the
+        substantially the same. The one difference between them being having to repackage packets
+        on the IPv4/IPv6 boundary. Such repackaging requires sufficient compatibility between the
         protocols which fortunately exists.
       </t>
       <t>With this approach, IPREF does not need to negotiate anything. It does not need any
@@ -165,16 +165,17 @@
         would simplify many issues including address space accessibility while complicating
         other issues perhaps of greater significance. For one, such a return to a single
         address space, single protocol environment runs against a broad, long running trend
-        of diverging interest of the Internet versus the interests of Internet customers. The
-        appearance of such ideas like NAT6 should give the proponents of IPv6 a pause. Indeed,
-        the customers of the Internet fiercely defend their independence which is the primary
-        reason why the transition to IPv6 has been resisted for so long.
+        of diverging interest of the Internet providers versus the interests of their customers.
+        The appearance of such ideas like NAT6 is symptomatic which should give the proponents
+        of IPv6 everywhere a pause. Indeed, the customers of the Internet fiercely defend their
+        independence which is the primary reason why the transition to IPv6 has been resisted
+        for so long.
       </t>
-      <t>In this context, IPREF offers an interesting alternative. Its ability to make IPv4
+      <t>In this context, IPREF offers a compelling alternative. Its ability to make IPv4
         and IPv6 compatible allows the ISPs to deploy IPv6 Internet without replacing
-        customer networks. In this way ISPs get what they want and the enterprises also get
-        what they want. Thus the Internet may evolve into a Multiprotocol Internet. It will
-        not only stop massive replacements, it will also provide a path for future upgrades
+        customer networks. In this way ISPs get what they want and their customers also get
+        what they want. Thus the Internet may evolve into a compatible Multiprotocol Internet.
+        It will not only stop massive replacements, it will also provide a path for future upgrades
         to IPv6, where a new protocol could be introduced gradually while allowing the customers
         to keep their networks.
      </t>
