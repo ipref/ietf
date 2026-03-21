@@ -120,7 +120,7 @@
         space for IPv4. Another variant, known as 'carrier grade NAT', added another level of
         hierarchy which extended total address space to 72 bits. This approach averted the shortage
         of IP addresses, but it achieved it at a cost of creating another problem. Namely, it
-        created millions of address spaces inaccessible from one another. These new address spaces
+        created millions of address spaces inaccessible from one another. These new addresses
         were not equal value, they were mostly useful for clients accessing servers within their
         own address spaces or within the space at the top of the hierarchy, commonly referred to
         as 'global IP addresses'.
@@ -218,6 +218,7 @@
         <li>addresses publishable in DNS</li>
         <li>no need for external translators or shared configurations</li>
         <li>no need for global IPv4 addresses</li>
+        <li>no dual stacks</li>
       </ul>
 
       <section><name>References</name>
@@ -296,6 +297,9 @@
           as if on the local network. This is common with cross protocol communication or more
           generally with cross address space communication. The gateways replace these encoded
           addresses with IPREF addresses when sending packets outside local networks.
+        </t>
+        <t>An IPREF gateway is essentially a router. It is referred to as a gateway to emphasize
+          its role in cross address space communication.
         </t>
 
       </section>  <!-- ^^ Gateways and Encoding Networks ^^ -->
@@ -492,11 +496,11 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         <t>References are network layer entities therefore the most natural place for embedding
           them would be network layer headers, such as IPv4 options or IPv6 extension headers.
         </t>
-        <t>Unfortunately, many Internet Service Providers drop options and extension headers for
-          various reasons. Even if they don't, routers tend to put them on a slow processing
-          path resulting in poor performance. For that reason, the most reliable way to embed
-          references is to place them in the payload. One common technique of accomplishing this
-          is tunneling where references could be made a part of the payload.
+        <t>Unfortunately, many Internet Service Providers drop packets with uncommon options
+          and extension headers for various reasons. Even if they don't, routers tend to put them
+          on a slow processing path resulting in poor performance. For that reason, the most
+          reliable way to embed references is to place them in the payload. One common technique
+          of accomplishing this is tunneling where references could be made a part of the payload.
         </t>
 
         <section><name>IPv4 Option</name>
@@ -523,23 +527,18 @@ DNS A1:   (none)                          DNS B6:   2001:db8::8 + 2466
         </section>
 
         <section><name>UDP Tunnel</name>
-          <t>Placing references in a UDP tunnel works for both IPv4 and IPv6. In both cases, the
-             references would be embedded in the form of respective options or extension headers.
-             In addition, a tunnel encapsulation record would be added. The order of items would
-             be as follows:
+          <t>Placing references in a UDP tunnel works for both IPv4 and IPv6. The references
+             would be embedded between the UDP header and the packet payload. In addition, a
+             tunnel information record would be added. The order of items would be as follows:
           </t>
           <ul spacing="compact" empty="true">
             <li>UDP header</li>
-            <li>Tunnel encapsulation record</li>
-            <li>IPREF option</li>
+            <li>Tunnel information record</li>
+            <li>Source and destination references</li>
             <li>Packet payload</li>
           </ul>
-          <t>The encapsulation record would consist of four octets. First octet would contain the
-             value of TTL copied from the original IP header. The second octet would contain protocol
-             number copied from the original IPv4 header or next header value form an IPv6 extension
-             header. The third octet would report number of hops detected for incoming packets. The
-             fourth octet would be reserved for possible future use while padding to 4 octet boundary.
-             The IPREF option would follow in the format matching respective IP protocol, IPv4 or IPv6.
+          <t>The tunnel information record would contain the value of TTL and the protocol
+            number plus any bit fields necessary for the tunnel operation.
           </t>
           <t>The tunnel would operate at port 1045. This value would be registered with IANA.
           </t>
