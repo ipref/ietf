@@ -1,0 +1,760 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+     draft-rfcxml-general-template-annotated-00
+
+     This template includes examples of most of the features of RFCXML with comments explaining
+     how to customise them, and examples of how to achieve specific formatting.
+
+     Documentation is at https://authors.ietf.org/en/templates-and-schemas
+-->
+<?xml-model href="rfc7991bis.rnc"?>  <!-- Required for schema validation and schema-aware editing -->
+<!-- <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?> -->
+<!-- This third-party XSLT can be enabled for direct transformations in XML processors, including most browsers -->
+
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
+<!-- If further character entities are required then they should be added to the DOCTYPE above.
+     Use of an external entity file is not recommended. -->
+
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  docName="draft-hoyes-intarea-ipref-tunnel-00"
+  ipr="trust200902"
+  obsoletes=""
+  updates=""
+  submissionType="IETF"
+  category="std"
+  consensus="true"
+  xml:lang="en"
+  version="3">
+<!--
+    * docName should be the name of your draft
+    * category should be one of std, bcp, info, exp, historic
+    * ipr should be one of trust200902, noModificationTrust200902, noDerivativesTrust200902, pre5378Trust200902
+    * updates can be an RFC number as NNNN
+    * obsoletes can be an RFC number as NNNN
+-->
+
+  <front>
+    <title>IPREF UDP Tunnel Protocol (IUTP)</title> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#title-4 -->
+    <!--  The abbreviated title is required if the full title is longer than 39 characters -->
+
+    <seriesInfo name="Internet-Draft" value="draft-hoyes-intarea-ipref-tunnel-00"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#seriesinfo -->
+    <!-- Set value to the name of the draft  -->
+
+    <author fullname="Parker Hoyes" initials="P" role="editor" surname="Hoyes"> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#author -->
+    <!-- initials should not include an initial for the surname -->
+    <!-- role="editor" is optional -->
+    <!-- Can have more than one author -->
+
+    <!-- all of the following elements are optional -->
+      <address> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#address -->
+        <email>parker@parkerhoyes.com</email>
+     </address>
+    </author>
+
+    <author fullname="Waldemar Augustyn" initials="W" surname="Augustyn">
+      <address>
+        <email>waldemar@wdmsys.com</email>
+      </address>
+    </author>
+
+    <date year="2026"/> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
+    <!--<date year="2023" month="2" day="5"/>--> <!-- https://authors.ietf.org/en/rfcxml-vocabulary#date -->
+    <!-- On draft submission:
+         * If only the current year is specified, the current day and month will be used.
+         * If the month and year are both specified and are the current ones, the current day will
+           be used
+         * If the year is not the current one, it is necessary to specify at least a month and day="1" will be used.
+    -->
+
+    <area>General</area>
+    <workgroup>Internet Engineering Task Force</workgroup>
+    <!-- "Internet Engineering Task Force" is fine for individual submissions.  If this element is
+          not present, the default is "Network Working Group", which is used by the RFC Editor as
+          a nod to the history of the RFC Series. -->
+
+    <keyword>IPREF</keyword>
+    <!-- Multiple keywords are allowed.  Keywords are incorporated into HTML output files for
+         use by search engines. -->
+
+    <abstract>
+      <t>TODO: Need an abstract.
+     </t>
+   </abstract>
+
+  </front>
+
+  <middle>
+
+    <section><name>Introduction</name>
+    <!-- The default attributes for <section> are numbered="true" and toc="default" -->
+      <t>The IPREF UDP Tunnel Protocol is used to encapsulate packets to be exchanged by
+         IPREF gateways. It can also be used in the IPREF Introspection Protocol by IPREF
+         gateways to send packets containing IPREF addresses to hosts on the local
+         network.
+      </t>
+
+      <section anchor="requirements">
+      <!-- anchor is an optional attribute -->
+        <name>Requirements Language</name>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+          "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+          RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+          interpreted as described in BCP 14 <xref target="RFC2119"/>
+          <xref target="RFC8174"/> when, and only when, they appear in
+          all capitals, as shown here.</t>
+      </section>
+      <!-- The 'Requirements Language' section is optional -->
+
+      <section anchor="terminology"><name>IPREF Terminology</name>
+        <t>IPREF - short name referring to technology described in this document, pronounced I-P-REF</t>
+        <t>context address - a native address component of an IPREF address</t>
+        <t>reference - an unsigned integer component of an IPREF address</t>
+        <t>IPREF address - addressing unit used with IPREF, a combination of a context address and a reference</t>
+        <t>encoding network - network representing IPREF addresses in native form</t>
+        <t>IPREF gateway - a device, or software component, that performs IPREF address rewriting</t>
+      </section>
+
+    </section> <!-- ^^ Introduction ^^ -->
+
+    <section><name>IPREF UDP Tunnel Protocol</name>
+
+      <t>TODO: probably need an overview paragraph connecting pieces described below.
+      </t>
+
+      <section><name>Packet Structure</name>
+
+        <t>A tunnel packet encapsulates a transport layer packet in a UDP packet (with
+          destination port 1045) which also contains a Tunnel Information header, an
+          optional Fragment Information header, and source and destination IPREF
+          addresses.
+        </t>
+        <t>TODO: We should be careful with the use of the word "encapsulation". We're
+          not encapsulating an IPv4/IPv6 packet, we're "converting" it (is that the
+          right word?) into an IPREF packet. It is the fragment of the transport layer
+          datagram that gets encapsulated, not the IPv4/IPv6 packet.
+        </t>
+        <t>When an IPREF gateway encapsulates a packet, the original IPv4/IPv6 header is
+          converted into a Tunnel Information (and possibly also Fragment Information)
+          header and the source and destination IPv4/IPv6 addresses are used to determine
+          the Source Reference and Destination Reference fields as well as the destination
+          IPREF gateway. The transport layer header and data are modified as necessary
+          (see "Transport Layer Encapsulation").
+        </t>
+        <t>TODO: I guess we can't even say we're purely encapsulating an opaque
+          transport layer packet, because we also need to modify it (especially in the
+          case of ICMP/ICMPv6).
+        </t>
+        <t>The contexts of the source and destination IPREF addresses MAY be omitted (CP=0
+          in Tunnel Information), in which case the packet is interpreted the same as if
+          both source and destination contexts were set to the Unspecified Context. When a
+          gateway receives a packet which contains the context fields (CP=1), the gateway
+          MUST check that the source and destination contexts match the expected values
+          and drop the packet if they do not.
+        </t>
+        <t>The outer IPv4/IPv6 packet MUST NOT be fragmented; and, in the case of IPv4, the
+          Don't Fragment bit must be set.
+        </t>
+        <t>Unless specified otherwise, all fields are in network byte order (big-endian).
+        </t>
+
+        <figure anchor="packet-structure"><name>Packet Structure</name>
+          <artwork type="ascii-art"> <![CDATA[
+    ┌───────────────────────┐
+    │   IPv4/IPv6 Header    │
+    ├───────────────────────┤
+    │      UDP Header       │
+    ├───────────────────────┤
+    │  Tunnel Information   │
+    ├───────────────────────┤
+    │ Fragment Information  │  (if IF=1 in Tunnel Information)
+    ├───────────────────────┤
+    │    Source Context     │  (if CP=1 in Tunnel Information)
+    ├───────────────────────┤
+    │  Destination Context  │  (if CP=1 in Tunnel Information)
+    ├───────────────────────┤
+    │   Source Reference    │
+    ├───────────────────────┤
+    │ Destination Reference │
+    ├───────────────────────┤
+    │   Transport Header    │
+    ├───────────────────────┤
+    │        Payload        │
+    └───────────────────────┘
+          ]]> </artwork>
+        </figure>
+
+      </section>  <!-- ^^ Packet Structure ^^ -->
+
+      <section><name>Tunnel Information Header</name>
+
+        <t>The tunnel information header is present in every packet and specifies which
+          following headers and fields are present as well as the length of the source and
+          destination reference fields.
+        </t>
+        <t>When converting from an IPv4 or IPv6 packet, the TTL field is copied unmodified
+          into the tunnel packet. For IPv4 packets, the Don't Fragment bit is also copied.
+          For IPv6 packets, the Don't Fragment bit is always set. The Is Fragment bit is
+          set as necessary. The Protocol field is set as described in "Transport Layer
+          Encapsulation".
+        </t>
+        <t>TODO: Should we also describe the shenanigans that need to be performed in
+          the case of de-encapsulating a packet with DF=0 to IPv6, or is that out of
+          scope of the tunnel protocol? This feels like a leaky abstraction.
+        </t>
+        <t>The REFL field indicates the length of the Source Reference and Destination
+          Reference fields. These fields SHOULD be as small as their contained references
+          permit.
+        </t>
+
+        <figure anchor="tunnel-information-header"><name>Tunnel Information Header</name>
+          <artwork type="ascii-art"> <![CDATA[
+    ┌───────────────────────┬───────┬───────┬───────┐
+    │           0           │   1   │   2   │   3   │
+    ├────────┬──┬─────┬──┬──┼───────┼───────┼───────┤
+    │0  1  2  3  4  5  6  7 │       │       │       │
+    └────────┴──┴─────┴──┴──┴───────┴───────┴───────┘
+
+    ┌────────┬──┬─────┬──┬──┬───────┬───────┬───────┐
+    │  RES1  │CP│REFL │IF│DF│ RES2  │  TTL  │ PROTO │
+    └────────┴──┴─────┴──┴──┴───────┴───────┴───────┘
+          ]]> </artwork>
+        </figure>
+
+        <t>RES1 : 3 bits - Write zero, drop if non-zero
+        </t>
+        <t>CP : 1 bit - Contexts Present
+        </t>
+        <t>REFL : 2 bits - Specifies the length of the references in the header:
+        </t>
+          <ul spacing="compact" empty="true">
+            <li>0 - 4 bytes</li>
+            <li>1 - 8 bytes</li>
+            <li>2 - 16 bytes</li>
+            <li>3 - reserved</li>
+          </ul>
+        <t>IF : 1 bit - Is Fragment
+        </t>
+        <t>DF : 1 bit - Don't Fragment
+        </t>
+        <t>RES2 : 8 bits - Write zero, read ignored
+        </t>
+        <t>TTL : 8 bits - Time to Live
+        </t>
+        <t>PROTO : 8 bits - Protocol
+        </t>
+
+      </section>  <!-- ^^ Tunnel Information Header ^^ -->
+
+      <section><name>Fragment Information Header</name>
+
+        <t>This header is only present if Is Fragment is set. The Fragment Offset, More
+          Fragments, and Identification fields are copied from the corresponding fields in
+          the IPv4 or IPv6 header.
+        </t>
+        <t>When converting from an IPv4 packet, the high 16 bits of the Identification
+          field are zeroed. When converting to an IPv4 packet, the high 16 bits of the
+          Identification field are discarded.
+        </t>
+
+        <figure anchor="fragment-information-header"><name>Fragment Information Header</name>
+          <artwork type="ascii-art"> <![CDATA[
+    ┌───────┬───────┬───────────────────────┬───────────────────────┐
+    │   0   │   1   │           2           │           3           │
+    ├───────┼───────┼───────────────────────┼──────────────┬─────┬──┤
+    │       │       │0  1  2  3  4  5  6  7 │0  1  2  3  4  5  6  7 │
+    └───────┴───────┴───────────────────────┴──────────────┴─────┴──┘
+
+    ┌───────┬───────┬───────────────────────┬──────────────┬─────┬──┐
+    │     RES3      │           Fragment Offset            │RES4 │MF│
+    ├───────┼───────┴───────────────────────┼──────────────┴─────┴──┤
+    │                        Identification                         │
+    └───────┴───────┴───────────────────────┴───────────────────────┘
+          ]]> </artwork>
+        </figure>
+
+        <t>RES3 : 16 bits - Reserved; must be zero
+        </t>
+        <t>Fragment Offset : 13 bits - In 8-byte units
+        </t>
+        <t>RES4 : 2 bits - Reserved; must be zero
+        </t>
+        <t>MF : 1 bit - More Fragments
+        </t>
+        <t>Identification : 32 bits
+        </t>
+
+      </section>  <!-- ^^ Fragment Information Header ^^ -->
+
+      <section><name>Source and Destination Context</name>
+
+        <t>The contexts consist of a 1-byte context type followed by the variable-length
+          context value. The length of the context value is determined by the type.
+        </t>
+
+        <sourcecode>
+    ┌───────┬───────┐
+    │   0   │  1... │
+    └───────┴───────┘
+
+    ┌───────┬───────┐
+    │ Type  │ Value │
+    └───────┴───────┘
+        </sourcecode>
+
+        <t>Type : 8 bits
+        </t>
+          <ul spacing="compact" empty="true">
+            <li>0 - Unspecified Context</li>
+            <li>4 - IPREF UDP Tunnel over IPv4</li>
+            <li>6 - IPREF UDP Tunnel over IPv6</li>
+          </ul>
+
+        <t>Other values are reserved for future use.
+        </t>
+
+        <section><name>Unspecified Context (Type = 0)</name>
+
+          <t>This context type indicates that the context should be inferred from the source
+            and destination addresses and ports of the outer IPv4/IPv6 and UDP headers.
+          </t>
+
+          <sourcecode>
+    ┌───────┬───────┬───────┬───────┐
+    │   0   │   1   │   2   │   3   │
+    └───────┴───────┴───────┴───────┘
+
+    ┌───────┬───────┬───────┬───────┐
+    │ Type  │          Pad          │
+    └───────┴───────┴───────┴───────┘
+          </sourcecode>
+
+          <t>Type : 8 bits - 0
+          </t>
+          <t>Pad : 24 bits - Write zero, drop if non-zero
+          </t>
+
+        </section>  <!-- ^^ Unspecified Context (Type = 0) ^^ -->
+
+        <section><name>IPREF UDP Tunnel over IPv4 Context (Type = 4)</name>
+
+          <sourcecode>
+    ┌───────┬───────┬───────┬───────┐
+    │   0   │   1   │   2   │   3   │
+    └───────┴───────┴───────┴───────┘
+
+    ┌───────┬───────┬───────┬───────┐
+    │ Type  │  Pad  │     Port      │
+    ├───────┼───────┼───────┼───────┤
+    │         IPv4 Address          │
+    └───────┴───────┴───────┴───────┘
+          </sourcecode>
+
+          <t>Type : 8 bits - 4
+          </t>
+          <t>Pad : 8 bits - Write zero, drop if non-zero
+          </t>
+          <t>Port : 16 bits - The UDP port of the IPREF tunnel
+          </t>
+          <t>IPv4 Address : 32 bits - The IPv4 address of the IPREF tunnel
+          </t>
+
+        </section>  <!-- ^^ IPREF UDP Tunnel over IPv4 Context (Type = 4) ^^ -->
+
+        <section><name>IPREF UDP Tunnel over IPv6 Context (Type = 6)</name>
+
+          <sourcecode>
+    ┌───────┬───────┬───────┬───────┐
+    │   0   │   1   │   2   │   3   │
+    └───────┴───────┴───────┴───────┘
+
+    ┌───────┬───────┬───────┬───────┐
+    │ Type  │  Pad  │     Port      │
+    ├───────┼───────┼───────┼───────┤
+    │         IPv6 Address...       │
+    ├───────┼───────┼───────┼───────┤
+    │      ...IPv6 Address...       │
+    ├───────┼───────┼───────┼───────┤
+    │      ...IPv6 Address...       │
+    ├───────┼───────┼───────┼───────┤
+    │      ...IPv6 Address          │
+    └───────┴───────┴───────┴───────┘
+          </sourcecode>
+
+          <t>Type : 8 bits - 6
+          </t>
+          <t>Pad : 8 bits - Write zero, drop if non-zero
+          </t>
+          <t>Port : 16 bits - The UDP port of the IPREF tunnel
+          </t>
+          <t>IPv6 Address : 128 bits - The IPv6 address of the IPREF tunnel
+          </t>
+
+        </section>  <!-- ^^ IPREF UDP Tunnel over IPv6 Context (Type = 6) ^^ -->
+
+      </section>  <!-- ^^ Source and Destiation Context ^^ -->
+
+      <section><name>Source and Destination Reference</name>
+
+        <t>The reference is a 128-bit unsigned integer encoded big-endian. Some of the
+          bytes in the reference are omitted if the reference length (specified by REFL in
+          the Tunnel Information header) is less than 16 bytes. Omitted bytes are
+          interpreted as zero.
+        </t>
+
+        <t>TODO: Should the reserved references be reserved by the tunnel protocol
+          spec, or by some other IPREF spec?
+        </t>
+
+        <t>The zero reference and all references whose most significant byte is zero are
+          reserved for future use.
+        </t>
+
+        <sourcecode>
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │A│   B   │   C   │   D   │  E  │
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+        </sourcecode>
+
+        <t>Given a reference with the above 16 bytes (big-endian), where A is 1 byte, B
+          through D are each 4 bytes, and E is 3 bytes, the encoding of the reference is
+          as follows, depending on REFL.
+        </t>
+
+        <sourcecode>
+    ┌─┬─┬─┬─┐
+    │A│  E  │  REFL=0 (4 bytes), implies B=0, C=0, and D=0
+    └─┴─┴─┴─┘
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┐
+    │A│   D   │  E  │  REFL=1 (8 bytes), implies B=0 and C=0
+    └─┴─┴─┴─┴─┴─┴─┴─┘
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │A│   B   │   C   │   D   │  E  │  REFL=2 (16 bytes)
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+        </sourcecode>
+
+      </section>  <!-- ^^ Source and Destination Reference ^^ -->
+
+      <section><name>Transport Layer Encapsulation</name>
+
+        <t>When the transport layer packet is encapsulated or de-encapsulated, some
+          adjustments are made depending on the protocol.
+        </t>
+        <t>The transport layer protocol is indicated by the Protocol field in Tunnel
+          Information. The following transport layer protocols are specified. Other values
+          are reserved for future use.
+        </t>
+          <ul spacing="compact" empty="true">
+            <li>0x01 - ICMP</li>
+            <li>0x06 - TCP</li>
+            <li>0x17 - UDP</li>
+          </ul>
+        <t>When converting from an IPv6 packet, the protocol value 0x3a (ICMPv6) is changed
+          to 0x01 (ICMP). When converting to an IPv6 packet, the protocol value 0x01 is
+          changed to 0x3a.
+        </t>
+        <t>The following sections describe the adjustment made to the transport layer
+          datagram. If the datagram is fragmented, then it may be necessary to wait for
+          multiple fragments to arrive before performing the adjustment, but the datagram
+          MUST NOT be reassembled - each fragment must be adjusted separately.
+        </t>
+
+        <section><name>TCP Encapsulation</name>
+
+          <t>The checksum field is modified as follows:
+          </t>
+          <ol>
+            <li><t>If the checksum is zero, it is not modified; otherwise, continue to step 2.</t>
+            </li>
+            <li><t>Invert all bits in the checksum.</t>
+            </li>
+            <li><t>Using one's complement arithmetic, subtract the one's complement sum of all
+                  16 bit words in the source and destination IPv4/IPv6 addresses of the outer
+                  packet.</t>
+            </li>
+            <li><t>Invert all bits in the checksum.</t>
+            </li>
+          </ol>
+
+        </section>  <!-- ^^ TCP Encapsulation ^^ -->
+
+        <section><name>TCP De-encapsulation</name>
+
+          <t>Perform the same adjustment as described in "TCP Encapsulation", except add the
+            checksum of the source and destination IPv4/IPv6 addresses instead of
+            subtracting it.
+          </t>
+
+        </section>  <!-- ^^ TCP De-encapsulation ^^ -->
+
+        <section><name>UDP Encapsulation</name>
+
+          <t>The checksum field is modified as follows:
+          </t>
+          <ol>
+            <li><t>If the checksum is zero, it is not modified; otherwise, continue to step 2.</t>
+            </li>
+            <li><t>If the checksum is 0xffff, then set the checksum to zero.</t>
+            </li>
+            <li><t>Invert all bits in the checksum.</t>
+            </li>
+            <li><t>Using one's complement arithmetic, subtract the one's complement sum of all
+                  16 bit words in the source and destination IPv4/IPv6 addresses of the outer
+                  packet.</t>
+            </li>
+            <li><t>Invert all bits in the checksum.</t>
+            </li>
+            <li><t>If the checksum is zero, then set the checksum to 0xffff.</t>
+            </li>
+          </ol>
+
+        </section>  <!-- ^^ UDP Encapsulation ^^ -->
+
+        <section><name>UDP De-encapsulation</name>
+
+          <t>Perform the same adjustment as described in "UDP Encapsulation", except add the
+            checksum of the source and destination IPv4/IPv6 addresses instead of
+            subtracting it.
+          </t>
+
+        </section>  <!-- ^^ UDP De-encapsulation ^^ -->
+
+        <section><name>ICMP Encapsulation</name>
+
+          <t>For ICMP messages which do not contain an inner packet, no adjustments are made.
+          </t>
+          <t>For ICMP messages which do contain an inner packet, the inner packet is
+            converted from an IPv4 packet to an IPREF UDP Tunnel Protocol packet (beginning
+            with the Tunnel Information header). For this inner packet, the IPREF addresses
+            are interpreted the same as in the outer packet except with the order reversed
+            (the source IPREF address is remote, the destination IPREF address is local).
+          </t>
+          <t>The checksum is recalculated with the new packet data if any adjustments are
+            made.
+          </t>
+
+        </section>  <!-- ^^ ICMP Encapsulation ^^ -->
+
+        <section><name>ICMPv6 Encapsulation</name>
+
+          <t>The Type and Code fields are converted to their closest ICMP functional
+            equivalents. For example, ICMPv6 Packet Too Big is converted to ICMP
+            Fragmentation Needed.
+          </t>
+          <t>TODO: Should we include a table of the conversions?
+          </t>
+          <t>For ICMPv6 Packet Too Big, the packet is dropped if the MTU is less than 1280;
+            otherwise, 20 is subtracted from the MTU.
+          </t>
+          <t>For ICMPv6 messages which contain an inner packet, the inner packet is converted
+            from an IPv6 packet to an IPREF UDP Tunnel Protocol packet (beginning with the
+            Tunnel Information header). For this inner packet, the IPREF addresses are
+            interpreted the same as in the outer packet except with the order reversed (the
+            source IPREF address is remote, the destination IPREF address is local).
+          </t>
+          <t>The checksum is recalculated over the Type, Code, and message body. (No
+            pseudo-header is included in the checksum calculation.)
+          </t>
+          <t>Note that, in the case of a fragmented ICMPv6 datagram without an inner packet,
+            it is possible to encapsulate the packet by only adjusting the first fragment in
+            the datagram and without recalculating the checksum over the entire datagram (by
+            using a checksum adjustment), but it is necessary to wait for the last fragment
+            in the datagram to determine the total datagram size so that it may be
+            subtracted from the checksum.
+          </t>
+
+        </section>  <!-- ^^ ICMPv6 Encapsulation ^^ -->
+
+        <section><name>ICMP De-encapsulation (IPv4 Outer Header)</name>
+
+          <t>Perform the same adjustment as described in "ICMP Encapsulation", except
+            converting inner packets from an IPREF UDP Tunnel Protocol packet to an IPv4
+            packet.
+          </t>
+
+        </section>  <!-- ^^ ICMP De-encapsulation (IPv4 Outer Header) ^^ -->
+
+        <section><name>ICMPv6 De-encapsulation (IPv6 Outer Header)</name>
+
+          <t>The Type and Code fields are converted from ICMP to their closest ICMPv6
+            functional equivalents. For example, ICMP Fragmentation Needed is converted to
+            ICMPv6 Packet Too Big.
+          </t>
+          <t>TODO: Should we include a table of the conversions?
+          </t>
+          <t>For ICMPv6 Packet Too Big, 20 is added to the MTU.
+          </t>
+          <t>For ICMPv6 messages which contain an inner packet, the inner packet is converted
+            from an IPREF UDP Tunnel Protocol packet to an IPv6 packet.
+          </t>
+          <t>The checksum is recalculated over the datagram and pseudo-header as required by
+            ICMPv6.
+          </t>
+          <t>As with ICMPv6 encapsulation, in the case of a fragmented ICMPv6 datagram
+            without an inner packet, it is possible to de-encapsulate the packet by only
+            adjusting the first fragment and waiting for the last fragment to determine the
+            datagram length.
+          </t>
+
+        </section>  <!-- ^^ ICMPv6 De-encapsulation (IPv6 Outer Header) ^^ -->
+
+      </section>  <!-- ^^ Transport Layer Encapsulation ^^ -->
+
+    </section> <!-- ^^ IPREF UDP Tunnel Protocol ^^ -->
+
+    <section><name>IPREF Gateway Operation</name>
+
+        <t>Packets with a destination reference of 1 are addressed to the IPREF gateway
+          itself. Gateways MUST respond with ICMP Echo Response with source reference 1 to
+          unfragmented ICMP Echo Request addressed to this reference unless prohibited by
+          a rate-limiting threshold or other security policy. Use of ICMP Echo Request
+          addressed to reference 1 enables the implementation of Datagram Packetization
+          Layer Path MTU Discovery (DPLPMTUD), as described by RFC 9869.
+        </t>
+        <t>Use of other transport layer protocols from/to reference 1 is reserved for
+          future use - gateways MUST respond with encapsulated ICMP Port Unreachable or
+          ICMP Protocol Unreachable with source reference 1 unless prohibited by a
+          rate-limiting threshold or other security policy.
+        </t>
+        <t>An IPREF gateway MAY generate other encapsulated ICMP messages (eg. ICMP Echo
+          Request, ICMP Network Unreachable, ICMP Fragmentation Needed) sent from
+          reference 1.
+        </t>
+        <t>TODO: Should we require the gateway to generate ICMP Fragmentation Needed
+          when the local network MTU is too small? Or is that a topic for a different
+          spec? Maybe this entire section should be part of a different spec?
+        </t>
+
+    </section>  <!-- ^^ IPREF Gateway Operation ^^ -->
+
+    <section><name>IPREF Introspection Protocol</name>
+
+      <t>TODO: Should this be a separate spec?
+      </t>
+      <t>The IPREF Introspection Protocol (IIP) supports IPREF-aware implementations of
+        troubleshooting utilities such as ping and traceroute by enabling hosts on the
+        local network to discover IPREF addresses of themselves and remote hosts
+        connecting over the gateway.
+      </t>
+      <t>Implementation of IIP is OPTIONAL. IIP operates only on the local network behind
+        an IPREF gateway; IIP packets are never sent over the tunnel.
+      </t>
+      <t>An IIP packet has the same structure and interpretation as an IPREF UDP Tunnel
+        Protocol packet, except:
+      </t>
+      <ul>
+        <li>The UDP source and destination ports are both 1046.
+        </li>
+        <li>The Unspecified Context (in both the source and destination fields) is
+          interpreted as referring to the local gateway (the gateway that generated the
+          IIP packet).
+        </li>
+      </ul>
+      <t>When a gateway de-encapsulates an ICMP or ICMPv6 packet, it MAY send an IIP
+        packet at the same time, with the same source and destination addresses in the
+        outer IPv4/IPv6 header as the ICMP/ICMPv6 packet. The IIP packet is generated by
+        encapsulating the ICMP/ICMPv6 packet. The IIP packet may be derived from the
+        original tunnel packet that the ICMP/ICMPv6 datagram was de-encaspulated from;
+        however, due to the different interpretation of the Unspecified Context, it may
+        be necessary to insert or modify the context fields. Unless both the source and
+        destination contexts are the local IPREF gateway itself, an IIP packet must
+        include the context fields (CP=1).
+      </t>
+      <t>If IIP is enabled, the gateway MUST drop on encapsulation any ICMP or ICMPv6
+        message whose inner packet is an IIP packet.
+      </t>
+      <t>A host on the local network can discover its own IPREF address and the IPREF
+        address of a remote host (connecting over the IPREF gateway) by sending an ICMP
+        Echo Request to the remote host. If IIP is enabled on the local gateway, the
+        host should receive both an ICMP Echo Response and an IIP-encapsulated ICMP Echo
+        Response; the IIP-encapsulated packet contains the IPREF addresses. By gradually
+        incrementing the TTL, an IPREF-aware traceroute can be performed. Note that this
+        does not require IIP to be enabled on the remote IPREF gateway, as IIP is a
+        local-only protocol.
+      </t>
+
+    </section>  <!-- ^^ IPREF Introspection Protocol ^^ -->
+
+    <section anchor="IANA">
+    <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
+      <name>IANA Considerations</name>
+      <t>This memo includes no requests to IANA.</t>
+    </section>
+
+    <section anchor="Security">
+      <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
+      <name>Security Considerations</name>
+      <t>This document should not affect the security of the Internet. Documents describing particular
+        pieces of IPREF might. Proper security consideration statements would be included in those
+        documents.
+      </t>
+    </section>
+
+    <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
+  </middle>
+
+  <back>
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+
+        <reference anchor="RFC791" target="https://www.rfc-editor.org/info/rfc791">
+        <!-- Manually added reference -->
+          <front>
+            <title>Internet Protocol</title>
+            <author initials="J." surname="Postel" fullname="J. Postel">
+              <organization/>
+            </author>
+            <date year="1981" month="September"/>
+            <abstract>
+              <t>Internet Protocol Specification
+              </t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="791"/>
+        </reference>
+
+
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1035.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8200.xml"/>
+        <!-- The recommended and simplest way to include a well known reference -->
+
+      </references>
+
+      <references>
+        <name>Informative References</name>
+
+        <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+        <!-- Manually added reference -->
+          <front>
+            <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+            <author initials="S." surname="Bradner" fullname="S. Bradner">
+              <organization/>
+            </author>
+            <date year="1997" month="March"/>
+            <abstract>
+              <t>In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+              </t>
+            </abstract>
+          </front>
+          <seriesInfo name="BCP" value="14"/>
+          <seriesInfo name="RFC" value="2119"/>
+          <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+        </reference>
+
+      </references>
+    </references>
+
+ </back>
+</rfc>
+<!-- vim: tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+-->
