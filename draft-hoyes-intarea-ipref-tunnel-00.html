@@ -1223,7 +1223,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hoyes &amp; Augustyn</td>
-<td class="center">Expires 26 February 2027</td>
+<td class="center">Expires 27 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1236,12 +1236,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-hoyes-intarea-ipref-tunnel-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-25" class="published">25 August 2026</time>
+<time datetime="2026-08-26" class="published">26 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-02-26">26 February 2027</time></dd>
+<dd class="expires"><time datetime="2027-02-27">27 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1278,7 +1278,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1709,34 +1709,34 @@ li > p:last-of-type:only-child {
           bytes in the reference are omitted if the reference length (specified by REFL in
           the Tunnel Information header) is less than 16 bytes. Omitted bytes are
           interpreted as zero.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
-<p id="section-2.5-2">TODO: Should the reserved references be reserved by the tunnel protocol
-          spec, or by some other IPREF spec?<a href="#section-2.5-2" class="pilcrow">¶</a></p>
-<p id="section-2.5-3">The zero reference and all references whose most significant byte is zero are
-          reserved for future use.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
-<div class="sourcecode" id="section-2.5-4">
+<p id="section-2.5-2">The most significant 8 bits are reserved for future use. It could be flags or indicators for
+          special purpose. They are currently not defined and should be set to zero. The effective reference
+          space is reduced by these 8 bits. Further, the reference values 0-1024 are reserved for special
+          purpose and should not be used. Currently, reference value of 0 has a special meaning to consider
+          only context address when rewriting the addresses. It is referred to as a null reference.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<div class="sourcecode" id="section-2.5-3">
 <pre>
     ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   B   │   C   │   D   │  E  │
+    │R  A   │   B   │   C   │   D   │
     └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-</pre><a href="#section-2.5-4" class="pilcrow">¶</a>
+</pre><a href="#section-2.5-3" class="pilcrow">¶</a>
 </div>
-<p id="section-2.5-5">Given a reference with the above 16 bytes (big-endian), where A is 1 byte, B
-          through D are each 4 bytes, and E is 3 bytes, the encoding of the reference is
-          as follows, depending on REFL.<a href="#section-2.5-5" class="pilcrow">¶</a></p>
-<div class="sourcecode" id="section-2.5-6">
+<p id="section-2.5-4">Given a reference with the above 16 bytes (big-endian), where the top byte
+          is reserved 'R', the encoding of the reference is as follows, depending on REFL.<a href="#section-2.5-4" class="pilcrow">¶</a></p>
+<div class="sourcecode" id="section-2.5-5">
 <pre>
     ┌─┬─┬─┬─┐
-    │A│  E  │  REFL=0 (4 bytes), implies B=0, C=0, and D=0
+    │R  D   │  REFL=0 (4 bytes), A,B,C = 0
     └─┴─┴─┴─┘
 
     ┌─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   D   │  E  │  REFL=1 (8 bytes), implies B=0 and C=0
+    │R  C   │   D   │  REFL=1 (8 bytes), A,B = 0
     └─┴─┴─┴─┴─┴─┴─┴─┘
 
     ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   B   │   C   │   D   │  E  │  REFL=2 (16 bytes)
+    │R  A   │   B   │   C   │   D   │  REFL=2 (16 bytes)
     └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-</pre><a href="#section-2.5-6" class="pilcrow">¶</a>
+</pre><a href="#section-2.5-5" class="pilcrow">¶</a>
 </div>
 </section>
 <section id="section-2.6">
