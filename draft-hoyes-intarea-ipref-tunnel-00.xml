@@ -407,36 +407,34 @@
           interpreted as zero.
         </t>
 
-        <t>TODO: Should the reserved references be reserved by the tunnel protocol
-          spec, or by some other IPREF spec?
-        </t>
-
-        <t>The zero reference and all references whose most significant byte is zero are
-          reserved for future use.
+        <t>The most significant 8 bits are reserved for future use. It could be flags or indicators for
+          special purpose. They are currently not defined and should be set to zero. The effective reference
+          space is reduced by these 8 bits. Further, the reference values 0-1024 are reserved for special
+          purpose and should not be used. Currently, reference value of 0 has a special meaning to consider
+          only context address when rewriting the addresses. It is referred to as a null reference.
         </t>
 
         <sourcecode>
     ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   B   │   C   │   D   │  E  │
+    │R  A   │   B   │   C   │   D   │
     └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
         </sourcecode>
 
-        <t>Given a reference with the above 16 bytes (big-endian), where A is 1 byte, B
-          through D are each 4 bytes, and E is 3 bytes, the encoding of the reference is
-          as follows, depending on REFL.
+        <t>Given a reference with the above 16 bytes (big-endian), where the top byte
+          is reserved 'R', the encoding of the reference is as follows, depending on REFL.
         </t>
 
         <sourcecode>
     ┌─┬─┬─┬─┐
-    │A│  E  │  REFL=0 (4 bytes), implies B=0, C=0, and D=0
+    │R  D   │  REFL=0 (4 bytes), A,B,C = 0
     └─┴─┴─┴─┘
 
     ┌─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   D   │  E  │  REFL=1 (8 bytes), implies B=0 and C=0
+    │R  C   │   D   │  REFL=1 (8 bytes), A,B = 0
     └─┴─┴─┴─┴─┴─┴─┴─┘
 
     ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │A│   B   │   C   │   D   │  E  │  REFL=2 (16 bytes)
+    │R  A   │   B   │   C   │   D   │  REFL=2 (16 bytes)
     └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
         </sourcecode>
 
