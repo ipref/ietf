@@ -122,9 +122,24 @@
 
     </section> <!-- ^^ Introduction ^^ -->
 
-    <section><name>IPREF UDP Tunnel Protocol</name>
+    <section><name>IPREF UDP Tunnel Protocol (IUTP)</name>
 
-      <t>TODO: probably need an overview paragraph connecting pieces described below.
+      <t>IPREF, <xref target="I-D-IPREF"/>, does not specifically require a tunnel. The
+        references can be added to the packets using standard extension mechanisms
+        designed for the relevant network protocols. Unfortunately in case of IPv4
+        and IPv6, these mechanisms prove unreliable. In many cases, packets
+        carrying IPv4 options or IPv6 extension headers are placed on the slow path
+        or worse yet are outright dropped. These are serious protocol deficiencies
+        found with both IPv4 and IPv6 which require employing alternative means of
+        transferring reference information with the packets.
+      </t>
+      <t>One such common mechanism is tunneling via UDP. While there are many
+        UDP tunnels in existence, none fits the needs of IPREF. IPREF references
+        are not meant to be tunneled, rather, IPREF references are meant to be
+        appended to the existing packets. Thus, IUTP is not a classic tunnel. Its
+        main purpose is to attach reference information to existing packet in the
+        payload, rather than in the header, in order to work around deficient
+        protocols which may drop them accidentally while in transit.
       </t>
 
       <section><name>Packet Structure</name>
@@ -134,23 +149,14 @@
           optional Fragment Information header, and source and destination IPREF
           addresses.
         </t>
-        <t>TODO: We should be careful with the use of the word "encapsulation". We're
-          not encapsulating an IPv4/IPv6 packet, we're "converting" it (is that the
-          right word?) into an IPREF packet. It is the fragment of the transport layer
-          datagram that gets encapsulated, not the IPv4/IPv6 packet.
-        </t>
-        <t>When an IPREF gateway encapsulates a packet, the original IPv4/IPv6 header is
+       <t>When an IPREF gateway encapsulates a packet, the original IPv4/IPv6 header is
           converted into a Tunnel Information (and possibly also Fragment Information)
           header and the source and destination IPv4/IPv6 addresses are used to determine
           the Source Reference and Destination Reference fields as well as the destination
           IPREF gateway. The transport layer header and data are modified as necessary
           (see "Transport Layer Encapsulation").
         </t>
-        <t>TODO: I guess we can't even say we're purely encapsulating an opaque
-          transport layer packet, because we also need to modify it (especially in the
-          case of ICMP/ICMPv6).
-        </t>
-        <t>The contexts of the source and destination IPREF addresses MAY be omitted (CP=0
+       <t>The contexts of the source and destination IPREF addresses MAY be omitted (CP=0
           in Tunnel Information), in which case the packet is interpreted the same as if
           both source and destination contexts were set to the Unspecified Context. When a
           gateway receives a packet which contains the context fields (CP=1), the gateway
@@ -191,7 +197,7 @@
 
       </section>  <!-- ^^ Packet Structure ^^ -->
 
-      <section><name>Tunnel Information Header</name>
+      <section anchor="tun-info-header"><name>Tunnel Information Header</name>
 
         <t>The tunnel information header is present in every packet and specifies which
           following headers and fields are present as well as the length of the source and
@@ -203,11 +209,7 @@
           set as necessary. The Protocol field is set as described in "Transport Layer
           Encapsulation".
         </t>
-        <t>TODO: Should we also describe the shenanigans that need to be performed in
-          the case of de-encapsulating a packet with DF=0 to IPv6, or is that out of
-          scope of the tunnel protocol? This feels like a leaky abstraction.
-        </t>
-        <t>The REFL field indicates the length of the Source Reference and Destination
+       <t>The REFL field indicates the length of the Source Reference and Destination
           Reference fields. These fields SHOULD be as small as their contained references
           permit.
         </t>
@@ -401,42 +403,15 @@
 
       <section><name>Source and Destination Reference</name>
 
-        <t>The reference is a 128-bit unsigned integer encoded big-endian. Some of the
-          bytes in the reference are omitted if the reference length (specified by REFL in
-          the Tunnel Information header) is less than 16 bytes. Omitted bytes are
-          interpreted as zero.
+        <t>Source and destination references are 16-octet long items possibly compressed
+          to 4 or 8 octets as described in <xref target="ref-compression"/> <xref target="ref-compression" format="title"/>.
+          The value of the REFL field in <xref target="tun-info-header" format="title"/> indicates which format is used.
         </t>
-
-        <t>The most significant 8 bits are reserved for future use. It could be flags or indicators for
-          special purpose. They are currently not defined and should be set to zero. The effective reference
-          space is reduced by these 8 bits. Further, the reference values 0-1024 are reserved for special
-          purpose and should not be used. Currently, reference value of 0 has a special meaning to consider
-          only context address when rewriting the addresses. It is referred to as a null reference.
-        </t>
-
-        <sourcecode>
-    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  A   │   B   │   C   │   D   │
-    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-        </sourcecode>
-
-        <t>Given a reference with the above 16 bytes (big-endian), where the top byte
-          is reserved 'R', the encoding of the reference is as follows, depending on REFL.
-        </t>
-
-        <sourcecode>
-    ┌─┬─┬─┬─┐
-    │R  D   │  REFL=0 (4 bytes), A,B,C = 0
-    └─┴─┴─┴─┘
-
-    ┌─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  C   │   D   │  REFL=1 (8 bytes), A,B = 0
-    └─┴─┴─┴─┴─┴─┴─┴─┘
-
-    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  A   │   B   │   C   │   D   │  REFL=2 (16 bytes)
-    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-        </sourcecode>
+          <ul spacing="compact" empty="true">
+            <li>REFL=0 compressed 4 octet reference</li>
+            <li>REFL=1 compressed 8 octet reference</li>
+            <li>REFL=2 uncompressed 16 octet reference</li>
+          </ul>
 
       </section>  <!-- ^^ Source and Destination Reference ^^ -->
 
@@ -546,8 +521,6 @@
             equivalents. For example, ICMPv6 Packet Too Big is converted to ICMP
             Fragmentation Needed.
           </t>
-          <t>TODO: Should we include a table of the conversions?
-          </t>
           <t>For ICMPv6 Packet Too Big, the packet is dropped if the MTU is less than 1280;
             otherwise, 20 is subtracted from the MTU.
           </t>
@@ -585,8 +558,6 @@
             functional equivalents. For example, ICMP Fragmentation Needed is converted to
             ICMPv6 Packet Too Big.
           </t>
-          <t>TODO: Should we include a table of the conversions?
-          </t>
           <t>For ICMPv6 Packet Too Big, 20 is added to the MTU.
           </t>
           <t>For ICMPv6 messages which contain an inner packet, the inner packet is converted
@@ -607,7 +578,69 @@
 
     </section> <!-- ^^ IPREF UDP Tunnel Protocol ^^ -->
 
-    <section><name>IPREF Gateway Operation</name>
+    <section><name>IPREF Reference</name>
+
+      <t>A reference is a 16 octet item. The most significant octet is reserved
+         for future use. It could be flags or indicators for special purpose. They
+         are currently not defined and should be set to zero. The rest of the reference
+         comprises its value interpreted as an unsigned integer. The range of the values
+         is 15 octets or 120 bits.
+      </t>
+        <sourcecode>
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │R│      reference value        │  R - reserved
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+        </sourcecode>
+
+      <t>
+         The reference values 0-1023 inclusive are reserved for special purpose and
+         should not be used beyond their intended purpose. Currently, the following
+         reserved values have been defined:
+      </t>
+        <ul spacing="compact" empty="true">
+          <li>0 - (null reference) only consider context address when rewriting addresses</li>
+          <li>1 - reference to the gateway itself when used with ICMP messages</li>
+        </ul>
+
+      <section anchor="ref-compression"><name>Reference Compression</name>
+
+        <t>Given the large range for reference values, many of these values may include
+          zeros in their top bits. This creates an opportunity to compress the reference
+          by omitting these zero bits. A reference may be viewed as comprised of four
+          four-octet components with the reserved octet always as the most significant
+          one.
+        </t>
+
+        <sourcecode>
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │R  A   │   B   │   C   │   D   │
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+        </sourcecode>
+
+        <t>If the particular reference value fits within a smaller range, then the
+          reference may be compressed as shown below. The reserved octet always
+          occupies the top position.
+        </t>
+
+        <sourcecode>
+    ┌─┬─┬─┬─┐  reference length: 4 octets
+    │R  D   │  effective range: 24 bits
+    └─┴─┴─┴─┘  A, B, C: all zeros
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┐  reference length: 8 octets
+    │R  C   │   D   │  effective range: 56 bits
+    └─┴─┴─┴─┴─┴─┴─┴─┘  A, B: all zeros
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐  reference length: 16 octets
+    │R  A   │   B   │   C   │   D   │  effective range: 120 bits
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘  A, B: not all zeros
+        </sourcecode>
+
+      </section>  <!-- ^^ Reference Compression ^^ -->
+
+    </section>  <!-- ^^ IPREF Reference ^^ -->
+
+     <section><name>IPREF Gateway Operation</name>
 
         <t>Packets with a destination reference of 1 are addressed to the IPREF gateway
           itself. Gateways MUST respond with ICMP Echo Response with source reference 1 to
@@ -625,17 +658,11 @@
           Request, ICMP Network Unreachable, ICMP Fragmentation Needed) sent from
           reference 1.
         </t>
-        <t>TODO: Should we require the gateway to generate ICMP Fragmentation Needed
-          when the local network MTU is too small? Or is that a topic for a different
-          spec? Maybe this entire section should be part of a different spec?
-        </t>
 
     </section>  <!-- ^^ IPREF Gateway Operation ^^ -->
 
     <section><name>IPREF Introspection Protocol</name>
 
-      <t>TODO: Should this be a separate spec?
-      </t>
       <t>The IPREF Introspection Protocol (IIP) supports IPREF-aware implementations of
         troubleshooting utilities such as ping and traceroute by enabling hosts on the
         local network to discover IPREF addresses of themselves and remote hosts
@@ -704,6 +731,21 @@
       <references>
         <name>Normative References</name>
 
+        <reference anchor="I-D-IPREF" target="https://www.ietf.org/archive/id/draft-augustyn-intarea-ipref-07.html">
+          <front>
+            <title>IP Addressing with References</title>
+            <author initials="W." surname="Augustyn" fullname="W. Augustyn">
+              <organization/>
+            </author>
+            <date year="2026" month="March"/>
+            <abstract>
+              <t>IP Addressing with References specification
+              </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Internet-Draft" value="draft-augustyn-intarea-ipref-07"/>
+        </reference>
+
         <reference anchor="RFC791" target="https://www.rfc-editor.org/info/rfc791">
         <!-- Manually added reference -->
           <front>
@@ -719,7 +761,6 @@
           </front>
           <seriesInfo name="RFC" value="791"/>
         </reference>
-
 
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1035.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
