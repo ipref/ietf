@@ -11,24 +11,24 @@
        TODO: Need an abstract.
        
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.34.1" name="generator">
 <meta content="IPREF" name="keyword">
 <meta content="draft-hoyes-intarea-ipref-tunnel-00" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
+  xml2rfc 3.34.1
     Python 3.12.3
-    ConfigArgParse 1.7.5
+    ConfigArgParse 1.7.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.1.1
+    lxml 6.1.3
     natsort 8.4.0
-    platformdirs 4.10.0
+    platformdirs 4.11.8
     pycountry 26.2.16
     PyYAML 6.0.3
     requests 2.34.2
-    wcwidth 0.8.2
-    weasyprint 69.0
+    wcwidth 0.8.3
+    weasyprint 70.0
 -->
 <link href="draft-hoyes-intarea-ipref-tunnel-00.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -353,6 +353,10 @@ table p {
   /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
      be allowed within tables more generally, it would be far better to select on a class. */
   margin: 0;
+}
+sub,
+sup {
+ white-space: nowrap;
 }
 
 /* pilcrow */
@@ -1061,6 +1065,9 @@ aside > p {
   figcaption, table caption {
     page-break-before: avoid;
   }
+  table {
+    page-break-inside: avoid;
+  }
 }
 /* Font size adjustments for print */
 @media print {
@@ -1219,11 +1226,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">IPREF UDP Tunnel Protocol (IUTP)</td>
-<td class="right">August 2026</td>
+<td class="right">September 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hoyes &amp; Augustyn</td>
-<td class="center">Expires 27 February 2027</td>
+<td class="center">Expires 22 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1236,12 +1243,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-hoyes-intarea-ipref-tunnel-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-26" class="published">26 August 2026</time>
+<time datetime="2026-09-18" class="published">18 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-02-27">27 February 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-22">22 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1278,7 +1285,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1319,7 +1326,7 @@ li > p:last-of-type:only-child {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-ipref-udp-tunnel-protocol" class="internal xref">IPREF UDP Tunnel Protocol</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-ipref-udp-tunnel-protocol-i" class="internal xref">IPREF UDP Tunnel Protocol (IUTP)</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
                 <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-packet-structure" class="internal xref">Packet Structure</a></p>
@@ -1379,30 +1386,38 @@ li > p:last-of-type:only-child {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-ipref-gateway-operation" class="internal xref">IPREF Gateway Operation</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-ipref-introspection-protoco" class="internal xref">IPREF Introspection Protocol</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-ipref-reference" class="internal xref">IPREF Reference</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-reference-compression" class="internal xref">Reference Compression</a></p>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-ipref-gateway-operation" class="internal xref">IPREF Gateway Operation</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-ipref-introspection-protoco" class="internal xref">IPREF Introspection Protocol</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1444,10 +1459,24 @@ li > p:last-of-type:only-child {
 </div>
 </section>
 <section id="section-2">
-      <h2 id="name-ipref-udp-tunnel-protocol">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-ipref-udp-tunnel-protocol" class="section-name selfRef">IPREF UDP Tunnel Protocol</a>
+      <h2 id="name-ipref-udp-tunnel-protocol-i">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-ipref-udp-tunnel-protocol-i" class="section-name selfRef">IPREF UDP Tunnel Protocol (IUTP)</a>
       </h2>
-<p id="section-2-1">TODO: probably need an overview paragraph connecting pieces described below.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">IPREF, <span>[<a href="#I-D-IPREF" class="cite xref">I-D-IPREF</a>]</span>, does not specifically require a tunnel. The
+        references can be added to the packets using standard extension mechanisms
+        designed for the relevant network protocols. Unfortunately in case of IPv4
+        and IPv6, these mechanisms prove unreliable. In many cases, packets
+        carrying IPv4 options or IPv6 extension headers are placed on the slow path
+        or worse yet are outright dropped. These are serious protocol deficiencies
+        found with both IPv4 and IPv6 which require employing alternative means of
+        transferring reference information with the packets.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">One such common mechanism is tunneling via UDP. While there are many
+        UDP tunnels in existence, none fits the needs of IPREF. IPREF references
+        are not meant to be tunneled, rather, IPREF references are meant to be
+        appended to the existing packets. Thus, IUTP is not a classic tunnel. Its
+        main purpose is to attach reference information to existing packet in the
+        payload, rather than in the header, in order to work around deficient
+        protocols which may drop them accidentally while in transit.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <section id="section-2.1">
         <h3 id="name-packet-structure">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-packet-structure" class="section-name selfRef">Packet Structure</a>
@@ -1456,31 +1485,24 @@ li > p:last-of-type:only-child {
           destination port 1045) which also contains a Tunnel Information header, an
           optional Fragment Information header, and source and destination IPREF
           addresses.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.1-2">TODO: We should be careful with the use of the word "encapsulation". We're
-          not encapsulating an IPv4/IPv6 packet, we're "converting" it (is that the
-          right word?) into an IPREF packet. It is the fragment of the transport layer
-          datagram that gets encapsulated, not the IPv4/IPv6 packet.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.1-3">When an IPREF gateway encapsulates a packet, the original IPv4/IPv6 header is
+<p id="section-2.1-2">When an IPREF gateway encapsulates a packet, the original IPv4/IPv6 header is
           converted into a Tunnel Information (and possibly also Fragment Information)
           header and the source and destination IPv4/IPv6 addresses are used to determine
           the Source Reference and Destination Reference fields as well as the destination
           IPREF gateway. The transport layer header and data are modified as necessary
-          (see "Transport Layer Encapsulation").<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1-4">TODO: I guess we can't even say we're purely encapsulating an opaque
-          transport layer packet, because we also need to modify it (especially in the
-          case of ICMP/ICMPv6).<a href="#section-2.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.1-5">The contexts of the source and destination IPREF addresses MAY be omitted (CP=0
+          (see "Transport Layer Encapsulation").<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">The contexts of the source and destination IPREF addresses MAY be omitted (CP=0
           in Tunnel Information), in which case the packet is interpreted the same as if
           both source and destination contexts were set to the Unspecified Context. When a
           gateway receives a packet which contains the context fields (CP=1), the gateway
           MUST check that the source and destination contexts match the expected values
-          and drop the packet if they do not.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.1-6">The outer IPv4/IPv6 packet MUST NOT be fragmented; and, in the case of IPv4, the
-          Don't Fragment bit must be set.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.1-7">Unless specified otherwise, all fields are in network byte order (big-endian).<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+          and drop the packet if they do not.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The outer IPv4/IPv6 packet MUST NOT be fragmented; and, in the case of IPv4, the
+          Don't Fragment bit must be set.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">Unless specified otherwise, all fields are in network byte order (big-endian).<a href="#section-2.1-5" class="pilcrow">¶</a></p>
 <span id="name-packet-structure-2"></span><div id="packet-structure">
 <figure id="figure-1">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.1-8.1">
+          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.1-6.1">
 <pre>
     ┌───────────────────────┐
     │   IPv4/IPv6 Header    │
@@ -1510,6 +1532,7 @@ li > p:last-of-type:only-child {
           </figcaption></figure>
 </div>
 </section>
+<div id="tun-info-header">
 <section id="section-2.2">
         <h3 id="name-tunnel-information-header">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-tunnel-information-header" class="section-name selfRef">Tunnel Information Header</a>
@@ -1522,15 +1545,12 @@ li > p:last-of-type:only-child {
           For IPv6 packets, the Don't Fragment bit is always set. The Is Fragment bit is
           set as necessary. The Protocol field is set as described in "Transport Layer
           Encapsulation".<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">TODO: Should we also describe the shenanigans that need to be performed in
-          the case of de-encapsulating a packet with DF=0 to IPv6, or is that out of
-          scope of the tunnel protocol? This feels like a leaky abstraction.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">The REFL field indicates the length of the Source Reference and Destination
+<p id="section-2.2-3">The REFL field indicates the length of the Source Reference and Destination
           Reference fields. These fields SHOULD be as small as their contained references
-          permit.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+          permit.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <span id="name-tunnel-information-header-2"></span><div id="tunnel-information-header">
 <figure id="figure-2">
-          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-5.1">
+          <div class="alignLeft art-ascii-art art-text artwork" id="section-2.2-4.1">
 <pre>
     ┌───────────────────────┬───────┬───────┬───────┐
     │           0           │   1   │   2   │   3   │
@@ -1547,25 +1567,26 @@ li > p:last-of-type:only-child {
 <a href="#name-tunnel-information-header-2" class="selfRef">Tunnel Information Header</a>
           </figcaption></figure>
 </div>
-<p id="section-2.2-6">RES1 : 3 bits - Write zero, drop if non-zero<a href="#section-2.2-6" class="pilcrow">¶</a></p>
-<p id="section-2.2-7">CP : 1 bit - Contexts Present<a href="#section-2.2-7" class="pilcrow">¶</a></p>
-<p id="section-2.2-8">REFL : 2 bits - Specifies the length of the references in the header:<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">RES1 : 3 bits - Write zero, drop if non-zero<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">CP : 1 bit - Contexts Present<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-7">REFL : 2 bits - Specifies the length of the references in the header:<a href="#section-2.2-7" class="pilcrow">¶</a></p>
 <ul class="compact ulEmpty">
-<li class="compact ulEmpty" id="section-2.2-9.1">0 - 4 bytes<a href="#section-2.2-9.1" class="pilcrow">¶</a>
+<li class="compact ulEmpty" id="section-2.2-8.1">0 - 4 bytes<a href="#section-2.2-8.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact ulEmpty" id="section-2.2-9.2">1 - 8 bytes<a href="#section-2.2-9.2" class="pilcrow">¶</a>
+          <li class="compact ulEmpty" id="section-2.2-8.2">1 - 8 bytes<a href="#section-2.2-8.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact ulEmpty" id="section-2.2-9.3">2 - 16 bytes<a href="#section-2.2-9.3" class="pilcrow">¶</a>
+          <li class="compact ulEmpty" id="section-2.2-8.3">2 - 16 bytes<a href="#section-2.2-8.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact ulEmpty" id="section-2.2-9.4">3 - reserved<a href="#section-2.2-9.4" class="pilcrow">¶</a>
+          <li class="compact ulEmpty" id="section-2.2-8.4">3 - reserved<a href="#section-2.2-8.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.2-10">IF : 1 bit - Is Fragment<a href="#section-2.2-10" class="pilcrow">¶</a></p>
-<p id="section-2.2-11">DF : 1 bit - Don't Fragment<a href="#section-2.2-11" class="pilcrow">¶</a></p>
-<p id="section-2.2-12">RES2 : 8 bits - Write zero, read ignored<a href="#section-2.2-12" class="pilcrow">¶</a></p>
-<p id="section-2.2-13">TTL : 8 bits - Time to Live<a href="#section-2.2-13" class="pilcrow">¶</a></p>
-<p id="section-2.2-14">PROTO : 8 bits - Protocol<a href="#section-2.2-14" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">IF : 1 bit - Is Fragment<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<p id="section-2.2-10">DF : 1 bit - Don't Fragment<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+<p id="section-2.2-11">RES2 : 8 bits - Write zero, read ignored<a href="#section-2.2-11" class="pilcrow">¶</a></p>
+<p id="section-2.2-12">TTL : 8 bits - Time to Live<a href="#section-2.2-12" class="pilcrow">¶</a></p>
+<p id="section-2.2-13">PROTO : 8 bits - Protocol<a href="#section-2.2-13" class="pilcrow">¶</a></p>
 </section>
+</div>
 <section id="section-2.3">
         <h3 id="name-fragment-information-header">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-fragment-information-header" class="section-name selfRef">Fragment Information Header</a>
@@ -1705,39 +1726,17 @@ li > p:last-of-type:only-child {
         <h3 id="name-source-and-destination-refe">
 <a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-source-and-destination-refe" class="section-name selfRef">Source and Destination Reference</a>
         </h3>
-<p id="section-2.5-1">The reference is a 128-bit unsigned integer encoded big-endian. Some of the
-          bytes in the reference are omitted if the reference length (specified by REFL in
-          the Tunnel Information header) is less than 16 bytes. Omitted bytes are
-          interpreted as zero.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
-<p id="section-2.5-2">The most significant 8 bits are reserved for future use. It could be flags or indicators for
-          special purpose. They are currently not defined and should be set to zero. The effective reference
-          space is reduced by these 8 bits. Further, the reference values 0-1024 are reserved for special
-          purpose and should not be used. Currently, reference value of 0 has a special meaning to consider
-          only context address when rewriting the addresses. It is referred to as a null reference.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
-<div class="sourcecode" id="section-2.5-3">
-<pre>
-    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  A   │   B   │   C   │   D   │
-    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-</pre><a href="#section-2.5-3" class="pilcrow">¶</a>
-</div>
-<p id="section-2.5-4">Given a reference with the above 16 bytes (big-endian), where the top byte
-          is reserved 'R', the encoding of the reference is as follows, depending on REFL.<a href="#section-2.5-4" class="pilcrow">¶</a></p>
-<div class="sourcecode" id="section-2.5-5">
-<pre>
-    ┌─┬─┬─┬─┐
-    │R  D   │  REFL=0 (4 bytes), A,B,C = 0
-    └─┴─┴─┴─┘
-
-    ┌─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  C   │   D   │  REFL=1 (8 bytes), A,B = 0
-    └─┴─┴─┴─┴─┴─┴─┴─┘
-
-    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
-    │R  A   │   B   │   C   │   D   │  REFL=2 (16 bytes)
-    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
-</pre><a href="#section-2.5-5" class="pilcrow">¶</a>
-</div>
+<p id="section-2.5-1">Source and destination references are 16-octet long items possibly compressed
+          to 4 or 8 octets as described in <a href="#ref-compression" class="auto internal xref">Section 3.1</a> <a href="#ref-compression" class="internal xref">Reference Compression</a>.
+          The value of the REFL field in <a href="#tun-info-header" class="internal xref">Tunnel Information Header</a> indicates which format is used.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<ul class="compact ulEmpty">
+<li class="compact ulEmpty" id="section-2.5-2.1">REFL=0 compressed 4 octet reference<a href="#section-2.5-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact ulEmpty" id="section-2.5-2.2">REFL=1 compressed 8 octet reference<a href="#section-2.5-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact ulEmpty" id="section-2.5-2.3">REFL=2 uncompressed 16 octet reference<a href="#section-2.5-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
 </section>
 <section id="section-2.6">
         <h3 id="name-transport-layer-encapsulati">
@@ -1849,22 +1848,21 @@ li > p:last-of-type:only-child {
 <p id="section-2.6.6-1">The Type and Code fields are converted to their closest ICMP functional
             equivalents. For example, ICMPv6 Packet Too Big is converted to ICMP
             Fragmentation Needed.<a href="#section-2.6.6-1" class="pilcrow">¶</a></p>
-<p id="section-2.6.6-2">TODO: Should we include a table of the conversions?<a href="#section-2.6.6-2" class="pilcrow">¶</a></p>
-<p id="section-2.6.6-3">For ICMPv6 Packet Too Big, the packet is dropped if the MTU is less than 1280;
-            otherwise, 20 is subtracted from the MTU.<a href="#section-2.6.6-3" class="pilcrow">¶</a></p>
-<p id="section-2.6.6-4">For ICMPv6 messages which contain an inner packet, the inner packet is converted
+<p id="section-2.6.6-2">For ICMPv6 Packet Too Big, the packet is dropped if the MTU is less than 1280;
+            otherwise, 20 is subtracted from the MTU.<a href="#section-2.6.6-2" class="pilcrow">¶</a></p>
+<p id="section-2.6.6-3">For ICMPv6 messages which contain an inner packet, the inner packet is converted
             from an IPv6 packet to an IPREF UDP Tunnel Protocol packet (beginning with the
             Tunnel Information header). For this inner packet, the IPREF addresses are
             interpreted the same as in the outer packet except with the order reversed (the
-            source IPREF address is remote, the destination IPREF address is local).<a href="#section-2.6.6-4" class="pilcrow">¶</a></p>
-<p id="section-2.6.6-5">The checksum is recalculated over the Type, Code, and message body. (No
-            pseudo-header is included in the checksum calculation.)<a href="#section-2.6.6-5" class="pilcrow">¶</a></p>
-<p id="section-2.6.6-6">Note that, in the case of a fragmented ICMPv6 datagram without an inner packet,
+            source IPREF address is remote, the destination IPREF address is local).<a href="#section-2.6.6-3" class="pilcrow">¶</a></p>
+<p id="section-2.6.6-4">The checksum is recalculated over the Type, Code, and message body. (No
+            pseudo-header is included in the checksum calculation.)<a href="#section-2.6.6-4" class="pilcrow">¶</a></p>
+<p id="section-2.6.6-5">Note that, in the case of a fragmented ICMPv6 datagram without an inner packet,
             it is possible to encapsulate the packet by only adjusting the first fragment in
             the datagram and without recalculating the checksum over the entire datagram (by
             using a checksum adjustment), but it is necessary to wait for the last fragment
             in the datagram to determine the total datagram size so that it may be
-            subtracted from the checksum.<a href="#section-2.6.6-6" class="pilcrow">¶</a></p>
+            subtracted from the checksum.<a href="#section-2.6.6-5" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.6.7">
           <h4 id="name-icmp-de-encapsulation-ipv4-">
@@ -1881,62 +1879,121 @@ li > p:last-of-type:only-child {
 <p id="section-2.6.8-1">The Type and Code fields are converted from ICMP to their closest ICMPv6
             functional equivalents. For example, ICMP Fragmentation Needed is converted to
             ICMPv6 Packet Too Big.<a href="#section-2.6.8-1" class="pilcrow">¶</a></p>
-<p id="section-2.6.8-2">TODO: Should we include a table of the conversions?<a href="#section-2.6.8-2" class="pilcrow">¶</a></p>
-<p id="section-2.6.8-3">For ICMPv6 Packet Too Big, 20 is added to the MTU.<a href="#section-2.6.8-3" class="pilcrow">¶</a></p>
-<p id="section-2.6.8-4">For ICMPv6 messages which contain an inner packet, the inner packet is converted
-            from an IPREF UDP Tunnel Protocol packet to an IPv6 packet.<a href="#section-2.6.8-4" class="pilcrow">¶</a></p>
-<p id="section-2.6.8-5">The checksum is recalculated over the datagram and pseudo-header as required by
-            ICMPv6.<a href="#section-2.6.8-5" class="pilcrow">¶</a></p>
-<p id="section-2.6.8-6">As with ICMPv6 encapsulation, in the case of a fragmented ICMPv6 datagram
+<p id="section-2.6.8-2">For ICMPv6 Packet Too Big, 20 is added to the MTU.<a href="#section-2.6.8-2" class="pilcrow">¶</a></p>
+<p id="section-2.6.8-3">For ICMPv6 messages which contain an inner packet, the inner packet is converted
+            from an IPREF UDP Tunnel Protocol packet to an IPv6 packet.<a href="#section-2.6.8-3" class="pilcrow">¶</a></p>
+<p id="section-2.6.8-4">The checksum is recalculated over the datagram and pseudo-header as required by
+            ICMPv6.<a href="#section-2.6.8-4" class="pilcrow">¶</a></p>
+<p id="section-2.6.8-5">As with ICMPv6 encapsulation, in the case of a fragmented ICMPv6 datagram
             without an inner packet, it is possible to de-encapsulate the packet by only
             adjusting the first fragment and waiting for the last fragment to determine the
-            datagram length.<a href="#section-2.6.8-6" class="pilcrow">¶</a></p>
+            datagram length.<a href="#section-2.6.8-5" class="pilcrow">¶</a></p>
 </section>
 </section>
 </section>
 <section id="section-3">
-      <h2 id="name-ipref-gateway-operation">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-ipref-gateway-operation" class="section-name selfRef">IPREF Gateway Operation</a>
+      <h2 id="name-ipref-reference">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-ipref-reference" class="section-name selfRef">IPREF Reference</a>
       </h2>
-<p id="section-3-1">Packets with a destination reference of 1 are addressed to the IPREF gateway
+<p id="section-3-1">A reference is a 16 octet item. The most significant octet is reserved
+         for future use. It could be flags or indicators for special purpose. They
+         are currently not defined and should be set to zero. The rest of the reference
+         comprises its value interpreted as an unsigned integer. The range of the values
+         is 15 octets or 120 bits.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div class="sourcecode" id="section-3-2">
+<pre>
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │R│      reference value        │  R - reserved
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+</pre><a href="#section-3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3-3">
+         The reference values 0-1023 inclusive are reserved for special purpose and
+         should not be used beyond their intended purpose. Currently, the following
+         reserved values have been defined:<a href="#section-3-3" class="pilcrow">¶</a></p>
+<ul class="compact ulEmpty">
+<li class="compact ulEmpty" id="section-3-4.1">0 - (null reference) only consider context address when rewriting addresses<a href="#section-3-4.1" class="pilcrow">¶</a>
+</li>
+        <li class="compact ulEmpty" id="section-3-4.2">1 - reference to the gateway itself when used with ICMP messages<a href="#section-3-4.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<div id="ref-compression">
+<section id="section-3.1">
+        <h3 id="name-reference-compression">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-reference-compression" class="section-name selfRef">Reference Compression</a>
+        </h3>
+<p id="section-3.1-1">Given the large range for reference values, many of these values may include
+          zeros in their top bits. This creates an opportunity to compress the reference
+          by omitting these zero bits. A reference may be viewed as comprised of four
+          four-octet components with the reserved octet always as the most significant
+          one.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<div class="sourcecode" id="section-3.1-2">
+<pre>
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+    │R  A   │   B   │   C   │   D   │
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+</pre><a href="#section-3.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1-3">If the particular reference value fits within a smaller range, then the
+          reference may be compressed as shown below. The reserved octet always
+          occupies the top position.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<div class="sourcecode" id="section-3.1-4">
+<pre>
+    ┌─┬─┬─┬─┐  reference length: 4 octets
+    │R  D   │  effective range: 24 bits
+    └─┴─┴─┴─┘  A, B, C: all zeros
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┐  reference length: 8 octets
+    │R  C   │   D   │  effective range: 56 bits
+    └─┴─┴─┴─┴─┴─┴─┴─┘  A, B: all zeros
+
+    ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐  reference length: 16 octets
+    │R  A   │   B   │   C   │   D   │  effective range: 120 bits
+    └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘  A, B: not all zeros
+</pre><a href="#section-3.1-4" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+<section id="section-4">
+      <h2 id="name-ipref-gateway-operation">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-ipref-gateway-operation" class="section-name selfRef">IPREF Gateway Operation</a>
+      </h2>
+<p id="section-4-1">Packets with a destination reference of 1 are addressed to the IPREF gateway
           itself. Gateways MUST respond with ICMP Echo Response with source reference 1 to
           unfragmented ICMP Echo Request addressed to this reference unless prohibited by
           a rate-limiting threshold or other security policy. Use of ICMP Echo Request
           addressed to reference 1 enables the implementation of Datagram Packetization
-          Layer Path MTU Discovery (DPLPMTUD), as described by RFC 9869.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">Use of other transport layer protocols from/to reference 1 is reserved for
+          Layer Path MTU Discovery (DPLPMTUD), as described by RFC 9869.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Use of other transport layer protocols from/to reference 1 is reserved for
           future use - gateways MUST respond with encapsulated ICMP Port Unreachable or
           ICMP Protocol Unreachable with source reference 1 unless prohibited by a
-          rate-limiting threshold or other security policy.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">An IPREF gateway MAY generate other encapsulated ICMP messages (eg. ICMP Echo
+          rate-limiting threshold or other security policy.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">An IPREF gateway MAY generate other encapsulated ICMP messages (eg. ICMP Echo
           Request, ICMP Network Unreachable, ICMP Fragmentation Needed) sent from
-          reference 1.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">TODO: Should we require the gateway to generate ICMP Fragmentation Needed
-          when the local network MTU is too small? Or is that a topic for a different
-          spec? Maybe this entire section should be part of a different spec?<a href="#section-3-4" class="pilcrow">¶</a></p>
+          reference 1.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
-<section id="section-4">
+<section id="section-5">
       <h2 id="name-ipref-introspection-protoco">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-ipref-introspection-protoco" class="section-name selfRef">IPREF Introspection Protocol</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-ipref-introspection-protoco" class="section-name selfRef">IPREF Introspection Protocol</a>
       </h2>
-<p id="section-4-1">TODO: Should this be a separate spec?<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">The IPREF Introspection Protocol (IIP) supports IPREF-aware implementations of
+<p id="section-5-1">The IPREF Introspection Protocol (IIP) supports IPREF-aware implementations of
         troubleshooting utilities such as ping and traceroute by enabling hosts on the
         local network to discover IPREF addresses of themselves and remote hosts
-        connecting over the gateway.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">Implementation of IIP is OPTIONAL. IIP operates only on the local network behind
-        an IPREF gateway; IIP packets are never sent over the tunnel.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">An IIP packet has the same structure and interpretation as an IPREF UDP Tunnel
-        Protocol packet, except:<a href="#section-4-4" class="pilcrow">¶</a></p>
+        connecting over the gateway.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Implementation of IIP is OPTIONAL. IIP operates only on the local network behind
+        an IPREF gateway; IIP packets are never sent over the tunnel.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">An IIP packet has the same structure and interpretation as an IPREF UDP Tunnel
+        Protocol packet, except:<a href="#section-5-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-5.1">The UDP source and destination ports are both 1046.<a href="#section-4-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5-4.1">The UDP source and destination ports are both 1046.<a href="#section-5-4.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-4-5.2">The Unspecified Context (in both the source and destination fields) is
+        <li class="normal" id="section-5-4.2">The Unspecified Context (in both the source and destination fields) is
           interpreted as referring to the local gateway (the gateway that generated the
-          IIP packet).<a href="#section-4-5.2" class="pilcrow">¶</a>
+          IIP packet).<a href="#section-5-4.2" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="section-4-6">When a gateway de-encapsulates an ICMP or ICMPv6 packet, it MAY send an IIP
+<p id="section-5-5">When a gateway de-encapsulates an ICMP or ICMPv6 packet, it MAY send an IIP
         packet at the same time, with the same source and destination addresses in the
         outer IPv4/IPv6 header as the ICMP/ICMPv6 packet. The IIP packet is generated by
         encapsulating the ICMP/ICMPv6 packet. The IIP packet may be derived from the
@@ -1944,45 +2001,49 @@ li > p:last-of-type:only-child {
         however, due to the different interpretation of the Unspecified Context, it may
         be necessary to insert or modify the context fields. Unless both the source and
         destination contexts are the local IPREF gateway itself, an IIP packet must
-        include the context fields (CP=1).<a href="#section-4-6" class="pilcrow">¶</a></p>
-<p id="section-4-7">If IIP is enabled, the gateway MUST drop on encapsulation any ICMP or ICMPv6
-        message whose inner packet is an IIP packet.<a href="#section-4-7" class="pilcrow">¶</a></p>
-<p id="section-4-8">A host on the local network can discover its own IPREF address and the IPREF
+        include the context fields (CP=1).<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">If IIP is enabled, the gateway MUST drop on encapsulation any ICMP or ICMPv6
+        message whose inner packet is an IIP packet.<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-7">A host on the local network can discover its own IPREF address and the IPREF
         address of a remote host (connecting over the IPREF gateway) by sending an ICMP
         Echo Request to the remote host. If IIP is enabled on the local gateway, the
         host should receive both an ICMP Echo Response and an IIP-encapsulated ICMP Echo
         Response; the IIP-encapsulated packet contains the IPREF addresses. By gradually
         incrementing the TTL, an IPREF-aware traceroute can be performed. Note that this
         does not require IIP to be enabled on the remote IPREF gateway, as IIP is a
-        local-only protocol.<a href="#section-4-8" class="pilcrow">¶</a></p>
+        local-only protocol.<a href="#section-5-7" class="pilcrow">¶</a></p>
 </section>
 <div id="IANA">
-<section id="section-5">
+<section id="section-6">
       <h2 id="name-iana-considerations">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">This memo includes no requests to IANA.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">This memo includes no requests to IANA.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="Security">
-<section id="section-6">
+<section id="section-7">
       <h2 id="name-security-considerations">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">This document should not affect the security of the Internet. Documents describing particular
+<p id="section-7-1">This document should not affect the security of the Internet. Documents describing particular
         pieces of IPREF might. Proper security consideration statements would be included in those
-        documents.<a href="#section-6-1" class="pilcrow">¶</a></p>
+        documents.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-7">
+<section id="section-8">
       <h2 id="name-references">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-7.1">
+<section id="section-8.1">
         <h3 id="name-normative-references">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D-IPREF">[I-D-IPREF]</dt>
+        <dd>
+<span class="refAuthor">Augustyn, W.</span>, <span class="refTitle">"IP Addressing with References"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-augustyn-intarea-ipref-07</span>, <time datetime="2026-03" class="refDate">March 2026</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-augustyn-intarea-ipref-07.html">https://www.ietf.org/archive/id/draft-augustyn-intarea-ipref-07.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC791">[RFC791]</dt>
         <dd>
 <span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Protocol"</span>, <span class="seriesInfo">RFC 791</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc791">https://www.rfc-editor.org/info/rfc791</a>&gt;</span>. </dd>
@@ -2000,9 +2061,9 @@ li > p:last-of-type:only-child {
 <span class="refAuthor">Deering, S.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8200">https://www.rfc-editor.org/info/rfc8200</a>&gt;</span>. </dd>
 <dd class="break"></dd></dl>
 </section>
-<section id="section-7.2">
+<section id="section-8.2">
         <h3 id="name-informative-references">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
